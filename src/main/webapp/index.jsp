@@ -7,7 +7,8 @@
 <body>
 <h1>IoTBay</h1>
 <div class="topnav">
-    <a href="login">Login</a>
+    <a href="login.jsp">Login</a>
+    <a href="register.jsp">Register</a>
 </div>
 </body>
 </html>
