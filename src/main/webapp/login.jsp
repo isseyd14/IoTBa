@@ -5,8 +5,12 @@
     <link rel="stylesheet" type="text/css" href="loginStyles.css?<?php echo time(); ?>">
 </head>
 <body>
+    
+     <%
+            String loginError = (String) session.getAttribute("InvalidLogin");
+      %>
 <h1>Login</h1>
-<form method="post" action="" name="login" onsubmit="return validateForm()">
+<form method="post" action="LoginServlet" name="login" onsubmit="return validateForm()">
     <label>Email:</label>
     <input type="text" name="email"><br><br>
 
