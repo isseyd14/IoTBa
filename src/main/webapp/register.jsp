@@ -5,16 +5,17 @@
   <link rel="stylesheet" type="text/css" href="loginStyles.css?<?php echo time(); ?>">
 </head>
 <body>
+    <!--onsubmit="return validateForm()"-->
 <h1>Registration</h1>
-<form method="post" action="" name="registration" onsubmit="return validateForm()">
+<form method="post" action="RegisterServerlet" name="registration" >
   <label>Email:</label>
-  <input type="text" name="email"><br><br>
+  <input type="text" name="email" required ><br><br>
 
   <label>Name:</label>
-  <input type="text" name="name"><br><br>
+  <input type="text" name="fname" required><br><br>
 
   <label>Password:</label>
-  <input type="password" name="password"><br><br>
+  <input type="password" name="password" required><br><br>
 
   <label>Gender:</label>
   <input type="radio" name="gender" value="male">Male
@@ -34,7 +35,7 @@
   <input type="submit" value="Register">
 </form>
 
-
+<!--
 <script>
   function validateForm() {
     var email = document.forms["registration"]["email"].value;
@@ -55,7 +56,7 @@
       return false;
     }
   }
-</script>
+</script>-->
 
 
 </body>
