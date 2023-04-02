@@ -2,8 +2,10 @@
   <configuration default="false" name="GlassFish 6.2.5" type="GlassfishConfiguration" factoryName="Local" APPLICATION_SERVER_NAME="GlassFish 6.2.5" ALTERNATIVE_JRE_ENABLED="false" nameIsGenerated="true">
     <option name="UPDATING_POLICY" value="restart-server" />
     <deployment>
-      <artifact name="IoTBa:war exploded">
-        <settings />
+      <artifact name="IoTBay:war exploded">
+        <settings>
+          <option name="defaultContextRoot" value="false" />
+        </settings>
       </artifact>
     </deployment>
     <server-settings>
@@ -66,7 +68,7 @@
     <method v="2">
       <option name="Make" enabled="true" />
       <option name="BuildArtifacts" enabled="true">
-        <artifact name="IoTBa:war exploded" />
+        <artifact name="IoTBay:war exploded" />
       </option>
     </method>
   </configuration>
