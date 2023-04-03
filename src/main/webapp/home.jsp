@@ -142,6 +142,16 @@
     }
 </style>
 
+<%
+    String Email = (String) session.getAttribute("email");
+    if(Email == null){ 
+%>
+
+<body>Error no Login</body>
+
+<%} else if(Email != null){
+
+%>
 <body>
 
     <nav class="standard-Nav">
@@ -157,13 +167,13 @@
 
 
             </li>
+            <li class="nav-button">Welcome, <%out.print(Email);%></li>
             <li class="nav-button"><a class="active" href="home.jsp">Search</a></li>
 
-            <li class="nav-button"><a href="logout">Logout</a></li>
+            <li class="nav-button"><a href="/LogoutServlet">Logout</a></li>
         </ul>
     </nav>
-
-
+    
     <div class="main display">
         <h1 style="text-align: center; padding-top:50px;">Search Results...</h1>
         <p style="color:red;">This table is an example table. As this is hard coded, we will place the java code around
@@ -214,5 +224,8 @@
     </div>
 
 </body>
+<%}
+%>
+    
 
 </html>

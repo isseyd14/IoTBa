@@ -35,7 +35,7 @@ public class RegisterServerlet extends HttpServlet {
             Class.forName("com.mysql.jdbc.Driver");
             
             con = DriverManager.getConnection("jdbc:mysql://auth-db624.hstgr.io/u236601339_iotBay?autoReconnect=true&useSSL=false","u236601339_iotbayAdmin","iotBaypassword1");
-            System.out.println("Connected");
+            System.out.println("Register Connected");
             
             String sql = "insert into u236601339_iotBay.users (name, email, password) values(?,?,?)";
             

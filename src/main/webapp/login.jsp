@@ -10,7 +10,8 @@
             String loginError = (String) session.getAttribute("InvalidLogin");
       %>
 <h1>Login</h1>
-<form method="post" action="LoginServlet" name="login" onsubmit="return validateForm()">
+<!--onsubmit="return validateForm()"-->
+<form method="post" action="LoginServlet" name="login" >
     <label>Email:</label>
     <input type="text" name="email"><br><br>
 
