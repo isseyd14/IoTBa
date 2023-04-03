@@ -32,12 +32,12 @@ public class RegisterServerlet extends HttpServlet {
         try{
             Connection con = null;
             
-            Class.forName("org.postgresql.Driver");
+            Class.forName("com.mysql.jdbc.Driver");
             
-            con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/iotbay","postgres","yourpostgrespassword");
+            con = DriverManager.getConnection("jdbc:mysql://auth-db624.hstgr.io/u236601339_iotBay?autoReconnect=true&useSSL=false","u236601339_iotbayAdmin","iotBaypassword1");
             System.out.println("Connected");
             
-            String sql = "insert into iotbay.\"public\".users (name, email, password) values(?,?,?)";
+            String sql = "insert into u236601339_iotBay.users (name, email, password) values(?,?,?)";
             
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, name);
