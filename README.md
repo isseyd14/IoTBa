@@ -1,6 +1,6 @@
 ## IoTBay Group 4
 
-### To run this project on IntelliJ:
+### To run this project on IntelliJ (Recommended):
 
 1. Clone the GitHub Repository
 2. Open the folder containing the repository code as a new IntelliJ project

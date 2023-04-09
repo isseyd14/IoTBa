@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>grp6</groupId>
-    <artifactId>IoTBay</artifactId>
+    <artifactId>IoTBa</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>IoTBay</name>
     <packaging>war</packaging>

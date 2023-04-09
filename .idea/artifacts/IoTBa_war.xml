@@ -7,7 +7,7 @@
         <packaging>war</packaging>
       </options>
     </properties>
-    <root id="archive" name="IoTBay-1.0-SNAPSHOT.war">
+    <root id="archive" name="IoTBa-1.0-SNAPSHOT.war">
       <element id="artifact" artifact-name="IoTBa:war exploded" />
     </root>
   </artifact>
