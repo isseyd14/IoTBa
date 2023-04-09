@@ -13,5 +13,5 @@
 1. Clone the Github repository.
 2. On Netbeans, File -> Open Project -> Select folder containing repository code.
 3. Run project and if there is trouble detecting server, right click the IoT project -> properties -> run -> under server, and ensure Glassfish server is selected running version 6.2.5. If no option available, manually add server under tools -> server.
-4. If using a linux machine, you may get an error `Cannot run program "/Users/(username)/(folderlocation)/IoTBa/mvnw" (in directory "/Users/(username)/(folderlocation)/IoTBa"): error=13, Permission denied`. To fix this, `cd` into the `IoTBa` folder on terminal and run `chmod +x mvwn`.
+4. If using a mac/linux machine, you may get an error `Cannot run program "/Users/(username)/(folderlocation)/IoTBa/mvnw" (in directory "/Users/(username)/(folderlocation)/IoTBa"): error=13, Permission denied`. To fix this, `cd` into the `IoTBa` folder on terminal and run `chmod +x mvwn`.
 5. Run project, browser should automatically open to landing page or manually go to [http://localhost:8080/](http://localhost:8080/).
