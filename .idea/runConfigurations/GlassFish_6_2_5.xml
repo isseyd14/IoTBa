@@ -4,8 +4,10 @@
     <option name="UPDATE_CLASSES_ON_FRAME_DEACTIVATION" value="true" />
     <option name="UPDATING_POLICY" value="restart-server" />
     <deployment>
-      <artifact name="IoTBay:war exploded">
-        <settings />
+      <artifact name="IoTBa:war exploded">
+        <settings>
+          <option name="defaultContextRoot" value="false" />
+        </settings>
       </artifact>
     </deployment>
     <server-settings>
@@ -68,7 +70,7 @@
     <method v="2">
       <option name="Make" enabled="true" />
       <option name="BuildArtifacts" enabled="true">
-        <artifact name="IoTBay:war exploded" />
+        <artifact name="IoTBa:war exploded" />
       </option>
     </method>
   </configuration>
