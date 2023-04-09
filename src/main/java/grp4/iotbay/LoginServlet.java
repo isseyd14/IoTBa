@@ -1,4 +1,4 @@
-package grp6.iotbay;
+package grp4.iotbay;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;

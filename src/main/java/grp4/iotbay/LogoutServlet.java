@@ -1,4 +1,4 @@
-package grp6.iotbay;
+package grp4.iotbay;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -15,6 +15,7 @@ public class LogoutServlet extends HttpServlet {
         HttpServletRequest request, HttpServletResponse response
     ) throws ServletException, IOException {
         // end session
+        request.getSession().removeAttribute("email");
         response.sendRedirect("");
     }
 }
