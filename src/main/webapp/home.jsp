@@ -17,7 +17,7 @@
         height: 70px;
         background-color: #f3f3f3;
         box-shadow: 0px -10px 36px 3px rgba(143, 142, 142, 0.537);
-        
+
     }
 
     .nav-logo {
@@ -144,7 +144,8 @@
 
 <%
     String Email = (String) session.getAttribute("email");
-    if(Email == null){ 
+    if(Email == null){
+
 %>
 
 <body>Error no Login</body>
@@ -152,6 +153,8 @@
 <%} else if(Email != null){
 
 %>
+
+
 <body>
 
     <nav class="standard-Nav">
@@ -167,13 +170,13 @@
 
 
             </li>
-            <li class="nav-button">Welcome, <%out.print(Email);%></li>
+            <li class="nav-button">Welcome, <%out.print(Email);%> </li>
             <li class="nav-button"><a class="active" href="home.jsp">Search</a></li>
 
             <li class="nav-button"><a href="logout">Logout</a></li>
         </ul>
     </nav>
-    
+
     <div class="main display">
         <h1 style="text-align: center; padding-top:50px;">Search Results...</h1>
         <p style="color:red;">This table is an example table. As this is hard coded, we will place the java code around
@@ -226,6 +229,6 @@
 </body>
 <%}
 %>
-    
+
 
 </html>
