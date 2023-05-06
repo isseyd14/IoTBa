@@ -11,8 +11,9 @@
     String Name = (String) session.getAttribute("name");
 %>
 <body>
-<h1>Welcome to IoT Stock Management staff member: <%out.print(Name);%> </h1>
+<h1>Welcome to IoT Stock Management staff member: <%System.out.print(Name);%> </h1>
 <h2><a href="add-product.jsp">Add Product</a></h2>
+<h2><a href="remove-product.jsp">Remove Product</a></h2>
 
 </body>
 </html>

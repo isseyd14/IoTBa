@@ -19,6 +19,8 @@
   }
 </style>
 
+<h2><a href="staff-home.jsp">Back</a></h2>
+
 
 <form method="post" action="StockServlet" name="addProduct">
   <label>Product name:</label>
@@ -40,28 +42,27 @@
     con = DriverManager.getConnection("jdbc:mysql://auth-db624.hstgr.io/u236601339_iotBay?autoReconnect=true&useSSL=false", "u236601339_iotbayAdmin", "iotBaypassword1");
     Statement stmt = con.createStatement();
     ResultSet rs = stmt.executeQuery("SELECT * FROM product");
-
-    while (rs.next()) {
-      String productName = rs.getString("productName");
-      int stockAmount = rs.getInt("productQuantity");
-      double unitPrice = rs.getDouble("productPrice");
-
 %>
+
+
 <table class="stock-table">
   <tr>
     <th>Product Name</th>
     <th>Stock Amount</th>
     <th>Unit Price</th>
   </tr>
+  <% while (rs.next()) { %>
   <tr>
-    <td><%= productName %></td>
-    <td><%= stockAmount %></td>
-    <td><%= unitPrice %></td>
+    <td><%= rs.getString("productName") %></td>
+    <td><%= rs.getInt("productQuantity") %></td>
+    <td><%= rs.getDouble("productPrice") %></td>
   </tr>
+  <% } %>
 </table>
 
+
 <%
-    }
+
   } catch (SQLException e) {
     e.printStackTrace();
   }
