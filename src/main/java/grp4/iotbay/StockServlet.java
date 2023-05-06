@@ -34,8 +34,7 @@ public class StockServlet extends HttpServlet {
             ps.setDouble(3, price);
             ps.executeUpdate();
 
-            RequestDispatcher rd = request.getRequestDispatcher("add-product.jsp");
-            rd.forward(request, response);
+           response.sendRedirect("add-product.jsp");
 
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
