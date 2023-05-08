@@ -48,6 +48,14 @@
   <% } %>
 </table>
 
+<form action="removeServlet" method="post" name="removeProduct">
+  <label>Name of product to be removed from listing:</label>
+  <input type="text" name="productName"/>
+
+
+  <input type="submit" value="Add product">
+</form>
+
 </body>
 </html>
 
