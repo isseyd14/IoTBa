@@ -76,7 +76,7 @@ public class LoginServlet extends HttpServlet {
 
             else if(email.equals(emailDB) && password.equals(passwordDB) && typeDB.equals("staff")) {
                 HttpSession session = request.getSession();
-                // session.setAttribute("email", email);
+                session.setAttribute("email", email);
                 session.setAttribute("name", nameDB);
 
                 RequestDispatcher rd = request.getRequestDispatcher("staff-home.jsp");

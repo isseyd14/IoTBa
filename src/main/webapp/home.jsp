@@ -1,3 +1,4 @@
+<%@ page import="java.sql.*" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -6,7 +7,7 @@
     <title>IoTBay Search</title>
 </head>
 
-<style>
+<!-- <style>
     body {
         margin: 0;
         font-family: Arial, Helvetica, sans-serif;
@@ -140,6 +141,17 @@
         font-size: 14px;
         margin: 0;
     }
+</style> -->
+
+<style>
+    .stock-table {
+        border-collapse: collapse;
+    }
+
+    .stock-table td, .stock-table th {
+        border: 1px solid black;
+        padding: 0.5rem;
+    }
 </style>
 
 <%
@@ -155,7 +167,11 @@
 %>
 
 
+
 <body>
+
+
+
 
     <nav class="standard-Nav">
         <img  class="nav-logo" src="IotBayLogo.png" width="60px" height="60" alt="Product Image">
@@ -176,6 +192,42 @@
             <li class="nav-button"><a href="logout">Logout</a></li>
         </ul>
     </nav>
+
+    <h1>Available products</h1>
+
+    <%
+        Connection con;
+
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://auth-db624.hstgr.io/u236601339_iotBay?autoReconnect=true&useSSL=false", "u236601339_iotbayAdmin", "iotBaypassword1");
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM product");
+    %>
+
+
+    <table class="stock-table">
+        <tr>
+            <th>Product Name</th>
+            <th>Stock Amount</th>
+            <th>Unit Price</th>
+        </tr>
+        <% while (rs.next()) { %>
+        <tr>
+            <td><%= rs.getString("productName") %></td>
+            <td><%= rs.getInt("productQuantity") %></td>
+            <td><%= rs.getDouble("productPrice") %></td>
+        </tr>
+        <% } %>
+    </table>
+
+
+    <%
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    %>
+
 
     <div class="main display">
         <h1 style="text-align: center; padding-top:50px;">Search Results...</h1>
