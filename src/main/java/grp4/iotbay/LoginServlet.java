@@ -49,18 +49,22 @@ public class LoginServlet extends HttpServlet {
             
             String emailDB = "";
             String passwordDB = "";
+            String typeDB = "";
+            String nameDB = "";
             
             ResultSet rs = ps.executeQuery();
             
             while(rs.next()){
             emailDB = rs.getString("email");
             passwordDB = rs.getString("password");
+            typeDB = rs.getString("Type");
+            nameDB = rs.getString("name");
             
             System.out.println("emailDB: " + emailDB);
             System.out.println("passwordDB: " + passwordDB);
                     }
             
-            if(email.equals(emailDB) && password.equals(passwordDB)){
+            if(email.equals(emailDB) && password.equals(passwordDB) && typeDB.equals("customer")){
             System.out.println("in If");
             
             HttpSession session = request.getSession();
@@ -68,10 +72,21 @@ public class LoginServlet extends HttpServlet {
             
             RequestDispatcher rd = request.getRequestDispatcher("home.jsp");
             rd.forward(request, response);
-            }else{
-            System.out.println("in else");
-            RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
-            rd.forward(request, response);
+            }
+
+            else if(email.equals(emailDB) && password.equals(passwordDB) && typeDB.equals("staff")) {
+                HttpSession session = request.getSession();
+                // session.setAttribute("email", email);
+                session.setAttribute("name", nameDB);
+
+                RequestDispatcher rd = request.getRequestDispatcher("staff-home.jsp");
+                rd.forward(request,response);
+            }
+
+            else{
+                System.out.println("in else");
+                RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
+                rd.forward(request, response);
             }
             
             
