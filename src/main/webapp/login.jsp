@@ -99,29 +99,8 @@
     <label>Password:</label>
     <input type="password" name="password"><br><br>
 
-
-
     <input type="submit" value="Login">
 </form>
-
-
-<script>
-
-    function validateForm() {
-        let email = document.forms["login"]["email"].value;
-        let password = document.forms["login"]["password"].value;
-
-        if(email == "" || password == "" ) {
-            alert("Please enter a valid username or password.")
-            return false;
-        }
-    }
-
-
-
-
-
-</script>
 
 </body>
 
