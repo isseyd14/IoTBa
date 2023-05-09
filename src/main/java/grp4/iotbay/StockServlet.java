@@ -15,6 +15,8 @@ import java.sql.PreparedStatement;
 public class StockServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+
         String product = request.getParameter("product");
         int stock = Integer.parseInt(request.getParameter("stock"));
         double price = Double.parseDouble(request.getParameter("price"));

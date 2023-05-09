@@ -27,13 +27,15 @@
   <input type="text" name="product"><br><br>
 
   <label>Stock amount:</label>
-  <input type="number" name="stock"><br><br>
+  <input type="text" name="stock"><br><br>
 
   <label>Unit Price:</label>
-  <input type="number" name="price"><br><br>
+  <input type="text" name="price"><br><br>
 
   <input type="submit" value="Add product">
 </form>
+
+<h1>Product List</h1>
 
 <%
   Connection con;

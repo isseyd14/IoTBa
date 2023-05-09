@@ -17,6 +17,7 @@
 
 <body>
 <h2><a href="staff-home.jsp">Back</a></h2>
+<h1>Product List</h1>
 <%
   Connection con;
 
@@ -48,12 +49,12 @@
   <% } %>
 </table>
 
-<form action="removeServlet" method="post" name="removeProduct">
+<form action="RemoveServlet" method="post" name="removeProduct">
   <label>Name of product to be removed from listing:</label>
   <input type="text" name="productName"/>
 
 
-  <input type="submit" value="Add product">
+  <input type="submit" value="Remove product">
 </form>
 
 </body>
