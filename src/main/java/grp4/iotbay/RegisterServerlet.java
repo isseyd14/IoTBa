@@ -45,8 +45,7 @@ public class RegisterServerlet extends HttpServlet {
             ps.setString(3, password);
             ps.executeUpdate();
             
-            RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
-            rd.forward(request,response);
+            response.sendRedirect("index.jsp");
         }catch(ClassNotFoundException | SQLException e){
             System.out.println("Error! - " + e.getMessage());
         }

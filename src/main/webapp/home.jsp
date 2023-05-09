@@ -143,13 +143,14 @@
 </style>
 
 <%
-    String Email = (String) session.getAttribute("email");
-    if(Email == null){ 
+    String email = (String) session.getAttribute("email");
+    String name = (String) session.getAttribute("name");
+    if(email == null){
 %>
 
 <body>Error no Login</body>
 
-<%} else if(Email != null){
+<%} else if(email != null){
 
 %>
 <body>
@@ -167,7 +168,7 @@
 
 
             </li>
-            <li class="nav-button">Welcome, <%out.print(Email);%></li>
+            <li class="nav-button"><a href="account.jsp">Welcome, <%out.print(name);%></a></li>
             <li class="nav-button"><a class="active" href="home.jsp">Search</a></li>
 
             <li class="nav-button"><a href="logout">Logout</a></li>
