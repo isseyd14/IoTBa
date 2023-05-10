@@ -94,12 +94,10 @@
 <!--onsubmit="return validateForm()"-->
 <form method="post" action="LoginServlet" name="login" >
     <label>Email:</label>
-    <input type="text" name="email"><br><br>
+    <input type="text" name="email" required><br><br>
 
     <label>Password:</label>
-    <input type="password" name="password"><br><br>
-
-
+    <input type="password" name="password" required><br><br>
 
     <input type="submit" value="Login">
 </form>

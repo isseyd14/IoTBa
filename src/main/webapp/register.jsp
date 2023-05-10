@@ -105,7 +105,7 @@
   <input type="radio" name="gender" value="female">Female<br><br>
 
   <label>Agree to terms of Service:</label>
-  <input type="checkbox" name="tos" value="agree"><br><br>
+  <input type="checkbox" name="tos" value="agree" required><br><br>
 
 
   <!-- <input type="hidden" name="name" value="${param.name}" />

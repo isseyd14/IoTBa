@@ -38,7 +38,7 @@ public class DeleteServlet extends HttpServlet {
                 response.sendRedirect("index.jsp");
             }
         }catch(SQLException | ClassNotFoundException e){
-            System.out.println("Delelet Error! - " + e.getMessage());
+            System.out.println("Delete Error! - " + e.getMessage());
         }
     }
 }
