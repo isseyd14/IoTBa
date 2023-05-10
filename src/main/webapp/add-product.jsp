@@ -33,6 +33,15 @@
   <input type="text" name="price"><br><br>
 
   <input type="submit" value="Add product">
+
+  <%
+    String errorMessage = (String) request.getAttribute("errorMessage");
+    if (errorMessage != null) {
+  %>
+  <p style="color: red;"><%= errorMessage %></p>
+  <%
+    }
+  %>
 </form>
 
 <h1>Product List</h1>
