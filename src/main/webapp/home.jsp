@@ -155,14 +155,14 @@
 </style>
 
 <%
-    String Email = (String) session.getAttribute("email");
-    if(Email == null){
+    String name = (String) session.getAttribute("name");
+    if(name == null){
 
 %>
 
 <body>Error no Login</body>
 
-<%} else if(Email != null){
+<%} else if(name != null){
 
 %>
 
@@ -181,15 +181,15 @@
                 <form name="searchQuery" action="searchQuery" method="POST" class="seachForm">
                     <input type="text" id="searchQuery" name="searchQuery" placeholder="Search IOTBay"
                         class="searchField">
-                    <input type="submit" value="Search" style="background-color: ;">
+                    <input type="submit" value="Search" style="background-color:">
                 </form>
 
 
             </li>
-            <li class="nav-button">Welcome, <%out.print(Email);%> </li>
+            <li class="nav-button">Welcome, <%=name%> </li>
             <li class="nav-button"><a class="active" href="home.jsp">Search</a></li>
 
-            <li class="nav-button"><a href="logout">Logout</a></li>
+            <li class="nav-button"><a href="LogoutServletMod">Logout</a></li>
         </ul>
     </nav>
 
