@@ -21,6 +21,8 @@
 
 <body>
 
+<h1>Updating: <%=product.getName()%></h1>
+
 <table class="stock-table">
   <tr>
     <th>Name</th>
@@ -48,11 +50,20 @@
 </form>
 
 <% String errorMessage = (String) request.getAttribute("errorMessage"); %>
+<% String successMessage = (String) request.getAttribute("successMessage"); %>
 
-<%if(errorMessage != null) { %>
-<p><%=errorMessage%></p>
+<% if(errorMessage != null) { %>
+<p style="color: red"><%=errorMessage%></p>
 
 <% } %>
+
+<% if(successMessage != null) { %>
+<p style="color: green"><%=successMessage%></p>
+
+<% } %>
+
+<h2><a href="update-product.jsp">Back</a> </h2>
+<h2><a href="staff-home.jsp">Return home</a></h2>
 
 </body>
 </html>

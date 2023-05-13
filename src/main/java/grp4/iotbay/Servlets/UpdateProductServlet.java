@@ -80,8 +80,13 @@ public class UpdateProductServlet extends HttpServlet {
 
             HttpSession session = request.getSession();
             session.setAttribute("product", product);
+            request.setAttribute("successMessage", "Update Success!");
 
-            response.sendRedirect("product-details.jsp");
+            connection.close();
+            statement.close();
+
+            RequestDispatcher rd = request.getRequestDispatcher("product-details.jsp");
+            rd.forward(request, response);
 
 
         }
