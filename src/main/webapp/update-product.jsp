@@ -59,6 +59,14 @@
 
 </form>
 
+<% String errorMessage = (String) request.getAttribute("errorMessage"); %>
+
+<% if(errorMessage != null) { %>
+
+<h3 style="color: red"><%=errorMessage%></h3>
+
+<% } %>
+
 <%
 
   } catch (SQLException e) {

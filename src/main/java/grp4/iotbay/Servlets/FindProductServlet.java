@@ -18,6 +18,13 @@ public class FindProductServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String productName = request.getParameter("productName");
 
+        if(productName.isEmpty()) {
+            request.setAttribute("errorMessage", "Error: please enter product name");
+            RequestDispatcher rd = request.getRequestDispatcher("update-product.jsp");
+            rd.forward(request, response);
+            return;
+        }
+
         Connection con = null;
         PreparedStatement ps = null;
 
@@ -47,9 +54,10 @@ public class FindProductServlet extends HttpServlet {
                 RequestDispatcher rd = request.getRequestDispatcher("product-details.jsp");
                 rd.forward(request, response);
             }
-
             else {
-                response.sendRedirect("update-product.jsp");
+                request.setAttribute("errorMessage", "No product of that name");
+                RequestDispatcher rd = request.getRequestDispatcher("update-product.jsp");
+                rd.forward(request, response);
             }
 
 
