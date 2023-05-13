@@ -86,10 +86,7 @@
     </style>
     
 <body>
-    
-     <%
-            String loginError = (String) session.getAttribute("InvalidLogin");
-      %>
+
 <h1>Login</h1>
 <form method="post" action="LoginServlet" name="login" >
     <label>Email:</label>

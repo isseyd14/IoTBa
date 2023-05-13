@@ -19,17 +19,12 @@ public class UpdateProductServlet extends HttpServlet {
         String productType = request.getParameter("type");
         String productDescription = request.getParameter("description");
 
-        if(productName == null && productType == null && productDescription == null) {
-            request.setAttribute("statusMessage", "Error: enter at least one value.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("product-details.jsp");
-            dispatcher.forward(request, response);
+        if(productName.isEmpty() && productType.isEmpty() && productDescription.isEmpty()) {
+            request.setAttribute("errorMessage", "Error: enter at least one value.");
+            RequestDispatcher rd = request.getRequestDispatcher("product-details.jsp");
+            rd.forward(request, response);
             return;
         }
-
-       /* Product product = new Product();
-        product.setName(productName);
-        product.setType(productType);
-        product.setDescription(productDescription); */
 
         Connection connection = null;
         PreparedStatement statement = null;

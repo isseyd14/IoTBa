@@ -39,7 +39,7 @@ public class FindProductServlet extends HttpServlet {
 
             if(rs.next()) {
                 Product product = new Product();
-                product.setName(productName);
+                product.setName(rs.getString("productName"));
                 product.setType(rs.getString("productType"));
                 product.setDescription(rs.getString("productDescription"));
                 HttpSession session = request.getSession();
