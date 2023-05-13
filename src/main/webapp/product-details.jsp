@@ -5,7 +5,6 @@
 
 <head>
   <% Product product = (Product) session.getAttribute("product"); %>
-  <% String productName = product.getName(); %>
     <title>Modify Product - <%=product.getName()%></title>
 </head>
 
@@ -35,7 +34,10 @@
   </tr>
 </table>
 
-<form method="post" action="update-product.jsp">
+<form method="post" action="UpdateProductServlet">
+<input type="hidden" name="originalName" value="<%= product.getName() %>">
+<input type="hidden" name="originalType" value="<%= product.getType()%>">
+<input type="hidden" name="originalDesc" value="<%= product.getDescription() %>">
 <label>Update Name: </label>
 <input type="text" name="name"><br><br>
 <label>Update Type: </label>
