@@ -1,42 +1,58 @@
-package grp4.iotbay;
+package grp4.iotbay.Servlets;
 
+import grp4.iotbay.Product;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
+import jakarta.servlet.http.HttpSession;
 
-@WebServlet("/StockServlet")
-public class StockServlet extends HttpServlet {
+import java.io.IOException;
+import java.sql.*;
+
+@WebServlet("/FindProductServlet")
+public class FindProductServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-
-        String product = request.getParameter("product");
-        int stock = Integer.parseInt(request.getParameter("stock"));
-        double price = Double.parseDouble(request.getParameter("price"));
+        String productName = request.getParameter("productName");
 
         Connection con = null;
         PreparedStatement ps = null;
+
+        if(productName == null) {
+            return;
+        }
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://auth-db624.hstgr.io/u236601339_iotBay?autoReconnect=true&useSSL=false", "u236601339_iotbayAdmin", "iotBaypassword1");
 
-            String sql = "INSERT INTO u236601339_iotBay.product (productName, productQuantity, productPrice) VALUES (?, ?, ?)";
+            String sql = "SELECT * FROM product WHERE productName=?";
 
             ps = con.prepareStatement(sql);
-            ps.setString(1, product);
-            ps.setInt(2, stock);
-            ps.setDouble(3, price);
-            ps.executeUpdate();
 
-           response.sendRedirect("add-product.jsp");
+            ps.setString(1, productName);
+
+            ResultSet rs = ps.executeQuery();
+
+            if(rs.next()) {
+                Product product = new Product();
+                product.setName(productName);
+                product.setType(rs.getString("productType"));
+                product.setDescription(rs.getString("productDescription"));
+                HttpSession session = request.getSession();
+                session.setAttribute("product", product);
+                RequestDispatcher rd = request.getRequestDispatcher("product-details.jsp");
+                rd.forward(request, response);
+            }
+
+            else {
+                response.sendRedirect("update-product.jsp");
+            }
+
+
 
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
@@ -52,5 +68,6 @@ public class StockServlet extends HttpServlet {
                 System.out.println("Error closing resources: " + e.getMessage());
             }
         }
+
     }
 }

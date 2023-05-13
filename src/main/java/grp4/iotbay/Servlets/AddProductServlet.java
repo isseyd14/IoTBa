@@ -1,6 +1,5 @@
-package grp4.iotbay;
+package grp4.iotbay.Servlets;
 
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -11,31 +10,32 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 
-@WebServlet ("/RemoveServlet")
-public class RemoveServlet extends HttpServlet {
-
+@WebServlet("/AddProductServlet")
+public class AddProductServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String product = request.getParameter("productName");
+
+
+        String product = request.getParameter("product");
+        int stock = Integer.parseInt(request.getParameter("stock"));
+        double price = Double.parseDouble(request.getParameter("price"));
 
         Connection con = null;
         PreparedStatement ps = null;
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection(
-                "jdbc:mysql://auth-db624.hstgr.io/u236601339_iotBay?autoReconnect=true&useSSL=false",
-                "u236601339_iotbayAdmin", "iotBaypassword1"
-            );
+            con = DriverManager.getConnection("jdbc:mysql://auth-db624.hstgr.io/u236601339_iotBay?autoReconnect=true&useSSL=false", "u236601339_iotbayAdmin", "iotBaypassword1");
 
-            String sql = "DELETE FROM product WHERE productName=?";
+            String sql = "INSERT INTO u236601339_iotBay.product (productName, productType, productDescription, productQuantity, productPrice) VALUES (?, ?, ?)";
 
             ps = con.prepareStatement(sql);
             ps.setString(1, product);
+            ps.setInt(2, stock);
+            ps.setDouble(3, price);
             ps.executeUpdate();
 
-            response.sendRedirect("remove-product.jsp");
-
+           response.sendRedirect("add-product.jsp");
 
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());

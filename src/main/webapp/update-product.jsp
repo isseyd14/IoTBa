@@ -1,12 +1,15 @@
+<%@ page import="java.sql.*" %><%--
+  Created by IntelliJ IDEA.
+  User: byronlester
+  Date: 12/5/2023
+  Time: 11:53 am
+  To change this template use File | Settings | File Templates.
+--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
-<%@ page import="java.sql.*" %>
-
 <html>
 <head>
-    <title>Add product</title>
+    <title>Staff - Update</title>
 </head>
-<body>
 
 <style>
   .stock-table {
@@ -19,39 +22,7 @@
   }
 </style>
 
-<h2><a href="staff-home.jsp">Back</a></h2>
-
-
-<form method="post" action="AddProductServlet" name="addProduct">
-  <label>Name:</label>
-  <input type="text" name="product"><br><br>
-
-  <Label>Type</Label>
-  <input type="text" name="type"><br><br>
-
-  <Label>Description</Label>
-  <input type="text" name="description"><br><br>
-
-  <label>Stock amount:</label>
-  <input type="text" name="stock"><br><br>
-
-  <label>Unit Price:</label>
-  <input type="text" name="price"><br><br>
-
-  <input type="submit" value="Add product">
-
-  <%
-    String errorMessage = (String) request.getAttribute("errorMessage");
-    if (errorMessage != null) {
-  %>
-  <p style="color: red;"><%=errorMessage %></p>
-  <%
-    }
-  %>
-</form>
-
-<h1>Product List</h1>
-
+<body>
 <%
   Connection con;
 
@@ -81,6 +52,12 @@
   <% } %>
 </table>
 
+<form method="post" action="FindProductServlet">
+  <label>Type in product you wish to edit:</label>
+  <input type="text" name="productName"><br><br>
+  <input type="submit" value="Select"/>
+
+</form>
 
 <%
 
@@ -88,6 +65,9 @@
     e.printStackTrace();
   }
 %>
+
+
+<h2><a href="staff-home.jsp">Back</a></h2>
 
 </body>
 </html>
