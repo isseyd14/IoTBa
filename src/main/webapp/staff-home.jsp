@@ -13,6 +13,7 @@
 <%
     Product product = (Product) session.getAttribute("product");
     String Name = (String) session.getAttribute("name");
+    String errorMessage = (String) request.getAttribute("errorMessage");
 %>
 <body>
 <h1>Welcome to IoT Stock Management staff member: <%=Name%> </h1>
@@ -28,6 +29,8 @@
     <input type="text" name="productName">
     <input type="submit" value="Filter">
 </form>
+<% if(errorMessage != null) { %>
+<p style="color: red"><%=errorMessage%></p> <% } %>
 <%  Connection con = null;
     ResultSet rs = null; %>
 
@@ -70,7 +73,10 @@
         <td><%= rs.getInt("productQuantity") %></td>
         <td><%= rs.getDouble("productPrice") %></td>
     </tr>
-    <% } %>
+    <% }
+    if(con != null) {
+        con.close();
+    }%>
 </table> <% } else { %>
 
 <table class="stock-table">

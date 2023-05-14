@@ -28,16 +28,15 @@ public class FilterServlet extends HttpServlet {
 
             String sql = "SELECT * from u236601339_iotBay.product where productName=?";
 
-            if(sql == null || sql.isEmpty()) {
-                request.setAttribute("errorMessage", "No such product.");
-            }
-
             ps = con.prepareStatement(sql);
             ps.setString(1, productName);
             ResultSet rs = ps.executeQuery();
 
             if(!rs.next()) {
+                con.close();
+                ps.close();
                 HttpSession session = request.getSession();
+                request.setAttribute("errorMessage", "Cannot find product.");
                 session.setAttribute("product", null);
                 RequestDispatcher rd = request.getRequestDispatcher("staff-home.jsp");
                 rd.forward(request, response);
@@ -46,8 +45,11 @@ public class FilterServlet extends HttpServlet {
                 Product product = new Product();
                 product.setName(rs.getString("productName"));
                 product.setType(rs.getString("productType"));
+                product.setDescription(rs.getString("productDescription"));
                 product.setPrice(rs.getDouble("productPrice"));
                 product.setQuantity(rs.getInt("productQuantity"));
+                con.close();
+                ps.close();
                 HttpSession session = request.getSession();
                 session.setAttribute("product", product);
                 RequestDispatcher rd = request.getRequestDispatcher("staff-home.jsp");

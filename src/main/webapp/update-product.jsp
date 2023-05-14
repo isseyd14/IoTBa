@@ -1,4 +1,5 @@
-<%@ page import="java.sql.*" %><%--
+<%@ page import="java.sql.*" %>
+<%@ page import="grp4.iotbay.Product" %><%--
   Created by IntelliJ IDEA.
   User: byronlester
   Date: 12/5/2023
@@ -24,6 +25,7 @@
 
 <body>
 <%
+  Product product = (Product) session.getAttribute("product");
   Connection con;
 
   try {
@@ -32,13 +34,14 @@
     ResultSet rs = stmt.executeQuery("SELECT * FROM product");
 %>
 
-<h2>Search for Product:</h2>
-<form method="get" action="SearchProductServlet">
-  <input type="text" name="search" placeholder="Enter product name">
+<h2>Select product to edit:</h2>
+<form method="get" action="/FilterServlet">
+  <label>Filter product table</label>
+  <input type="text" name="productName" placeholder="Enter product name">
   <input type="submit" value="Search">
 </form>
 
-
+<% if(product == null) { %>
 <table class="stock-table">
   <tr>
     <th>Name</th>
@@ -56,10 +59,27 @@
     <td><%= rs.getDouble("productPrice") %></td>
   </tr>
   <% } %>
+</table>  <% } else { %>
+<table class="stock-table">
+  <tr>
+    <th>Name</th>
+    <th>Type</th>
+    <th>Description</th>
+    <th>Stock Quantity</th>
+    <th>Unit Price</th>
+  </tr>
+  <tr>
+    <td><%=product.getName() %></td>
+    <td><%=product.getType()%></td>
+    <td><%=product.getDescription()%></td>
+    <td><%=product.getQuantity()%></td>
+    <td><%=product.getPrice()%></td>
+  </tr>
+  <% } %>
 </table>
 
 <form method="post" action="FindProductServlet">
-  <label>Type in product you wish to edit:</label>
+  <strong><label>Type in product you wish to edit:</label></strong>
   <input type="text" name="productName"><br><br>
   <input type="submit" value="Select"/>
 
