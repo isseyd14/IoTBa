@@ -32,6 +32,12 @@
     ResultSet rs = stmt.executeQuery("SELECT * FROM product");
 %>
 
+<h2>Search for Product:</h2>
+<form method="get" action="SearchProductServlet">
+  <input type="text" name="search" placeholder="Enter product name">
+  <input type="submit" value="Search">
+</form>
+
 
 <table class="stock-table">
   <tr>

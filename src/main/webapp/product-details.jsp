@@ -53,12 +53,12 @@
 <% String successMessage = (String) request.getAttribute("successMessage"); %>
 
 <% if(errorMessage != null) { %>
-<p style="color: red"><%=errorMessage%></p>
+<h3 style="color: red"><%=errorMessage%></h3>
 
 <% } %>
 
 <% if(successMessage != null) { %>
-<p style="color: green"><%=successMessage%></p>
+<h3 style="color: green"><%=successMessage%></h3>
 
 <% } %>
 
