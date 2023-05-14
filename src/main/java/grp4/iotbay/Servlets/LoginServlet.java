@@ -31,8 +31,8 @@ public class LoginServlet extends HttpServlet {
         
         if (email == null || email.isEmpty() || password == null || password.isEmpty()) {
             request.setAttribute("errorMessage", "Please enter a valid email or password.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
-            dispatcher.forward(request, response);
+            RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
+            rd.forward(request, response);
             return;
         }
 
@@ -93,10 +93,8 @@ public class LoginServlet extends HttpServlet {
 
             else{
                 request.setAttribute("errorMessage", "Username or password incorrect. Try again.");
-                RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
                 RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
-                dispatcher.forward(request, response);
-                return;
+                rd.forward(request, response);
             }
             
             

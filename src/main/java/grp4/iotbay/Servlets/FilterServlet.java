@@ -19,6 +19,13 @@ public class FilterServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String productName = request.getParameter("productName");
 
+        if(productName.isEmpty()) {
+            HttpSession session = request.getSession();
+            session.setAttribute("product", null);
+            RequestDispatcher rd = request.getRequestDispatcher("staff-home.jsp");
+            rd.forward(request, response);
+        }
+
         Connection con = null;
         PreparedStatement ps = null;
 
@@ -33,8 +40,7 @@ public class FilterServlet extends HttpServlet {
             ResultSet rs = ps.executeQuery();
 
             if(!rs.next()) {
-                con.close();
-                ps.close();
+                closeConnections(con, ps, rs);
                 HttpSession session = request.getSession();
                 request.setAttribute("errorMessage", "Cannot find product.");
                 session.setAttribute("product", null);
@@ -48,8 +54,7 @@ public class FilterServlet extends HttpServlet {
                 product.setDescription(rs.getString("productDescription"));
                 product.setPrice(rs.getDouble("productPrice"));
                 product.setQuantity(rs.getInt("productQuantity"));
-                con.close();
-                ps.close();
+                closeConnections(con, ps, rs);
                 HttpSession session = request.getSession();
                 session.setAttribute("product", product);
                 RequestDispatcher rd = request.getRequestDispatcher("staff-home.jsp");
@@ -58,6 +63,18 @@ public class FilterServlet extends HttpServlet {
         }
         catch(SQLException | ClassNotFoundException e) {
 
+        }
+    }
+
+    private void closeConnections(Connection con, PreparedStatement ps, ResultSet rs) throws SQLException {
+        if(con != null) {
+            con.close();
+        }
+        if(ps != null) {
+            ps.close();
+        }
+        if(rs != null) {
+            rs.close();
         }
     }
 }

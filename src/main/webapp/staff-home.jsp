@@ -22,7 +22,7 @@
 <h2><a href="remove-product.jsp">Remove Product</a></h2>
 <h2><a href="LogoutServlet">Logout</a></h2>
 
-<h2>Currently Available products</h2>
+<h2>Stocked products</h2>
 
 <form action="/FilterServlet" method="get">
     <label>Search by product name: </label>
