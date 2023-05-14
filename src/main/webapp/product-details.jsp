@@ -62,8 +62,15 @@
 
 <% } %>
 
-<h2><a href="update-product.jsp">Back</a> </h2>
-<h2><a href="staff-home.jsp">Return home</a></h2>
+<form action="update-product.jsp">
+  <input type="submit" value="back">
+</form>
+<form action="ReturnHomeServlet" method="get">
+  <input type="submit" value="Return Home">
+</form>
+
+<!-- <h2><a href="update-product.jsp">Back</a> </h2> -->
+<!-- <h2><a href="ReturnHomeServlet" >Return home</a></h2> -->
 
 </body>
 </html>

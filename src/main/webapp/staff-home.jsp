@@ -14,6 +14,9 @@
     Product product = (Product) session.getAttribute("product");
     String Name = (String) session.getAttribute("name");
     String errorMessage = (String) request.getAttribute("errorMessage");
+    session.setAttribute("referringFile", "staff-home.jsp");
+
+
 %>
 <body>
 <h1>Welcome to IoT Stock Management staff member: <%=Name%> </h1>
@@ -28,6 +31,9 @@
     <label>Search by product name: </label>
     <input type="text" name="productName">
     <input type="submit" value="Filter">
+</form>
+<form action="/ResetFilterServlet" method="get">
+    <input type="submit" value="Reset">
 </form>
 <% if(errorMessage != null) { %>
 <p style="color: red"><%=errorMessage%></p> <% } %>

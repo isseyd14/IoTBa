@@ -12,6 +12,8 @@
     <title>Staff - Update</title>
 </head>
 
+<% session.setAttribute("referringFile", "update-product.jsp"); %>
+
 <style>
   .stock-table {
     border-collapse: collapse;
@@ -39,6 +41,9 @@
   <label>Filter product table</label>
   <input type="text" name="productName" placeholder="Enter product name">
   <input type="submit" value="Search">
+</form>
+<form method="get" action="/ResetFilterServlet">
+  <input type="submit" value="Reset">
 </form>
 
 <% if(product == null) { %>

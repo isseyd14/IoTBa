@@ -16,9 +16,11 @@ public class AddProductServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 
-        String product = request.getParameter("product");
-        int stock = Integer.parseInt(request.getParameter("stock"));
-        double price = Double.parseDouble(request.getParameter("price"));
+        String productName = request.getParameter("productName");
+        String productType = request.getParameter("productType");
+        String productDescription = request.getParameter("productDescription");
+        int productStock = Integer.parseInt(request.getParameter("productStock"));
+        double productPrice = Double.parseDouble(request.getParameter("productPrice"));
 
         Connection con = null;
         PreparedStatement ps = null;
@@ -27,12 +29,14 @@ public class AddProductServlet extends HttpServlet {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://auth-db624.hstgr.io/u236601339_iotBay?autoReconnect=true&useSSL=false", "u236601339_iotbayAdmin", "iotBaypassword1");
 
-            String sql = "INSERT INTO u236601339_iotBay.product (productName, productType, productDescription, productQuantity, productPrice) VALUES (?, ?, ?)";
+            String sql = "INSERT INTO u236601339_iotBay.product (productName, productType, productDescription, productQuantity, productPrice) VALUES (?, ?, ?, ?, ?)";
 
             ps = con.prepareStatement(sql);
-            ps.setString(1, product);
-            ps.setInt(2, stock);
-            ps.setDouble(3, price);
+            ps.setString(1, productName);
+            ps.setString(2, productType);
+            ps.setString(3, productDescription);
+            ps.setInt(4, productStock);
+            ps.setDouble(5, productPrice);
             ps.executeUpdate();
 
            response.sendRedirect("add-product.jsp");

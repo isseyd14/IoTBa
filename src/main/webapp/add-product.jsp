@@ -24,19 +24,19 @@
 
 <form method="post" action="AddProductServlet" name="addProduct">
   <label>Name:</label>
-  <input type="text" name="product"><br><br>
+  <input type="text" name="productName"><br><br>
 
   <Label>Type</Label>
-  <input type="text" name="type"><br><br>
+  <input type="text" name="productType"><br><br>
 
   <Label>Description</Label>
-  <input type="text" name="description"><br><br>
+  <input type="text" name="productDescription"><br><br>
 
   <label>Stock amount:</label>
-  <input type="text" name="stock"><br><br>
+  <input type="text" name="productStock"><br><br>
 
   <label>Unit Price:</label>
-  <input type="text" name="price"><br><br>
+  <input type="text" name="productPrice"><br><br>
 
   <input type="submit" value="Add product">
 

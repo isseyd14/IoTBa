@@ -17,12 +17,13 @@ import java.sql.*;
 public class FilterServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
         String productName = request.getParameter("productName");
+        String referringFile = (String) session.getAttribute("referringFile");
 
-        if(productName.isEmpty()) {
-            HttpSession session = request.getSession();
+       if(productName.isEmpty()) {
             session.setAttribute("product", null);
-            RequestDispatcher rd = request.getRequestDispatcher("staff-home.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher(referringFile);
             rd.forward(request, response);
         }
 
@@ -41,10 +42,9 @@ public class FilterServlet extends HttpServlet {
 
             if(!rs.next()) {
                 closeConnections(con, ps, rs);
-                HttpSession session = request.getSession();
                 request.setAttribute("errorMessage", "Cannot find product.");
                 session.setAttribute("product", null);
-                RequestDispatcher rd = request.getRequestDispatcher("staff-home.jsp");
+                RequestDispatcher rd = request.getRequestDispatcher(referringFile);
                 rd.forward(request, response);
             }
             else{
@@ -55,9 +55,8 @@ public class FilterServlet extends HttpServlet {
                 product.setPrice(rs.getDouble("productPrice"));
                 product.setQuantity(rs.getInt("productQuantity"));
                 closeConnections(con, ps, rs);
-                HttpSession session = request.getSession();
                 session.setAttribute("product", product);
-                RequestDispatcher rd = request.getRequestDispatcher("staff-home.jsp");
+                RequestDispatcher rd = request.getRequestDispatcher(referringFile);
                 rd.forward(request, response);
             }
         }
