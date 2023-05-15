@@ -29,7 +29,6 @@
 
 <body>
 <%
-  // Product product = (Product) session.getAttribute("product");
   Connection con;
 
   try {
@@ -68,7 +67,7 @@
     <td><%= rs.getDouble("productPrice") %></td>
   </tr>
   <% } %>
-</table>  <% } else { %>
+</table>  <% con.close(); rs.close(); } else { %>
 <table class="stock-table">
   <tr>
     <th>Name</th>
