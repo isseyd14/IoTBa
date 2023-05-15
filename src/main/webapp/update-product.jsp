@@ -33,7 +33,7 @@
   try {
     con = DriverManager.getConnection("jdbc:mysql://auth-db624.hstgr.io/u236601339_iotBay?autoReconnect=true&useSSL=false", "u236601339_iotbayAdmin", "iotBaypassword1");
     Statement stmt = con.createStatement();
-    ResultSet rs = stmt.executeQuery("SELECT * FROM product");
+    ResultSet rs = stmt.executeQuery("SELECT * FROM product order by productName ASC");
 %>
 
 <h2>Select product to edit:</h2>
