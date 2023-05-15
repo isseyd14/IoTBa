@@ -204,21 +204,30 @@
             ResultSet rs = stmt.executeQuery("SELECT * FROM product");
     %>
 
+    
 
     <table class="stock-table">
         <tr>
+            <th>Product ID</th>
             <th>Product Name</th>
             <th>Stock Amount</th>
             <th>Unit Price</th>
         </tr>
         <% while (rs.next()) { %>
         <tr>
+            <td><%= rs.getInt("productId") %></td>
             <td><%= rs.getString("productName") %></td>
             <td><%= rs.getInt("productQuantity") %></td>
-            <td><%= rs.getDouble("productPrice") %></td>
+            <td><%= rs.getDouble("productPrice") %></td>  
+            <td><button onclick={addToCart(<%= rs.getInt("productId") %>);}>Add to cart</button></td>
         </tr>
         <% } %>
     </table>
+    <script>
+        function addToCart(id, email) {
+           console.log(id, email);
+}      
+    </script>
 
 
     <%
