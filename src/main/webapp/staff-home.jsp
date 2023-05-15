@@ -19,6 +19,7 @@
 
 %>
 <body>
+<img  class="nav-logo" src="IotBayLogo.png" width="60px" height="60" alt="Product Image">
 <h1>Welcome to IoT Stock Management staff member: <%=Name%> </h1>
 <h2><a href="add-product.jsp">Add Product</a></h2>
 <h2><a href="update-product.jsp">Update Product Stock/Description</a></h2>
