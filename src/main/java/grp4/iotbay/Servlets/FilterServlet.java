@@ -12,6 +12,9 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 @WebServlet("/FilterServlet")
 public class FilterServlet extends HttpServlet {
@@ -19,52 +22,149 @@ public class FilterServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         String productName = request.getParameter("productName");
+        String productType = request.getParameter("productType");
         String referringFile = (String) session.getAttribute("referringFile");
 
-       if(productName.isEmpty()) {
-            session.setAttribute("product", null);
+        List<Product> products = new LinkedList<>();
+
+        if (productName.isEmpty() && productType.isEmpty()) {
+            session.setAttribute("products", null);
             RequestDispatcher rd = request.getRequestDispatcher(referringFile);
             rd.forward(request, response);
         }
 
-        Connection con = null;
-        PreparedStatement ps = null;
+        Connection con;
+        PreparedStatement ps;
 
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://auth-db624.hstgr.io/u236601339_iotBay?autoReconnect=true&useSSL=false", "u236601339_iotbayAdmin", "iotBaypassword1");
+        if (productType.isEmpty()) {
 
-            String sql = "SELECT * from u236601339_iotBay.product where productName=?";
+            try {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                con = DriverManager.getConnection(
+                    "jdbc:mysql://auth-db624.hstgr.io/u236601339_iotBay?autoReconnect=true&useSSL=false",
+                    "u236601339_iotbayAdmin", "iotBaypassword1"
+                );
 
-            ps = con.prepareStatement(sql);
-            ps.setString(1, productName);
-            ResultSet rs = ps.executeQuery();
+                String sql = "SELECT * from u236601339_iotBay.product where productName=?";
 
-            if(!rs.next()) {
-                closeConnections(con, ps, rs);
-                request.setAttribute("errorMessage", "Cannot find product.");
-                session.setAttribute("product", null);
-                RequestDispatcher rd = request.getRequestDispatcher(referringFile);
-                rd.forward(request, response);
-            }
-            else{
-                Product product = new Product();
-                product.setName(rs.getString("productName"));
-                product.setType(rs.getString("productType"));
-                product.setDescription(rs.getString("productDescription"));
-                product.setPrice(rs.getDouble("productPrice"));
-                product.setQuantity(rs.getInt("productQuantity"));
-                closeConnections(con, ps, rs);
-                session.setAttribute("product", product);
-                RequestDispatcher rd = request.getRequestDispatcher(referringFile);
-                rd.forward(request, response);
+                ps = con.prepareStatement(sql);
+                ps.setString(1, productName);
+                ResultSet rs = ps.executeQuery();
+
+                if (!rs.next()) {
+                    closeConnections(con, ps, rs);
+                    request.setAttribute("errorMessage", "Cannot find product.");
+                    session.setAttribute("products", null);
+                    RequestDispatcher rd = request.getRequestDispatcher(referringFile);
+                    rd.forward(request, response);
+                }
+
+                else {
+                    Product product = new Product();
+                    product.setName(rs.getString("productName"));
+                    product.setType(rs.getString("productType"));
+                    product.setDescription(rs.getString("productDescription"));
+                    product.setPrice(rs.getDouble("productPrice"));
+                    product.setQuantity(rs.getInt("productQuantity"));
+                    products.add(product);
+                    closeConnections(con, ps, rs);
+                    session.setAttribute("products", products);
+                    RequestDispatcher rd = request.getRequestDispatcher(referringFile);
+                    rd.forward(request, response);
+                }
+            } catch (SQLException | ClassNotFoundException e) {
+
             }
         }
-        catch(SQLException | ClassNotFoundException e) {
 
+        if(productName.isEmpty()) {
+            try {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                con = DriverManager.getConnection(
+                    "jdbc:mysql://auth-db624.hstgr.io/u236601339_iotBay?autoReconnect=true&useSSL=false",
+                    "u236601339_iotbayAdmin", "iotBaypassword1"
+                );
+
+                String sql = "SELECT * from u236601339_iotBay.product where productType=?";
+
+                ps = con.prepareStatement(sql);
+                ps.setString(1, productType);
+                ResultSet rs = ps.executeQuery();
+
+                while(rs.next()) {
+                    Product product = new Product();
+                    product.setName(rs.getString("productName"));
+                    product.setType(rs.getString("productType"));
+                    product.setDescription(rs.getString("productDescription"));
+                    product.setQuantity(rs.getInt("productQuantity"));
+                    product.setPrice(rs.getDouble("productPrice"));
+                    products.add(product);
+                }
+
+                if(!products.isEmpty()) {
+                    closeConnections(con, ps, rs);
+                    session.setAttribute("products", products);
+                    RequestDispatcher rd = request.getRequestDispatcher(referringFile);
+                    rd.forward(request, response);
+                }
+
+                else {
+                    closeConnections(con, ps, rs);
+                    request.setAttribute("errorMessage", "Cannot find product.");
+                    session.setAttribute("products", null);
+                    RequestDispatcher rd = request.getRequestDispatcher(referringFile);
+                    rd.forward(request, response);
+                }
+
+            }
+            catch (SQLException | ClassNotFoundException e) {
+
+            }
         }
+
+        else {
+            try {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                con = DriverManager.getConnection(
+                    "jdbc:mysql://auth-db624.hstgr.io/u236601339_iotBay?autoReconnect=true&useSSL=false",
+                    "u236601339_iotbayAdmin", "iotBaypassword1"
+                );
+
+                String sql = "SELECT * from u236601339_iotBay.product where productName = ? AND productType=?";
+
+                ps = con.prepareStatement(sql);
+                ps.setString(1, productName);
+                ps.setString(2, productType);
+
+                ResultSet rs = ps.executeQuery();
+
+                if (!rs.next()) {
+                    closeConnections(con, ps, rs);
+                    request.setAttribute("errorMessage", "Cannot find product.");
+                    session.setAttribute("products", null);
+                    RequestDispatcher rd = request.getRequestDispatcher(referringFile);
+                    rd.forward(request, response);
+                }
+
+                else {
+                    Product product = new Product();
+                    product.setName(rs.getString("productName"));
+                    product.setType(rs.getString("productType"));
+                    product.setDescription(rs.getString("productDescription"));
+                    product.setPrice(rs.getDouble("productPrice"));
+                    product.setQuantity(rs.getInt("productQuantity"));
+                    products.add(product);
+                    closeConnections(con, ps, rs);
+                    session.setAttribute("products", products);
+                    RequestDispatcher rd = request.getRequestDispatcher(referringFile);
+                    rd.forward(request, response);
+                }
+            } catch (SQLException | ClassNotFoundException e) {
+
+            }
+        }
+
     }
-
     private void closeConnections(Connection con, PreparedStatement ps, ResultSet rs) throws SQLException {
         if(con != null) {
             con.close();

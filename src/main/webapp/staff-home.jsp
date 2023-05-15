@@ -1,5 +1,8 @@
 <%@ page import="grp4.iotbay.Product" %>
 <%@ page import="java.sql.*" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.LinkedList" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 
@@ -11,7 +14,8 @@
 </head>
 
 <%
-    Product product = (Product) session.getAttribute("product");
+    // Product product = (Product) session.getAttribute("product");
+    List<Product> products = (LinkedList<Product>) session.getAttribute("products");
     String Name = (String) session.getAttribute("name");
     String errorMessage = (String) request.getAttribute("errorMessage");
     session.setAttribute("referringFile", "staff-home.jsp");
@@ -31,6 +35,8 @@
 <form action="/FilterServlet" method="get">
     <label>Search by product name: </label>
     <input type="text" name="productName">
+    <label>Search by product type: </label>
+    <input type="text" name="productType">
     <input type="submit" value="Filter">
 </form>
 <form action="/ResetFilterServlet" method="get">
@@ -41,7 +47,7 @@
 <%  Connection con = null;
     ResultSet rs = null; %>
 
-<% if(product == null) {
+<% if(products == null) {
     try {
         con = DriverManager.getConnection(
                 "jdbc:mysql://auth-db624.hstgr.io/u236601339_iotBay?autoReconnect=true&useSSL=false",
@@ -62,7 +68,7 @@
 
     %>
 
-<% if(product == null) { %>
+<% if(products == null) { %>
 
 <table class="stock-table">
     <tr>
@@ -95,13 +101,16 @@
     <th>Unit Price</th>
 </tr>
 <tr>
+    <%for(Product product : products) { %>
     <td><%=product.getName() %></td>
     <td><%=product.getType()%></td>
     <td><%=product.getDescription()%></td>
     <td><%=product.getQuantity()%></td>
     <td><%=product.getPrice()%></td>
 </tr>
-<% } %>
+<% }
+
+} %>
 </table>
 
 </body>

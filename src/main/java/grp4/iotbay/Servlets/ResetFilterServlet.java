@@ -20,7 +20,7 @@ public class ResetFilterServlet extends HttpServlet {
 
         HttpSession session = request.getSession();
         referringFile = (String) session.getAttribute("referringFile");
-        session.setAttribute("product", null);
+        session.setAttribute("products", null);
         RequestDispatcher rd = request.getRequestDispatcher(referringFile);
         rd.forward(request, response);
     }
