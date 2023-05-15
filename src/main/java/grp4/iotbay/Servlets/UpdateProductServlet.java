@@ -19,11 +19,16 @@ public class UpdateProductServlet extends HttpServlet {
         String productName = request.getParameter("name");
         String productType = request.getParameter("type");
         String productDesc = request.getParameter("description");
+        int productQuantity = Integer.parseInt(request.getParameter("quantity"));
+        double productPrice = Double.parseDouble(request.getParameter("price"));
+
         String originalName = request.getParameter("originalName");
         String originalType = request.getParameter("originalType");
         String originalDesc = request.getParameter("originalDesc");
+        int originalQuantity = Integer.parseInt(request.getParameter("originalQuantity"));
+        Double originalPrice = Double.valueOf(request.getParameter("originalPrice"));
 
-        if(productName.isEmpty() && productType.isEmpty() && productDesc.isEmpty()) {
+        if(productName.isEmpty() && productType.isEmpty() && productDesc.isEmpty() && productQuantity == 0 && productPrice == 0.0) {
             request.setAttribute("errorMessage", "Error: enter at least one value.");
             RequestDispatcher rd = request.getRequestDispatcher("product-details.jsp");
             rd.forward(request, response);
@@ -46,7 +51,7 @@ public class UpdateProductServlet extends HttpServlet {
             connection = DriverManager.getConnection("jdbc:mysql://auth-db624.hstgr.io/u236601339_iotBay?autoReconnect=true&useSSL=false","u236601339_iotbayAdmin","iotBaypassword1");
 
 
-            String query = "UPDATE product SET productName=?, productType = ?, productDescription = ?  WHERE productName = ?";
+            String query = "UPDATE product SET productName=?, productType = ?, productDescription = ?, productQuantity = ?, productPrice =?  WHERE productName = ?";
 
             statement = connection.prepareStatement(query);
 
@@ -74,7 +79,22 @@ public class UpdateProductServlet extends HttpServlet {
                 statement.setString(3, originalDesc);
             }
 
-            statement.setString(4, originalName);
+            if(productQuantity != 0) {
+                statement.setInt(4, productQuantity);
+                product.setQuantity(productQuantity);
+            }
+            else {
+                statement.setInt(4, originalQuantity);
+            }
+            if(productPrice != 0.0) {
+                statement.setDouble(5, productPrice);
+                product.setPrice(productPrice);
+            }
+            else {
+                statement.setDouble(5, originalPrice);
+            }
+
+            statement.setString(6, originalName);
 
             statement.executeUpdate();
 

@@ -49,6 +49,8 @@ public class FindProductServlet extends HttpServlet {
                 product.setName(rs.getString("productName"));
                 product.setType(rs.getString("productType"));
                 product.setDescription(rs.getString("productDescription"));
+                product.setQuantity(rs.getInt("productQuantity"));
+                product.setPrice(rs.getDouble("productPrice"));
                 HttpSession session = request.getSession();
                 session.setAttribute("product", product);
                 RequestDispatcher rd = request.getRequestDispatcher("product-details.jsp");

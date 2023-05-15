@@ -28,11 +28,15 @@
     <th>Name</th>
     <th>Type</th>
     <th>Description</th>
+    <th>Stock Quantity</th>
+    <th>Unit Price</th>
   </tr>
   <tr>
     <td><%=product.getName()%></td>
     <td><%=product.getType()%></td>
     <td><%=product.getDescription()%></td>
+    <td><%=product.getQuantity()%></td>
+    <td><%=product.getPrice()%></td>
   </tr>
 </table>
 
@@ -40,12 +44,18 @@
 <input type="hidden" name="originalName" value="<%= product.getName() %>">
 <input type="hidden" name="originalType" value="<%= product.getType()%>">
 <input type="hidden" name="originalDesc" value="<%= product.getDescription() %>">
+<input type="hidden" name="originalQuantity" value="<%= product.getQuantity() %>">
+<input type="hidden" name="originalPrice" value="<%= product.getPrice()%>">
 <label>Update Name: </label>
 <input type="text" name="name"><br><br>
-<label>Update Type: </label>
+  <label>Update Type: </label>
 <input type="text" name="type">
 <label>Update Description: </label>
 <input type="text" name="description">
+  <label>Update Quantity: </label>
+  <input type="text" name="quantity">
+  <label>Update Price: </label>
+  <input type="text" name="price">
 <input type="submit" value="Update">
 </form>
 
