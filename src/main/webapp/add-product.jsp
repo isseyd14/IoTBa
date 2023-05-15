@@ -48,6 +48,10 @@
   <%
     }
   %>
+  <% String successMessage = (String) request.getAttribute("successMessage");
+  if(successMessage != null) { %>
+  <p style="color: green"><%=successMessage%></p>
+  <% } %>
 </form>
 
 <h1>Product List</h1>

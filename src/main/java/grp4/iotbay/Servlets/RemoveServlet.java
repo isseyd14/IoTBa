@@ -32,7 +32,13 @@ public class RemoveServlet extends HttpServlet {
 
             ps = con.prepareStatement(sql);
             ps.setString(1, product);
-            ps.executeUpdate();
+            int rowsAffected = ps.executeUpdate();
+
+            if(rowsAffected == 0) {
+                request.setAttribute("errorMessage", "Error: No such product");
+                RequestDispatcher rd = request.getRequestDispatcher("remove-product.jsp");
+                rd.forward(request, response);
+            }
 
             response.sendRedirect("remove-product.jsp");
 
