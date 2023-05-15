@@ -33,11 +33,13 @@ public class AddProductServlet extends HttpServlet {
                 request.setAttribute("errorMessage", "Error: value missing. Please use all fields.");
                 RequestDispatcher rd = request.getRequestDispatcher("add-product.jsp");
                 rd.forward(request, response);
+                return;
             }
             else {
                 request.setAttribute("errorMessage", "Error: Invalid quantity or price value.");
                 RequestDispatcher rd = request.getRequestDispatcher("add-product.jsp");
-                rd.forward(request, response); 
+                rd.forward(request, response);
+                return;
             }
         }
 
