@@ -1,5 +1,7 @@
 <%@ page import="java.sql.*" %>
-<%@ page import="grp4.iotbay.Product" %><%--
+<%@ page import="grp4.iotbay.Product" %>
+<%@ page import="java.util.LinkedList" %>
+<%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: byronlester
   Date: 12/5/2023
@@ -11,8 +13,8 @@
 <head>
     <title>Staff - Update</title>
 </head>
-
-<% session.setAttribute("referringFile", "update-product.jsp"); %>
+<% session.setAttribute("referringFile", "update-product.jsp");
+  List<Product> products = (LinkedList<Product>) session.getAttribute("products");%>
 
 <style>
   .stock-table {
@@ -27,7 +29,7 @@
 
 <body>
 <%
-  Product product = (Product) session.getAttribute("product");
+  // Product product = (Product) session.getAttribute("product");
   Connection con;
 
   try {
@@ -37,16 +39,18 @@
 %>
 
 <h2>Select product to edit:</h2>
-<form method="get" action="/FilterServlet">
-  <label>Filter product table</label>
-  <input type="text" name="productName" placeholder="Enter product name">
-  <input type="submit" value="Search">
+<form action="/FilterServlet" method="get">
+  <label>Search by product name: </label>
+  <input type="text" name="productName">
+  <label>Search by product type: </label>
+  <input type="text" name="productType">
+  <input type="submit" value="Filter">
 </form>
-<form method="get" action="/ResetFilterServlet">
+<form action="/ResetFilterServlet" method="get">
   <input type="submit" value="Reset">
 </form>
 
-<% if(product == null) { %>
+<% if(products == null) { %>
 <table class="stock-table">
   <tr>
     <th>Name</th>
@@ -74,13 +78,15 @@
     <th>Unit Price</th>
   </tr>
   <tr>
+    <%for(Product product : products) { %>
     <td><%=product.getName() %></td>
     <td><%=product.getType()%></td>
     <td><%=product.getDescription()%></td>
     <td><%=product.getQuantity()%></td>
     <td><%=product.getPrice()%></td>
   </tr>
-  <% } %>
+    <% }
+    }%>
 </table>
 
 <form method="post" action="FindProductServlet">
