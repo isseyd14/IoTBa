@@ -13,6 +13,18 @@
 
 </head>
 
+<style>
+    .stock-table {
+        border-collapse: collapse;
+    }
+
+    .stock-table td, .stock-table th {
+        border: 1px solid black;
+        padding: 0.5rem;
+    }
+</style>
+
+
 <%
     // Product product = (Product) session.getAttribute("product");
     List<Product> products = (LinkedList<Product>) session.getAttribute("products");
