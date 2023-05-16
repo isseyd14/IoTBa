@@ -164,6 +164,8 @@
 <h3>Email: <%out.print(email);%></h3>
 <a  type="submit" href="edit_info.jsp"  class="button ">Edit My Information</a>
 <a  type="submit" href="delete_acc.jsp"  class="button ">Delete My Account</a>
+<br>
+<a  type="submit" href="AccessLogServlet"  class="button ">View Past Account Activity</a>
 
 </body>
 <%}

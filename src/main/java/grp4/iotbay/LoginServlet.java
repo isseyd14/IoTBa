@@ -62,6 +62,16 @@ public class LoginServlet extends HttpServlet {
             session.setAttribute("email", email);
             session.setAttribute("name", nameDB);
 
+            long loginTime = System.currentTimeMillis();
+            session.setAttribute("login_timestamp", loginTime);
+
+            sql = "insert into u236601339_iotBay.access_logs (email, login_timestamp) values (?,?)";
+
+            ps = con.prepareStatement(sql);
+            ps.setString(1, email);
+            ps.setLong(2, loginTime);
+            ps.executeUpdate();
+
             response.sendRedirect("home.jsp");
             }else{
             System.out.println("in else");
