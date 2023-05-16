@@ -4,6 +4,8 @@
 <head>
     <title>Remove Product</title>
 </head>
+<%String errorMessage = (String) request.getAttribute("errorMessage"); %>
+
 <style>
   .stock-table {
     border-collapse: collapse;
@@ -46,7 +48,7 @@
     <td><%= rs.getDouble("productPrice") %>
     </td>
   </tr>
-  <% } %>
+  <% } con.close(); rs.close(); %>
 </table>
 
 <form action="RemoveServlet" method="post" name="removeProduct">
@@ -56,6 +58,11 @@
 
   <input type="submit" value="Remove product">
 </form>
+
+<% if(errorMessage != null) { %>
+<p style="color: red"><%=errorMessage%></p>
+
+<% } %>
 
 </body>
 </html>

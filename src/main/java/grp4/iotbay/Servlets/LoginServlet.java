@@ -1,4 +1,4 @@
-package grp4.iotbay;
+package grp4.iotbay.Servlets;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -10,10 +10,7 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
@@ -32,8 +29,18 @@ public class LoginServlet extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         
-        try{
-            Connection con;
+        if (email == null || email.isEmpty() || password == null || password.isEmpty()) {
+            request.setAttribute("errorMessage", "Please enter a valid email or password.");
+            RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
+            rd.forward(request, response);
+            return;
+        }
+
+        Connection con = null;
+
+        PreparedStatement ps = null;
+        
+        try {
             
             Class.forName("com.mysql.jdbc.Driver");
             
@@ -42,7 +49,7 @@ public class LoginServlet extends HttpServlet {
             
             String sql = "select * from u236601339_iotBay.users where email=? and password=?";
             
-            PreparedStatement ps = con.prepareStatement(sql);
+            ps = con.prepareStatement(sql);
             
             ps.setString(1, email);
             ps.setString(2, password);
@@ -55,23 +62,24 @@ public class LoginServlet extends HttpServlet {
             ResultSet rs = ps.executeQuery();
             
             while(rs.next()){
-            emailDB = rs.getString("email");
-            passwordDB = rs.getString("password");
-            typeDB = rs.getString("Type");
-            nameDB = rs.getString("name");
-            
-            System.out.println("emailDB: " + emailDB);
-            System.out.println("passwordDB: " + passwordDB);
-                    }
-            
-            if(email.equals(emailDB) && password.equals(passwordDB) && typeDB.equals("customer")){
-            System.out.println("in If");
-            
-            HttpSession session = request.getSession();
-            session.setAttribute("email", email);
-            
-            RequestDispatcher rd = request.getRequestDispatcher("home.jsp");
-            rd.forward(request, response);
+                emailDB = rs.getString("email");
+                passwordDB = rs.getString("password");
+                typeDB = rs.getString("Type");
+                nameDB = rs.getString("name");
+
+                System.out.println("emailDB: " + emailDB);
+                System.out.println("passwordDB: " + passwordDB);
+                        }
+
+                if(email.equals(emailDB) && password.equals(passwordDB) && typeDB.equals("customer")){
+                System.out.println("in If");
+
+                HttpSession session = request.getSession();
+                session.setAttribute("email", email);
+                session.setAttribute("name", nameDB);
+
+                RequestDispatcher rd = request.getRequestDispatcher("home.jsp");
+                rd.forward(request, response);
             }
 
             else if(email.equals(emailDB) && password.equals(passwordDB) && typeDB.equals("staff")) {
@@ -84,7 +92,7 @@ public class LoginServlet extends HttpServlet {
             }
 
             else{
-                System.out.println("in else");
+                request.setAttribute("errorMessage", "Username or password incorrect. Try again.");
                 RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
                 rd.forward(request, response);
             }
@@ -94,6 +102,21 @@ public class LoginServlet extends HttpServlet {
         }catch(Exception e){
         System.out.println(" Login Error - " + e.getMessage());
         }
+        finally {
+            // Close statement and connection
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+
     }
 }
 

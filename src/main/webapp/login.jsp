@@ -86,12 +86,8 @@
     </style>
     
 <body>
-    
-     <%
-            String loginError = (String) session.getAttribute("InvalidLogin");
-      %>
+
 <h1>Login</h1>
-<!--onsubmit="return validateForm()"-->
 <form method="post" action="LoginServlet" name="login" >
     <label>Email:</label>
     <input type="text" name="email"><br><br>
@@ -100,6 +96,15 @@
     <input type="password" name="password"><br><br>
 
     <input type="submit" value="Login">
+
+    <%
+    String errorMessage = (String) request.getAttribute("errorMessage");
+    if (errorMessage != null) {
+%>
+        <p style="color: red;"><%= errorMessage %></p>
+<%
+    }
+%>
 </form>
 
 </body>

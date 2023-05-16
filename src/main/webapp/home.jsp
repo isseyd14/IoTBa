@@ -1,4 +1,7 @@
 <%@ page import="java.sql.*" %>
+<%@ page import="grp4.iotbay.Model.Product" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.LinkedList" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -6,6 +9,15 @@
 <head>
     <title>IoTBay Search</title>
 </head>
+
+<%
+    // Product product = (Product) session.getAttribute("product");
+    List<Product> products = (LinkedList<Product>) session.getAttribute("products");
+    String name = (String) session.getAttribute("name");
+    String errorMessage = (String) request.getAttribute("errorMessage");
+    session.setAttribute("referringFile", "home.jsp");
+
+%>
 
 <!-- <style>
     body {
@@ -154,24 +166,7 @@
     }
 </style>
 
-<%
-    String Email = (String) session.getAttribute("email");
-    if(Email == null){
-
-%>
-
-<body>Error no Login</body>
-
-<%} else if(Email != null){
-
-%>
-
-
-
 <body>
-
-
-
 
     <nav class="standard-Nav">
         <img  class="nav-logo" src="IotBayLogo.png" width="60px" height="60" alt="Product Image">
@@ -181,53 +176,102 @@
                 <form name="searchQuery" action="searchQuery" method="POST" class="seachForm">
                     <input type="text" id="searchQuery" name="searchQuery" placeholder="Search IOTBay"
                         class="searchField">
-                    <input type="submit" value="Search" style="background-color: ;">
+                    <input type="submit" value="Search">
                 </form>
 
 
             </li>
-            <li class="nav-button">Welcome, <%out.print(Email);%> </li>
+            <li class="nav-button">Welcome, <%=name%> </li>
             <li class="nav-button"><a class="active" href="home.jsp">Search</a></li>
 
-            <li class="nav-button"><a href="logout">Logout</a></li>
+            <li class="nav-button"><a href="LogoutServlet">Logout</a></li>
         </ul>
     </nav>
 
-    <h1>Available products</h1>
+    <h1>Available products:</h1>
 
-    <%
-        Connection con;
+    <form action="/FilterServlet" method="get">
+        <label>Search by product name: </label>
+        <input type="text" name="productName">
+        <label>Search by product type: </label>
+        <input type="text" name="productType">
+        <input type="submit" value="Filter">
+    </form>
+    <form action="/ResetFilterServlet" method="get">
+        <input type="submit" value="Reset">
+    </form>
+    <% if(errorMessage != null) { %>
+    <p style="color: red"><%=errorMessage%></p> <% } %>
+    <%  Connection con = null;
+        ResultSet rs = null; %>
 
+    <% if(products == null) {
         try {
+            con = DriverManager.getConnection(
+                    "jdbc:mysql://auth-db624.hstgr.io/u236601339_iotBay?autoReconnect=true&useSSL=false",
+                    "u236601339_iotbayAdmin", "iotBaypassword1"
+            );
+
             con = DriverManager.getConnection("jdbc:mysql://auth-db624.hstgr.io/u236601339_iotBay?autoReconnect=true&useSSL=false", "u236601339_iotbayAdmin", "iotBaypassword1");
             Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM product");
+            rs = stmt.executeQuery("SELECT * FROM product order by productName ASC");
+
+
+
+        }
+        catch(SQLException e) {
+
+        }
+    }
+
     %>
 
+    <% if(products == null) { %>
 
     <table class="stock-table">
         <tr>
-            <th>Product Name</th>
-            <th>Stock Amount</th>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Stock Quantity</th>
             <th>Unit Price</th>
         </tr>
         <% while (rs.next()) { %>
         <tr>
             <td><%= rs.getString("productName") %></td>
+            <td><%= rs.getString("productType")%></td>
+            <td><%= rs.getString("productDescription")%></td>
             <td><%= rs.getInt("productQuantity") %></td>
             <td><%= rs.getDouble("productPrice") %></td>
         </tr>
-        <% } %>
+        <% }
+            if(con != null) {
+                con.close();
+            }%>
+    </table> <% } else { %>
+
+    <table class="stock-table">
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Stock Quantity</th>
+            <th>Unit Price</th>
+        </tr>
+        <%for(Product product : products) { %>
+        <td><%=product.getName() %></td>
+        <td><%=product.getType()%></td>
+        <td><%=product.getDescription()%></td>
+        <td><%=product.getQuantity()%></td>
+        <td><%=product.getPrice()%></td>
+        </tr>
+        <% }
+        }%>
     </table>
 
 
-    <%
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    %>
-
+   <!-- Jack old Table
 
     <div class="main display">
         <h1 style="text-align: center; padding-top:50px;">Search Results...</h1>
@@ -276,11 +320,9 @@
         </table>
 
 
-    </div>
+    </div> -->
 
 </body>
-<%}
-%>
 
 
 </html>

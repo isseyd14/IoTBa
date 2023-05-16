@@ -22,17 +22,36 @@
 <h2><a href="staff-home.jsp">Back</a></h2>
 
 
-<form method="post" action="StockServlet" name="addProduct">
-  <label>Product name:</label>
-  <input type="text" name="product"><br><br>
+<form method="post" action="AddProductServlet" name="addProduct">
+  <label>Name:</label>
+  <input type="text" name="productName"><br><br>
+
+  <Label>Type</Label>
+  <input type="text" name="productType"><br><br>
+
+  <Label>Description</Label>
+  <input type="text" name="productDescription"><br><br>
 
   <label>Stock amount:</label>
-  <input type="text" name="stock"><br><br>
+  <input type="text" name="productStock"><br><br>
 
   <label>Unit Price:</label>
-  <input type="text" name="price"><br><br>
+  <input type="text" name="productPrice"><br><br>
 
   <input type="submit" value="Add product">
+
+  <%
+    String errorMessage = (String) request.getAttribute("errorMessage");
+    if (errorMessage != null) {
+  %>
+  <p style="color: red;"><%=errorMessage %></p>
+  <%
+    }
+  %>
+  <% String successMessage = (String) request.getAttribute("successMessage");
+  if(successMessage != null) { %>
+  <p style="color: green"><%=successMessage%></p>
+  <% } %>
 </form>
 
 <h1>Product List</h1>
@@ -43,19 +62,23 @@
   try {
     con = DriverManager.getConnection("jdbc:mysql://auth-db624.hstgr.io/u236601339_iotBay?autoReconnect=true&useSSL=false", "u236601339_iotbayAdmin", "iotBaypassword1");
     Statement stmt = con.createStatement();
-    ResultSet rs = stmt.executeQuery("SELECT * FROM product");
+    ResultSet rs = stmt.executeQuery("SELECT * FROM product ORDER BY productName ASC");
 %>
 
 
 <table class="stock-table">
   <tr>
-    <th>Product Name</th>
-    <th>Stock Amount</th>
+    <th>Name</th>
+    <th>Type</th>
+    <th>Description</th>
+    <th>Stock Quantity</th>
     <th>Unit Price</th>
   </tr>
   <% while (rs.next()) { %>
   <tr>
     <td><%= rs.getString("productName") %></td>
+    <td><%= rs.getString("productType")%></td>
+    <td><%= rs.getString("productDescription")%></td>
     <td><%= rs.getInt("productQuantity") %></td>
     <td><%= rs.getDouble("productPrice") %></td>
   </tr>
