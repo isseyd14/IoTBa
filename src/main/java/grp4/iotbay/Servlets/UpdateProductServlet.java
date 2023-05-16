@@ -19,20 +19,49 @@ public class UpdateProductServlet extends HttpServlet {
         String productName = request.getParameter("name");
         String productType = request.getParameter("type");
         String productDesc = request.getParameter("description");
-        int productQuantity = Integer.parseInt(request.getParameter("quantity"));
-        double productPrice = Double.parseDouble(request.getParameter("price"));
+        String stringQuantity = request.getParameter("quantity");
+        String stringPrice = request.getParameter("price");
+        // Collect all form parameters.
+
+        int productQuantity = 0;
+        double productPrice = 0.0;
 
         String originalName = request.getParameter("originalName");
         String originalType = request.getParameter("originalType");
         String originalDesc = request.getParameter("originalDesc");
         int originalQuantity = Integer.parseInt(request.getParameter("originalQuantity"));
-        Double originalPrice = Double.valueOf(request.getParameter("originalPrice"));
+        double originalPrice = Double.valueOf(request.getParameter("originalPrice"));
+        // Gather the original values of the product.
 
-        if(productName.isEmpty() && productType.isEmpty() && productDesc.isEmpty() && productQuantity == 0 && productPrice == 0.0) {
+        if(productName.isEmpty() && productType.isEmpty() && productDesc.isEmpty() &&
+            stringQuantity.isEmpty() && stringPrice.isEmpty()) {
             request.setAttribute("errorMessage", "Error: enter at least one value.");
             RequestDispatcher rd = request.getRequestDispatcher("product-details.jsp");
             rd.forward(request, response);
             return;
+            // If all values are empty, send error.
+        }
+
+        if(!stringQuantity.isEmpty()) { // Check that quantity value can be parsed as int. If not, return error.
+            try {
+                productQuantity = Integer.parseInt(stringQuantity);
+            }
+            catch(Exception e) {
+                request.setAttribute("errorMessage", "Error: Incorrect data type for quantity and/or price.");
+                RequestDispatcher rd = request.getRequestDispatcher("product-details.jsp");
+                rd.forward(request, response);
+            }
+        }
+
+        if(!stringPrice.isEmpty()) { // Check that price value can be parsed as double. If not, return error.
+            try {
+                productPrice = Double.parseDouble(stringPrice);
+            }
+            catch(Exception e) {
+                request.setAttribute("errorMessage", "Error: Incorrect data type for quantity and/or price.");
+                RequestDispatcher rd = request.getRequestDispatcher("product-details.jsp");
+                rd.forward(request, response);
+            }
         }
 
         Connection connection = null;
@@ -43,6 +72,9 @@ public class UpdateProductServlet extends HttpServlet {
         product.setName(originalName);
         product.setType(originalType);
         product.setDescription(originalDesc);
+        product.setQuantity(originalQuantity);
+        product.setPrice(originalPrice);
+        // Set product object to be sent back as default, in case they do not get updated.
 
         try {
 
@@ -112,7 +144,9 @@ public class UpdateProductServlet extends HttpServlet {
         }
 
         catch(SQLException | ClassNotFoundException e) {
-
+            request.setAttribute("errorMessage", "Error: could not connect to database/ could not find database driver.");
+            RequestDispatcher rd = request.getRequestDispatcher("product-details.jsp");
+            rd.forward(request, response);
         }
 
 
