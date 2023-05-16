@@ -1,4 +1,4 @@
-package grp4.iotbay;
+package grp4.iotbay.Model;
 
 import java.io.Serializable;
 

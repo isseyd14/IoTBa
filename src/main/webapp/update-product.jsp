@@ -1,5 +1,5 @@
 <%@ page import="java.sql.*" %>
-<%@ page import="grp4.iotbay.Product" %>
+<%@ page import="grp4.iotbay.Model.Product" %>
 <%@ page import="java.util.LinkedList" %>
 <%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.

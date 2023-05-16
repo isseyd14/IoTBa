@@ -1,7 +1,6 @@
 package grp4.iotbay.Servlets;
 
-import com.mysql.cj.Session;
-import grp4.iotbay.Product;
+import grp4.iotbay.Model.Product;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -12,7 +11,6 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 

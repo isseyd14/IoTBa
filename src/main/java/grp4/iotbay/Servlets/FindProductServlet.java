@@ -1,6 +1,6 @@
 package grp4.iotbay.Servlets;
 
-import grp4.iotbay.Product;
+import grp4.iotbay.Model.Product;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
