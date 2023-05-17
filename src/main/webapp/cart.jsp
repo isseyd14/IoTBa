@@ -67,7 +67,7 @@ con = DriverManager.getConnection("jdbc:mysql://auth-db624.hstgr.io/u236601339_i
             <td><%= rs.getString("productDescription")%></td>
             <td>1</td>
             <td>$<%= rs.getDouble("productPrice") %></td>
-        <td>Remove</td>
+        <td><a href="remove-cart?id=<%=id %>">Remove</a></td>
         </tr>
         <%}}%>
     </table>
