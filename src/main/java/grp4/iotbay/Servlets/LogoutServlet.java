@@ -14,7 +14,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-@WebServlet("/logout")
+@WebServlet("/LogoutServlet")
 public class LogoutServlet extends HttpServlet {
     @Override
     protected void service(
@@ -52,6 +52,7 @@ public class LogoutServlet extends HttpServlet {
                 session.removeAttribute("email");
                 session.removeAttribute("login_timestamp");
                 session.removeAttribute("access_logs");
+                session.invalidate();
                 response.sendRedirect("");
             }
         } catch (SQLException | ClassNotFoundException e) {
