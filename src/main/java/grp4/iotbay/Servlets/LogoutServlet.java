@@ -1,4 +1,4 @@
-package grp6.iotbay;
+package grp4.iotbay.Servlets;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -8,13 +8,17 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet("/logout")
+@WebServlet("/LogoutServlet")
 public class LogoutServlet extends HttpServlet {
     @Override
     protected void service(
         HttpServletRequest request, HttpServletResponse response
     ) throws ServletException, IOException {
-        // end session
-        response.sendRedirect("");
+        try {
+            request.getSession().invalidate();
+            response.sendRedirect("index.jsp");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

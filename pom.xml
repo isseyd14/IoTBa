@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>grp6</groupId>
-    <artifactId>IoTBay</artifactId>
+    <artifactId>IoTBa</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>IoTBay</name>
     <packaging>war</packaging>
@@ -35,6 +35,16 @@
             <artifactId>junit-jupiter-engine</artifactId>
             <version>${junit.version}</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.2.5</version>
+        </dependency>
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <version>8.0.32</version>
         </dependency>
     </dependencies>
 
