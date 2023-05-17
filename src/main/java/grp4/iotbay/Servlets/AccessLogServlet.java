@@ -1,4 +1,4 @@
-package grp4.iotbay;
+package grp4.iotbay.Servlets;
 
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
