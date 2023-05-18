@@ -12,6 +12,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import grp4.Model.Payment;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 @WebServlet("/AddPaymentServlet")
 public class AddPaymentServlet extends HttpServlet {
@@ -24,7 +26,6 @@ public class AddPaymentServlet extends HttpServlet {
         String Expdate = request.getParameter("CCEE");
         String currentEmail = (String) session.getAttribute("email");
         String name = request.getParameter("Name");
-        //int orderID = request.getParameter("orderID");
        Connection con = null;
         PreparedStatement ps = null;
 
@@ -44,15 +45,19 @@ public class AddPaymentServlet extends HttpServlet {
             session.setAttribute("Oldpayment",defaultpayment);
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://auth-db624.hstgr.io/u236601339_iotBay?autoReconnect=true&useSSL=false", "u236601339_iotbayAdmin", "iotBaypassword1");
-            String sql = "INSERT INTO u236601339_iotBay.PaymentInfo (CardNumber, CVC, Expdate,  Email, Name, orderID) VALUES (?, ?, ?, ?, ?, ?)";
-            ps = con.prepareStatement(sql);
+            String sql = "INSERT INTO u236601339_iotBay.PaymentInfo (CardNumber, CVC, Expdate,  Email, Name) VALUES (?, ?, ?, ?, ?)";
+            ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, CCN);
             ps.setString(2, CVC);
             ps.setString(3, Expdate);
             ps.setString(4, currentEmail);
             ps.setString(5, name);
-           // ps.setInt(6, orderID);
             ps.executeUpdate();
+            ResultSet rs = ps.getGeneratedKeys();
+            while(rs.next()){
+                int g = rs.getInt(1);
+                session.setAttribute("PayID",g);
+            }
            response.sendRedirect("home.jsp");
                             }
 

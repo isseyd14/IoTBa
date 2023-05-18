@@ -23,7 +23,7 @@ public class UpdatePaymentServlet extends HttpServlet {
         String CVC = request.getParameter("CCCVC");
         String Expdate = request.getParameter("CCEE");
         String currentEmail = (String) session.getAttribute("email");
-        int orderID = (int) session.getAttribute("orderID");
+        //int orderID = (int) session.getAttribute("orderID");
         String name = request.getParameter("Name");
         
         Payment pay =  (Payment) session.getAttribute("Oldpayment");
@@ -52,13 +52,13 @@ public class UpdatePaymentServlet extends HttpServlet {
             //session.setAttribute("Oldpayment",defaultpayment);
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://auth-db624.hstgr.io/u236601339_iotBay?autoReconnect=true&useSSL=false", "u236601339_iotbayAdmin", "iotBaypassword1");
-            String sql = "Update u236601339_iotBay.PaymentInfo Set (CardNumber, CVC, Expdate, Name) VALUES (?, ?, ?, ?) Where orderID = ?" ;
+            String sql = "Update u236601339_iotBay.PaymentInfo Set (CardNumber, CVC, Expdate, Name) VALUES (?, ?, ?, ?) Where email = ?" ;
             ps = con.prepareStatement(sql);
             ps.setString(1, CCN);
             ps.setString(2, CVC);
             ps.setString(3, Expdate);
             ps.setString(4, name);
-            //ps.setString(5, orderID);
+            ps.setString(5, currentEmail);
             ps.executeUpdate();
            response.sendRedirect("home.jsp");
                             }

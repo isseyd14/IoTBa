@@ -169,7 +169,7 @@
             </li>
             <li class="nav-button">Welcome, <%out.print(Email);%></li>
             <li class="nav-button"><a class="active" href="home.jsp">Search</a></li>
-
+            <li class="nav-button"><a class="active" href="Addpayment.jsp">add payment</a></li>
             <li class="nav-button"><a href="logout">Logout</a></li>
         </ul>
     </nav>
