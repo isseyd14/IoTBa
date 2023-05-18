@@ -1,7 +1,9 @@
 <%@ page import="java.sql.*" %>
-<%@ page import="grp4.iotbay.Model.Product" %>
+<%@ page import="grp4.iotbay.Model.*" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.LinkedList" %>
+
+<%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -9,7 +11,6 @@
 <head>
     <title>IoTBay Search</title>
 </head>
-
 <style>
     body {
         margin: 0;
@@ -160,6 +161,7 @@
 
     // Product product = (Product) session.getAttribute("product");
     List<Product> products = (LinkedList<Product>) session.getAttribute("products");
+    ArrayList<Cart> cart_list = (ArrayList<Cart>) session.getAttribute("cart-list");
     String errorMessage = (String) request.getAttribute("errorMessage");
     session.setAttribute("referringFile", "home.jsp");
 
@@ -188,7 +190,16 @@
             </li>
             <li class="nav-button"><a href="account.jsp">Welcome, <%out.print(name);%></a></li>
             <li class="nav-button"><a class="active" href="home.jsp">Search</a></li>
-
+            <% if(cart_list != null){%>
+            <li class="nav-button"><a class="active" href="cart.jsp">
+                    Cart(<%=cart_list.size()%>)
+                </a></li>
+            <%}else{%><li class="nav-button"><a class="active" href="cart.jsp">
+                    Cart
+                </a></li>
+       
+            <%}%>
+            <li class="nav-button"><a href="orders.jsp">Orders</a></li>
             <li class="nav-button"><a href="LogoutServlet">Logout</a></li>
         </ul>
     </nav>
@@ -247,7 +258,8 @@
             <td><%= rs.getString("productType")%></td>
             <td><%= rs.getString("productDescription")%></td>
             <td><%= rs.getInt("productQuantity") %></td>
-            <td><%= rs.getDouble("productPrice") %></td>
+            <td>$<%= rs.getDouble("productPrice") %></td>
+            <td><a href="add-to-cart?id=<%=rs.getInt("productId")%>"> Add to Cart</a></td>
         </tr>
         <% }
             if(con != null) {
@@ -268,7 +280,9 @@
         <td><%=product.getType()%></td>
         <td><%=product.getDescription()%></td>
         <td><%=product.getQuantity()%></td>
-        <td><%=product.getPrice()%></td>
+        <td>$<%=product.getPrice()%></td>
+        <td><%=product.getId()%></td>
+        <!--<td><a class="btn btn-dark" href="add-to-cart?id=<%=product.getId()%>">Add to Cart</a> <a</td>-->
         </tr>
         <% }
         }%>
