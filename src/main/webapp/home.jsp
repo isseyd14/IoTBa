@@ -160,7 +160,6 @@
 
     // Product product = (Product) session.getAttribute("product");
     List<Product> products = (LinkedList<Product>) session.getAttribute("products");
-    String name = (String) session.getAttribute("name");
     String errorMessage = (String) request.getAttribute("errorMessage");
     session.setAttribute("referringFile", "home.jsp");
 
