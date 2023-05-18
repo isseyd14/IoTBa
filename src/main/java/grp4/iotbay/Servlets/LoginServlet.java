@@ -58,6 +58,7 @@ public class LoginServlet extends HttpServlet {
             String passwordDB = "";
             String typeDB = "";
             String nameDB = "";
+            int userIdDB = 0;
             
             ResultSet rs = ps.executeQuery();
             
@@ -66,9 +67,11 @@ public class LoginServlet extends HttpServlet {
                 passwordDB = rs.getString("password");
                 typeDB = rs.getString("Type");
                 nameDB = rs.getString("name");
+                userIdDB = rs.getInt("userID");
 
                 System.out.println("emailDB: " + emailDB);
                 System.out.println("passwordDB: " + passwordDB);
+                System.out.println("userID: " + userIdDB);
                         }
 
                 if(email.equals(emailDB) && password.equals(passwordDB) && typeDB.equals("customer")){
@@ -77,6 +80,7 @@ public class LoginServlet extends HttpServlet {
                 HttpSession session = request.getSession();
                 session.setAttribute("email", email);
                 session.setAttribute("name", nameDB);
+                session.setAttribute("userId", userIdDB);
 
                 RequestDispatcher rd = request.getRequestDispatcher("home.jsp");
                 rd.forward(request, response);
