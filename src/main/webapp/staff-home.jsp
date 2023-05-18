@@ -243,7 +243,7 @@
         <td><%= rs.getString("productType")%></td>
         <td><%= rs.getString("productDescription")%></td>
         <td><%= rs.getInt("productQuantity") %></td>
-        <td><%= rs.getDouble("productPrice") %></td>
+        <td>$<%= rs.getDouble("productPrice") %></td>
     </tr>
     <% }
     if(con != null) {
@@ -265,7 +265,7 @@
     <td><%=product.getType()%></td>
     <td><%=product.getDescription()%></td>
     <td><%=product.getQuantity()%></td>
-    <td><%=product.getPrice()%></td>
+    <td>$<%=product.getPrice()%></td>
 </tr>
 <% }
 

@@ -80,7 +80,7 @@
     <td><%= rs.getString("productType")%></td>
     <td><%= rs.getString("productDescription")%></td>
     <td><%= rs.getInt("productQuantity") %></td>
-    <td><%= rs.getDouble("productPrice") %></td>
+    <td>$<%= rs.getDouble("productPrice") %></td>
   </tr>
   <% } %>
 </table>

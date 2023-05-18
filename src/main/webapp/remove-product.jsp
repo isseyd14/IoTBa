@@ -46,7 +46,7 @@
     </td>
     <td><%= rs.getInt("productQuantity") %>
     </td>
-    <td><%= rs.getDouble("productPrice") %>
+    <td>$<%= rs.getDouble("productPrice") %>
     </td>
     <td>
       <form action="RemoveServlet" method="post">
