@@ -5,6 +5,7 @@
     <title>Remove Product</title>
 </head>
 <%String errorMessage = (String) request.getAttribute("errorMessage"); %>
+<%String successMessage = (String) request.getAttribute("successMessage"); %>
 
 <style>
   .stock-table {
@@ -47,12 +48,18 @@
     </td>
     <td><%= rs.getDouble("productPrice") %>
     </td>
+    <td>
+      <form action="RemoveServlet" method="post">
+        <input type="hidden" name="productName" value="<%=rs.getString("productName")%>">
+        <input type="submit" value="Remove product">
+      </form>
+    </td>
   </tr>
   <% } con.close(); rs.close(); %>
 </table>
 
 <form action="RemoveServlet" method="post" name="removeProduct">
-  <label>Name of product to be removed from listing:</label>
+  <label>Use remove buttons above OR enter name of product to be removed from listing:</label>
   <input type="text" name="productName"/>
 
 
@@ -62,6 +69,10 @@
 <% if(errorMessage != null) { %>
 <p style="color: red"><%=errorMessage%></p>
 
+<% } %>
+
+<% if(successMessage != null) { %>
+<p style="color: green"><%=successMessage%></p>
 <% } %>
 
 </body>

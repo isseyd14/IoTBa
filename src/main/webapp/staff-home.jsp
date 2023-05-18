@@ -143,6 +143,10 @@
         background-color: #45a049;
     } */
 
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
 
     .stock-table {
         border-collapse: collapse;
