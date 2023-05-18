@@ -20,33 +20,41 @@ public class AddProductServlet extends HttpServlet {
         String productName = request.getParameter("productName");
         String productType = request.getParameter("productType");
         String productDescription = request.getParameter("productDescription");
+        String stringStock = request.getParameter("productStock");
+        String stringPrice = request.getParameter("productPrice");
         int productStock = 0;
         double productPrice = 0.0;
 
-        try {
-            productStock = Integer.parseInt(request.getParameter("productStock"));
-            productPrice = Double.parseDouble(request.getParameter("productPrice"));
+        if(productName.isEmpty() || productType.isEmpty() || productDescription.isEmpty() || stringStock.isEmpty()
+        || stringPrice.isEmpty()) {
+            request.setAttribute("errorMessage", "Error: value missing. Please use all fields.");
+            RequestDispatcher rd = request.getRequestDispatcher("add-product.jsp");
+            rd.forward(request, response);
+            return;
+        }
 
-        } catch (NumberFormatException e) {
+        if(!stringStock.isEmpty()) {
+            try {
+                productStock = Integer.parseInt(stringStock);
 
-            if(productName.isEmpty() || productType.isEmpty() || productDescription.isEmpty()) {
-                request.setAttribute("errorMessage", "Error: value missing. Please use all fields.");
-                RequestDispatcher rd = request.getRequestDispatcher("add-product.jsp");
-                rd.forward(request, response);
-                return;
-            }
-            else {
-                request.setAttribute("errorMessage", "Error: Invalid quantity or price value.");
+            } catch (NumberFormatException e) {
+                request.setAttribute("errorMessage", "Incorrect input for quantity or stock.");
                 RequestDispatcher rd = request.getRequestDispatcher("add-product.jsp");
                 rd.forward(request, response);
                 return;
             }
         }
 
-        if(productName.isEmpty() || productType.isEmpty() || productDescription.isEmpty()) {
-            request.setAttribute("errorMessage", "Error: value missing. Please use all fields.");
-            RequestDispatcher rd = request.getRequestDispatcher("add-product.jsp");
-            rd.forward(request, response);
+        if(!stringPrice.isEmpty()) {
+            try {
+                productPrice = Double.parseDouble(stringPrice);
+            }
+            catch(NumberFormatException e) {
+                request.setAttribute("errorMessage", "Incorrect input for quantity or stock.");
+                RequestDispatcher rd = request.getRequestDispatcher("add-product.jsp");
+                rd.forward(request, response);
+                return;
+            }
         }
 
         Connection con = null;

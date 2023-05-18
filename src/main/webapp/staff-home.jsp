@@ -14,6 +14,136 @@
 </head>
 
 <style>
+
+    body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .standard-Nav {
+        display: flex;
+        height: 70px;
+        background-color: #f3f3f3;
+        box-shadow: 0px -10px 36px 3px rgba(143, 142, 142, 0.537);
+
+    }
+
+    .nav-logo {
+        font-size: 24px;
+        font-weight: bold;
+        text-decoration: none;
+        color: #333;
+        margin-top: auto;
+        margin-bottom: auto;
+
+        padding-left: 50px;
+        padding-right: 50px;
+    }
+
+    .nav-links {
+        display: flex;
+        flex-grow: 1;
+        justify-content: flex-end;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        flex-basis: 0;
+    }
+
+    .nav-links .nav-search {
+
+        width: 100%;
+        margin-left: 20px;
+        margin-right: 20px;
+        margin-top: auto;
+        margin-bottom: auto;
+    }
+
+
+    .nav-links .nav-button a  {
+        display: flex;
+        height: 100%;
+        padding-left: 40px;
+        padding-right: 40px;
+        align-items: center;
+        font-size: 16px;
+        font-weight: bold;
+        text-decoration: none;
+        color: #fff;
+        background-color: #034473;
+        transition: background-color 0.3s ease;
+
+    }
+
+    .name-card {
+        display: flex;
+        height: 100%;
+        padding-left: 40px;
+        padding-right: 40px;
+        align-items: center;
+        font-size: 16px;
+        font-weight: bold;
+        text-decoration: none;
+        color: black;
+        background-color: #f3f3f3;
+        transition: background-color 0.3s ease;
+    }
+
+    .nav-links .nav-button a:hover {
+        background-color: #0c78c5;
+    }
+
+    .nav-links .nav-button .active {
+        background-color: #4494d5;
+    }
+
+    .h2Button a {
+        display: flex;
+        height: 100%;
+        padding-left: 40px;
+        padding-right: 40px;
+        align-items: center;
+        font-size: 16px;
+        font-weight: bold;
+        text-decoration: none;
+        color: #fff;
+        background-color: #4CAF50;
+        transition: background-color 0.3s ease;
+    }
+
+    .h2Button a:hover {
+        background-color: #80d27b;
+    }
+
+    .form-container {
+
+    }
+
+    /*.form-container label {
+        margin-bottom: 5px;
+    }
+
+    .form-container input[type="text"],
+    .form-container input[type="submit"] {
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+    }
+
+    .form-container input[type="submit"] {
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .form-container input[type="submit"]:hover {
+        background-color: #45a049;
+    } */
+
+
     .stock-table {
         border-collapse: collapse;
     }
@@ -24,25 +154,36 @@
     }
 </style>
 
-
 <%
     // Product product = (Product) session.getAttribute("product");
     List<Product> products = (LinkedList<Product>) session.getAttribute("products");
-    String Name = (String) session.getAttribute("name");
+    String name = (String) session.getAttribute("name");
     String errorMessage = (String) request.getAttribute("errorMessage");
     session.setAttribute("referringFile", "staff-home.jsp");
 
 
 %>
 <body>
-<img  class="nav-logo" src="IotBayLogo.png" width="60px" height="60" alt="Product Image">
-<h1>Welcome to IoT Stock Management staff member: <%=Name%> </h1>
-<h2><a href="add-product.jsp">Add Product</a></h2>
-<h2><a href="update-product.jsp">Update Product Details</a></h2>
-<h2><a href="remove-product.jsp">Remove Product</a></h2>
-<h2><a href="LogoutServlet">Logout</a></h2>
+
+<nav class="standard-Nav">
+    <img  class="nav-logo" src="IotBayLogo.png" width="60px" height="60" alt="Product Image">
+    <ul class="nav-links">
+        <li class="name-card">Welcome, <%=name%></li>
+        <li class="h2Button"><a href="add-product.jsp">Add Product</a></li>
+        <li class="h2Button"> <a href="update-product.jsp"> Update Product Details</a></li>
+        <li class="h2Button"><a href="remove-product.jsp">Remove Product</a></li>
+
+
+        <li class="nav-button"><a href="LogoutServlet">Logout</a></li>
+    </ul>
+
+</nav>
+
+
 
 <h2>Stocked products</h2>
+
+<div class="form-container">
 
 <form action="/FilterServlet" method="get">
     <label>Search by product name: </label>
@@ -54,6 +195,8 @@
 <form action="/ResetFilterServlet" method="get">
     <input type="submit" value="Reset">
 </form>
+</div>
+
 <% if(errorMessage != null) { %>
 <p style="color: red"><%=errorMessage%></p> <% } %>
 <%  Connection con = null;
