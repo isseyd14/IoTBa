@@ -73,7 +73,7 @@
 <% } %>
 
 <form action="update-product.jsp">
-  <input type="submit" value="back">
+  <input type="submit" value="Back">
 </form>
 <form action="ReturnHomeServlet" method="get">
   <input type="submit" value="Return Home">

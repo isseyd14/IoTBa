@@ -65,6 +65,10 @@
     <td><%= rs.getString("productDescription")%></td>
     <td><%= rs.getInt("productQuantity") %></td>
     <td><%= rs.getDouble("productPrice") %></td>
+    <td><form action="/FindProductServlet" method="post">
+      <input type="hidden" value="<%=rs.getString("productName")%>" name = "productName">
+      <input type="submit" value="Select">
+    </form></td>
   </tr>
   <% } %>
 </table>  <% con.close(); rs.close(); } else { %>
@@ -89,7 +93,7 @@
 </table>
 
 <form method="post" action="FindProductServlet">
-  <strong><label>Type in product you wish to edit:</label></strong>
+  <strong><label>Select product above OR type in product you wish to edit:</label></strong>
   <input type="text" name="productName"><br><br>
   <input type="submit" value="Select"/>
 
