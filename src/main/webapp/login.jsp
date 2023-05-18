@@ -86,24 +86,27 @@
     </style>
     
 <body>
-
+    
+     <%
+            String loginError = (String) session.getAttribute("InvalidLogin");
+      %>
 <h1>Login</h1>
 <form method="post" action="LoginServlet" name="login" >
     <label>Email:</label>
-    <input type="text" name="email"><br><br>
+    <input type="text" name="email" required><br><br>
 
     <label>Password:</label>
-    <input type="password" name="password"><br><br>
+    <input type="password" name="password" required><br><br>
 
     <input type="submit" value="Login">
 
-    <%
-    String errorMessage = (String) request.getAttribute("errorMessage");
-    if (errorMessage != null) {
-%>
-        <p style="color: red;"><%= errorMessage %></p>
 <%
-    }
+String errorMessage = (String) request.getAttribute("errorMessage");
+if (errorMessage != null) {
+%>
+    <p style="color: red;"><%= errorMessage %></p>
+<%
+}
 %>
 </form>
 

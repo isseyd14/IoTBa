@@ -37,7 +37,7 @@ public class RegisterServerlet extends HttpServlet {
             con = DriverManager.getConnection("jdbc:mysql://auth-db624.hstgr.io/u236601339_iotBay?autoReconnect=true&useSSL=false","u236601339_iotbayAdmin","iotBaypassword1");
             System.out.println("Register Connected");
             
-            String sql = "insert into u236601339_iotBay.users (name, email, password) values(?,?,?)";
+            String sql = "insert into u236601339_iotBay.users (name, email, password) values (?,?,?)";
             
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, name);
@@ -45,8 +45,7 @@ public class RegisterServerlet extends HttpServlet {
             ps.setString(3, password);
             ps.executeUpdate();
             
-            RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
-            rd.forward(request,response);
+            response.sendRedirect("index.jsp");
         }catch(ClassNotFoundException | SQLException e){
             System.out.println("Error! - " + e.getMessage());
         }

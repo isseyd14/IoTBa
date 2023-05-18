@@ -11,17 +11,7 @@
 <head>
     <title>IoTBay Search</title>
 </head>
-
-<%
-    // Product product = (Product) session.getAttribute("product");
-    List<Product> products = (LinkedList<Product>) session.getAttribute("products");
-    ArrayList<Cart> cart_list = (ArrayList<Cart>) session.getAttribute("cart-list");
-    String name = (String) session.getAttribute("name");
-    String errorMessage = (String) request.getAttribute("errorMessage");
-    session.setAttribute("referringFile", "home.jsp");
-%>
-
-<!-- <style>
+<style>
     body {
         margin: 0;
         font-family: Arial, Helvetica, sans-serif;
@@ -32,7 +22,7 @@
         height: 70px;
         background-color: #f3f3f3;
         box-shadow: 0px -10px 36px 3px rgba(143, 142, 142, 0.537);
-
+        
     }
 
     .nav-logo {
@@ -155,9 +145,6 @@
         font-size: 14px;
         margin: 0;
     }
-</style> -->
-
-<style>
     .stock-table {
         border-collapse: collapse;
     }
@@ -168,6 +155,24 @@
     }
 </style>
 
+<%
+    String email = (String) session.getAttribute("email");
+    String name = (String) session.getAttribute("name");
+
+    // Product product = (Product) session.getAttribute("product");
+    List<Product> products = (LinkedList<Product>) session.getAttribute("products");
+    ArrayList<Cart> cart_list = (ArrayList<Cart>) session.getAttribute("cart-list");
+    String errorMessage = (String) request.getAttribute("errorMessage");
+    session.setAttribute("referringFile", "home.jsp");
+
+    if(email == null){
+%>
+
+<body>Error no Login</body>
+
+<%} else if(email != null){
+
+%>
 <body>
 
     <nav class="standard-Nav">
@@ -178,12 +183,12 @@
                 <form name="searchQuery" action="searchQuery" method="POST" class="seachForm">
                     <input type="text" id="searchQuery" name="searchQuery" placeholder="Search IOTBay"
                         class="searchField">
-                    <input type="submit" value="Search">
+                    <input type="submit" value="Search" style="background-color: ;">
                 </form>
 
 
             </li>
-            <li class="nav-button">Welcome, <%=name%></li>
+            <li class="nav-button"><a href="account.jsp">Welcome, <%out.print(name);%></a></li>
             <li class="nav-button"><a class="active" href="home.jsp">Search</a></li>
             <% if(cart_list != null){%>
             <li class="nav-button"><a class="active" href="cart.jsp">
@@ -337,6 +342,5 @@
     </div> -->
 
 </body>
-
-
+<%}%>
 </html>
