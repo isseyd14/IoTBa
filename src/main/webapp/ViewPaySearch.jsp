@@ -5,6 +5,12 @@
 --%>
 <%@ page import= "grp4.Model.Payment"%> 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+  <%
+        String CCNEr = (String) session.getAttribute("PayidSearch");
+        String CCEEr = (String) session.getAttribute("dateSearch");
+        Payment pay = (Payment) session.getAttribute("paymentN");
+        
+    %>  
 <!DOCTYPE html>
 <html>
     <head>
@@ -12,13 +18,13 @@
         <title>Payments search</title>
     </head>
     <body>
-     <form action="searchPaymentServlet" method="post">
+     <form action="searchpayServlet" method="post">
             <table>
                 <tr>
                     <th>Search</th>
                     <th> 
                         <select name="searchOption">
-                            <option value="creditCardNumberSearch">Credit Card Number</option>
+                            <option value="PayidSearch">PaymentID</option>
                             <option value="dateSearch">Date(dd-mm-yyyy)</option>
                         </select>
                     </th>
@@ -32,46 +38,22 @@
                 <th>Credit Card Number</th>
                 <th>Credit Card Expiry</th>
                 <th>Credit Card CVC</th>
-                <th>Last modified</th>
                 <th>Name</th>
+                <th>Amount</th>
+               
             </tr>
-            <%
-                if (paymentList.size() > 0) {
-                    for (int i = 0; i < paymentList.size(); i++) {
-                        if (paymentList.get(i).getIsDefault() == 1) {
-                            DefaultString = "True";
-                        } else {
-                            DefaultString = "False";
-                        }
-                        //For loop to iterate through the entire paymentList and convert the default varaible from a int to a String
-            %>
             <tr>
-                <td><%=paymentList.get(i).getCreditCardNumber()%></td>
-                <td><%=paymentList.get(i).getCreditCardExpiry()%></td>
-                <td><%=paymentList.get(i).getCreditCardCVC()%></td>
-                <td><%=paymentList.get(i).getCreated()%></td>
-                <td><%=paymentList.get(i).getLastUpdated()%></td>
-                <td><%=DefaultString%></td>
-                <td><a href="PaymentServlet?action=update&index=<%=i%>">Update</a></td><!--Sends information about which Payment has been selected for updates-->
-                <td><a href="PaymentServlet?action=delete&number=<%=i%>">Delete</a></td> <!--This sends information about which Payment has been selected for deletion-->
+                <td><%=pay.getCreditCardNumber()%></td>
+                <td><%=pay.getCreditCardExpiry()%></td>
+                <td><%=pay.getCreditCardCVC()%></td>
+                <td><%=pay.getName()%></td>
+                <td><%=pay.getAmount()%></td>
             </tr>
-            <%
-                    }
-                }
-            %>
-            <tr>
-                <td colspan="8"><a href="addPayment.jsp">Add new payment</a></td><!--After the if statement so it is always present-->
-            </tr>
+        
         </table>
-        <%
-            } catch (Exception ex) {
-                ;
-            }
-        } else {
-        %>
-        <h4>Please log in to load your Payment methods</h4><!--For anonymous customers-->
-        <%
-            }
-        %>
+            <% String errorMessage = (String) request.getAttribute("errorMessage"); %>
+            <% if(errorMessage != null) { %>
+            <h3 style="color: red"><%=errorMessage%></h3>
+            <% } %>
     </body>
 </html>

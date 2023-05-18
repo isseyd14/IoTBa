@@ -160,12 +160,15 @@
     </ul>
 </nav>
 
-<h3>Name: <%out.print(name);%></h3>
-<h3>Email: <%out.print(email);%></h3>
-<a  type="submit" href="edit_info.jsp"  class="button ">Edit My Information</a>
-<a  type="submit" href="delete_acc.jsp"  class="button ">Delete My Account</a>
-<br>
-<a  type="submit" href="AccessLogServlet"  class="button ">View Past Account Activity</a>
+<h3>This action will irreversibly delete your account from IoTBay and all of your saved information!</h3>
+<h3>Are you sure you wish to proceed?</h3>
+
+<form method="post" action="DeleteServlet" name="delete" >
+    <label>Confirm Password:</label>
+    <input type="password" name="password" required><br><br>
+    <input type="submit" value="Yes, Proceed">
+    <a type="button" href="account.jsp">No, Never mind</a>
+</form>
 
 </body>
 <%}

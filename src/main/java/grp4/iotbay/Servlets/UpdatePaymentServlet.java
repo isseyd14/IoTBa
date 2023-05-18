@@ -25,6 +25,8 @@ public class UpdatePaymentServlet extends HttpServlet {
         String currentEmail = (String) session.getAttribute("email");
         //int orderID = (int) session.getAttribute("orderID");
         String name = request.getParameter("Name");
+        int payID =(int) session.getAttribute("PayID");
+
         
         Payment pay =  (Payment) session.getAttribute("Oldpayment");
        Connection con = null;
@@ -52,16 +54,16 @@ public class UpdatePaymentServlet extends HttpServlet {
             //session.setAttribute("Oldpayment",defaultpayment);
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://auth-db624.hstgr.io/u236601339_iotBay?autoReconnect=true&useSSL=false", "u236601339_iotbayAdmin", "iotBaypassword1");
-            String sql = "Update u236601339_iotBay.PaymentInfo Set (CardNumber, CVC, Expdate, Name) VALUES (?, ?, ?, ?) Where email = ?" ;
+            String sql = "Update u236601339_iotBay.PaymentInfo Set (CardNumber, CVC, Expdate, Name) VALUES (?, ?, ?, ?) Where  = PaymentID ?" ;
             ps = con.prepareStatement(sql);
             ps.setString(1, CCN);
             ps.setString(2, CVC);
             ps.setString(3, Expdate);
             ps.setString(4, name);
-            ps.setString(5, currentEmail);
+            ps.setInt(5,payID );
             ps.executeUpdate();
-           response.sendRedirect("home.jsp");
-                            }
+            response.sendRedirect("home.jsp");
+            }
 
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());

@@ -10,7 +10,8 @@ public class Payment {
     private String creditCardCVC;
     private String Email;
     private String Name;
-    private int isDefault;
+    private String Amount;
+    //private int isDefault;
     private Timestamp Created;
 
     public Payment(String creditCardNumber, String creditCardExpiry, String creditCardCVC,String name ,String email) {
@@ -21,12 +22,30 @@ public class Payment {
         this.Email = email;
 
     }
+       public Payment() {
+        this.creditCardCVC = creditCardCVC;
+        this.creditCardExpiry = creditCardExpiry;
+        this.creditCardNumber = creditCardNumber;
+        this.Name = Name;
+        this.Email = Email;
+        this.Amount  = Amount;
+        this.Created = Created;
+
+    }
         public Timestamp getCreated() {
         return Created;
     }
 
     public void setCreated(Timestamp created) {
         this.Created = created;
+    }
+    
+    public String getAmount() {
+        return Amount;
+    }
+
+    public void setAmount(String amount) {
+        this.Amount = amount;
     }
     
 

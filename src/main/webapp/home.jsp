@@ -1,3 +1,9 @@
+<%@ page import="java.sql.*" %>
+<%@ page import="grp4.iotbay.Model.*" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.LinkedList" %>
+
+<%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -5,7 +11,6 @@
 <head>
     <title>IoTBay Search</title>
 </head>
-
 <style>
     body {
         margin: 0;
@@ -140,16 +145,32 @@
         font-size: 14px;
         margin: 0;
     }
+    .stock-table {
+        border-collapse: collapse;
+    }
+
+    .stock-table td, .stock-table th {
+        border: 1px solid black;
+        padding: 0.5rem;
+    }
 </style>
 
 <%
-    String Email = (String) session.getAttribute("email");
-    if(Email == null){ 
+    String email = (String) session.getAttribute("email");
+    String name = (String) session.getAttribute("name");
+
+    // Product product = (Product) session.getAttribute("product");
+    List<Product> products = (LinkedList<Product>) session.getAttribute("products");
+    ArrayList<Cart> cart_list = (ArrayList<Cart>) session.getAttribute("cart-list");
+    String errorMessage = (String) request.getAttribute("errorMessage");
+    session.setAttribute("referringFile", "home.jsp");
+
+    if(email == null){
 %>
 
 <body>Error no Login</body>
 
-<%} else if(Email != null){
+<%} else if(email != null){
 
 %>
 <body>
@@ -167,13 +188,110 @@
 
 
             </li>
-            <li class="nav-button">Welcome, <%out.print(Email);%></li>
+            <li class="nav-button"><a href="account.jsp">Welcome, <%out.print(name);%></a></li>
             <li class="nav-button"><a class="active" href="home.jsp">Search</a></li>
-            <li class="nav-button"><a class="active" href="Addpayment.jsp">add payment</a></li>
-            <li class="nav-button"><a href="logout">Logout</a></li>
+            <% if(cart_list != null){%>
+            <li class="nav-button"><a class="active" href="cart.jsp">
+                    Cart(<%=cart_list.size()%>)
+                </a></li>
+            <%}else{%><li class="nav-button"><a class="active" href="cart.jsp">
+                    Cart
+                </a></li>
+       
+            <%}%>
+            <li class="nav-button"><a href="orders.jsp">Orders</a></li>
+            <li class="nav-button"><a href="LogoutServlet">Logout</a></li>
         </ul>
     </nav>
-    
+
+    <h1>Available products:</h1>
+
+    <form action="/FilterServlet" method="get">
+        <label>Search by product name: </label>
+        <input type="text" name="productName">
+        <label>Search by product type: </label>
+        <input type="text" name="productType">
+        <input type="submit" value="Filter">
+    </form>
+    <form action="/ResetFilterServlet" method="get">
+        <input type="submit" value="Reset">
+    </form>
+    <% if(errorMessage != null) { %>
+    <p style="color: red"><%=errorMessage%></p> <% } %>
+    <%  Connection con = null;
+        ResultSet rs = null; %>
+
+    <% if(products == null) {
+        try {
+            con = DriverManager.getConnection(
+                    "jdbc:mysql://auth-db624.hstgr.io/u236601339_iotBay?autoReconnect=true&useSSL=false",
+                    "u236601339_iotbayAdmin", "iotBaypassword1"
+            );
+
+            con = DriverManager.getConnection("jdbc:mysql://auth-db624.hstgr.io/u236601339_iotBay?autoReconnect=true&useSSL=false", "u236601339_iotbayAdmin", "iotBaypassword1");
+            Statement stmt = con.createStatement();
+            rs = stmt.executeQuery("SELECT * FROM product order by productName ASC");
+
+
+
+        }
+        catch(SQLException e) {
+
+        }
+    }
+
+    %>
+
+    <% if(products == null) { %>
+
+    <table class="stock-table">
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Stock Quantity</th>
+            <th>Unit Price</th>
+        </tr>
+        <% while (rs.next()) { %>
+        <tr>
+            <td><%= rs.getString("productName") %></td>
+            <td><%= rs.getString("productType")%></td>
+            <td><%= rs.getString("productDescription")%></td>
+            <td><%= rs.getInt("productQuantity") %></td>
+            <td>$<%= rs.getDouble("productPrice") %></td>
+            <td><a href="add-to-cart?id=<%=rs.getInt("productId")%>"> Add to Cart</a></td>
+        </tr>
+        <% }
+            if(con != null) {
+                con.close();
+            }%>
+    </table> <% } else { %>
+
+    <table class="stock-table">
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Stock Quantity</th>
+            <th>Unit Price</th>
+        </tr>
+        <%for(Product product : products) { %>
+        <td><%=product.getName() %></td>
+        <td><%=product.getType()%></td>
+        <td><%=product.getDescription()%></td>
+        <td><%=product.getQuantity()%></td>
+        <td>$<%=product.getPrice()%></td>
+        <td><%=product.getId()%></td>
+        <!--<td><a class="btn btn-dark" href="add-to-cart?id=<%=product.getId()%>">Add to Cart</a> <a</td>-->
+        </tr>
+        <% }
+        }%>
+    </table>
+
+
+
+   <!-- Jack old Table
+
     <div class="main display">
         <h1 style="text-align: center; padding-top:50px;">Search Results...</h1>
         <p style="color:red;">This table is an example table. As this is hard coded, we will place the java code around
@@ -221,11 +339,8 @@
         </table>
 
 
-    </div>
+    </div> -->
 
 </body>
-<%}
-%>
-    
-
+<%}%>
 </html>
