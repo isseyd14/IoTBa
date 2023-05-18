@@ -84,6 +84,7 @@ con = DriverManager.getConnection("jdbc:mysql://auth-db624.hstgr.io/u236601339_i
         }}%>
         
     <h3>Total Price: $<%= sum %></h3>
+    <a href="cart-checkout">Check Out</a>
     
         </div>
     <%}else{%>
