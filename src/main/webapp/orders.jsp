@@ -103,7 +103,7 @@
         <td>$<%=orderList.getPrice()%></td>        
         <td><%=orderList.getDate()%></td>
 
-        <td><a href="">Cancel Order</a></td>
+        <td><a href="cancel-order?id=<%=orderList.getOrderId()%>">Cancel Order</a></td>
         </tr>
         <%}%>
     </table>
