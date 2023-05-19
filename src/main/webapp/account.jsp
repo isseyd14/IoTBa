@@ -166,6 +166,8 @@
 <a  type="submit" href="delete_acc.jsp"  class="button ">Delete My Account</a>
 <br>
 <a  type="submit" href="AccessLogServlet"  class="button ">View Past Account Activity</a>
+<a  type="submit" href="Deletepaymentservlet"  class="button ">Delete Payment Info</a>
+
 
 </body>
 <%}
