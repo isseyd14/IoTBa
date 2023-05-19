@@ -30,7 +30,7 @@ public class Deletepaymentservlet extends HttpServlet {
             ps.setString(1, currentEmail);
             ps.executeUpdate();
             request.setAttribute("errorMessage3", "Succesfully removed payment method");
-           //response.sendRedirect("account.jsp");
+            response.sendRedirect("account.jsp");
                             }
 
          catch (Exception e) {
