@@ -13,8 +13,6 @@ public class Validators implements Serializable {
     private String creditCardNumberPattern = "([0-9]{16})";
     private String creditCardExpiryPattern = "([0-1]{1})([0-9]{1})(/)([2-9]{1})([0-9]{1})";
     private String creditCardCVCPattern = "([0-9]{3})";
-    private String phonePattern = "([0-9]{10})";
-    private String numberPattern = "[0-9]+";
 
     public Validators() {
     }
@@ -50,10 +48,6 @@ public class Validators implements Serializable {
         return validate(passwordPattern, password);
     }
 
-    public boolean validatePhoneNumber(String phoneNumber) {
-
-        return validate(phonePattern, phoneNumber);
-    }
 
     public boolean validateCreditCardNumber(String creditCardNumber) {
         return validate(creditCardNumberPattern, creditCardNumber);
@@ -67,9 +61,7 @@ public class Validators implements Serializable {
         return validate(creditCardCVCPattern, creditCardCVC);
     }
 
-    public boolean validateNumber(String number) {
-        return validate(numberPattern, number);
-    }
+  
 
     public void clear(HttpSession session) {
         session.setAttribute("stockErr", "");
