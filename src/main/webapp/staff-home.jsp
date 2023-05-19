@@ -1,3 +1,4 @@
+
 <%@ page import="grp4.iotbay.Model.Product" %>
 <%@ page import="java.sql.*" %>
 <%@ page import="java.util.ArrayList" %>
@@ -189,14 +190,14 @@
 
 <div class="form-container">
 
-<form action="/FilterServlet" method="get">
+<form action="FilterServlet" method="get">
     <label>Search by product name: </label>
     <input type="text" name="productName">
     <label>Search by product type: </label>
     <input type="text" name="productType">
     <input type="submit" value="Filter">
 </form>
-<form action="/ResetFilterServlet" method="get">
+<form action="ResetFilterServlet" method="get">
     <input type="submit" value="Reset">
 </form>
 </div>

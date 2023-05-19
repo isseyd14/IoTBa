@@ -1,3 +1,4 @@
+
 protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String product = request.getParameter("product");
         int stock = Integer.parseInt(request.getParameter("stock"));
@@ -21,4 +22,5 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
+
     }

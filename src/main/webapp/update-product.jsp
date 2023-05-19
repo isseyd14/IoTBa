@@ -1,3 +1,4 @@
+
 <%@ page import="java.sql.*" %>
 <%@ page import="grp4.iotbay.Model.Product" %>
 <%@ page import="java.util.LinkedList" %>
@@ -38,14 +39,14 @@
 %>
 
 <h2>Select product to edit:</h2>
-<form action="/FilterServlet" method="get">
+<form action="FilterServlet" method="get">
   <label>Search by product name: </label>
   <input type="text" name="productName">
   <label>Search by product type: </label>
   <input type="text" name="productType">
   <input type="submit" value="Filter">
 </form>
-<form action="/ResetFilterServlet" method="get">
+<form action="ResetFilterServlet" method="get">
   <input type="submit" value="Reset">
 </form>
 
@@ -65,7 +66,7 @@
     <td><%= rs.getString("productDescription")%></td>
     <td><%= rs.getInt("productQuantity") %></td>
     <td>$<%= rs.getDouble("productPrice") %></td>
-    <td><form action="/FindProductServlet" method="post">
+    <td><form action="FindProductServlet" method="post">
       <input type="hidden" value="<%=rs.getString("productName")%>" name = "productName">
       <input type="submit" value="Select">
     </form></td>
