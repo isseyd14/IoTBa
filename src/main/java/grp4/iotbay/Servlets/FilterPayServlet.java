@@ -1,7 +1,6 @@
-
 package grp4.iotbay.Servlets;
 
-import grp4.iotbay.Model.Product;
+import grp4.iotbay.Model.Pay;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -15,66 +14,62 @@ import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
-@WebServlet("/FilterServlet")
-public class FilterServlet extends HttpServlet {
+@WebServlet("/FilterPayServlet")
+public class FilterPayServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        String productName = request.getParameter("productName");
-        String productType = request.getParameter("productType");
-        String referringFile = (String) session.getAttribute("referringFile");
+        //String productName = request.getParameter("email");
+        String productName = request.getParameter("payID");
+        String productType = request.getParameter("Paydate");
+        String currentEmail = (String) session.getAttribute("email");
+        String referringFile = (String) session.getAttribute("referringFile1123");
 
-        List<Product> products = new LinkedList<>();
-
+        List<Pay> pay = new LinkedList<>();
         if (productName.isEmpty() && productType.isEmpty()) {
-            session.setAttribute("products", null);
+            session.setAttribute("pay", null);
             RequestDispatcher rd = request.getRequestDispatcher(referringFile);
             rd.forward(request, response);
         }
-
         Connection con;
         PreparedStatement ps;
-
-        if (productType.isEmpty()) {
-
             try {
-                Class.forName("com.mysql.cj.jdbc.Driver");
+                Class.forName("com.mysql.cj.jdbc.Driver") ;
                 con = DriverManager.getConnection(
                     "jdbc:mysql://auth-db624.hstgr.io/u236601339_iotBay?autoReconnect=true&useSSL=false",
                     "u236601339_iotbayAdmin", "iotBaypassword1"
                 );
 
-                String sql = "SELECT * from u236601339_iotBay.product where productName=?";
+                String sql = "SELECT * from u236601339_iotBay.Payment WHERE PayID=? AND Email=?";
 
                 ps = con.prepareStatement(sql);
                 ps.setString(1, productName);
+                ps.setString(2, currentEmail);                
                 ResultSet rs = ps.executeQuery();
 
                 if (!rs.next()) {
                     closeConnections(con, ps, rs);
-                    request.setAttribute("errorMessage", "Cannot find product.");
-                    session.setAttribute("products", null);
+                    request.setAttribute("errorMessage2", "Cannot find payment.");
+                    session.setAttribute("pay", null);
                     RequestDispatcher rd = request.getRequestDispatcher(referringFile);
                     rd.forward(request, response);
                 }
 
                 else {
-                    Product product = new Product();
-                    product.setName(rs.getString("productName"));
-                    product.setType(rs.getString("productType"));
-                    product.setDescription(rs.getString("productDescription"));
-                    product.setPrice(rs.getDouble("productPrice"));
-                    product.setQuantity(rs.getInt("productQuantity"));
-                    products.add(product);
+                    Pay product = new Pay();
+                    product.setID(rs.getInt("PayID"));
+                    product.setAmount(rs.getString("Amount"));
+                    product.setCreated(rs.getString("Date"));
+                    pay.add(product);
                     closeConnections(con, ps, rs);
-                    session.setAttribute("products", products);
+                    session.setAttribute("pay", pay);
                     RequestDispatcher rd = request.getRequestDispatcher(referringFile);
                     rd.forward(request, response);
                 }
             } catch (SQLException | ClassNotFoundException e) {
 
             }
-        }
+        
 
         if(productName.isEmpty()) {
             try {
@@ -84,43 +79,39 @@ public class FilterServlet extends HttpServlet {
                     "u236601339_iotbayAdmin", "iotBaypassword1"
                 );
 
-                String sql = "SELECT * from u236601339_iotBay.product where productType=?";
+                String sql = "SELECT * from u236601339_iotBay.Payment where Date=? AND Email=?";
 
                 ps = con.prepareStatement(sql);
                 ps.setString(1, productType);
+                ps.setString(2, currentEmail);                
                 ResultSet rs = ps.executeQuery();
 
                 while(rs.next()) {
-                    Product product = new Product();
-                    product.setName(rs.getString("productName"));
-                    product.setType(rs.getString("productType"));
-                    product.setDescription(rs.getString("productDescription"));
-                    product.setQuantity(rs.getInt("productQuantity"));
-                    product.setPrice(rs.getDouble("productPrice"));
-                    products.add(product);
+                    Pay product = new Pay();
+                    product.setID(rs.getInt("productName"));
+                    product.setAmount(rs.getString("productType"));
+                    product.setCreated(rs.getString("productDescription"));
+                    pay.add(product);
                 }
 
-                if(!products.isEmpty()) {
+                if(!pay.isEmpty()) {
                     closeConnections(con, ps, rs);
-                    session.setAttribute("products", products);
+                    session.setAttribute("pay", pay);
                     RequestDispatcher rd = request.getRequestDispatcher(referringFile);
                     rd.forward(request, response);
                 }
 
                 else {
                     closeConnections(con, ps, rs);
-                    request.setAttribute("errorMessage", "Cannot find product.");
-                    session.setAttribute("products", null);
+                    request.setAttribute("errorMessage2", "Cannot find Payment.");
+                    session.setAttribute("pay", null);
                     RequestDispatcher rd = request.getRequestDispatcher(referringFile);
                     rd.forward(request, response);
                 }
-
             }
             catch (SQLException | ClassNotFoundException e) {
-
             }
         }
-
         else {
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");
@@ -129,32 +120,31 @@ public class FilterServlet extends HttpServlet {
                     "u236601339_iotbayAdmin", "iotBaypassword1"
                 );
 
-                String sql = "SELECT * from u236601339_iotBay.product where productName = ? AND productType=?";
+                String sql = "SELECT * from u236601339_iotBay.Payment where PayID = ? AND Date=? AND Email=?";
 
                 ps = con.prepareStatement(sql);
                 ps.setString(1, productName);
                 ps.setString(2, productType);
+                ps.setString(3, currentEmail);                
 
                 ResultSet rs = ps.executeQuery();
 
                 if (!rs.next()) {
                     closeConnections(con, ps, rs);
-                    request.setAttribute("errorMessage", "Cannot find product.");
-                    session.setAttribute("products", null);
+                    request.setAttribute("errorMessage2", "Cannot find product.");
+                    session.setAttribute("pay", null);
                     RequestDispatcher rd = request.getRequestDispatcher(referringFile);
                     rd.forward(request, response);
                 }
 
                 else {
-                    Product product = new Product();
-                    product.setName(rs.getString("productName"));
-                    product.setType(rs.getString("productType"));
-                    product.setDescription(rs.getString("productDescription"));
-                    product.setPrice(rs.getDouble("productPrice"));
-                    product.setQuantity(rs.getInt("productQuantity"));
-                    products.add(product);
+                     Pay product = new Pay();
+                    product.setID(rs.getInt("PayID"));
+                    product.setAmount(rs.getString("Amount"));
+                    product.setCreated(rs.getString("Date"));
+                    pay.add(product);
                     closeConnections(con, ps, rs);
-                    session.setAttribute("products", products);
+                    session.setAttribute("pay", pay);
                     RequestDispatcher rd = request.getRequestDispatcher(referringFile);
                     rd.forward(request, response);
                 }
@@ -162,8 +152,8 @@ public class FilterServlet extends HttpServlet {
 
             }
         }
-
     }
+    
     private void closeConnections(Connection con, PreparedStatement ps, ResultSet rs) throws SQLException {
         if(con != null) {
             con.close();

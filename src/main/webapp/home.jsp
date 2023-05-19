@@ -201,10 +201,13 @@
             <%}%>
             <li class="nav-button"><a href="orders.jsp">Orders</a></li>
             <li class="nav-button"><a href="LogoutServlet">Logout</a></li>
+            <li class="nav-button"><a href="ViewPayList.jsp">Payment history</a></li>
+
         </ul>
     </nav>
 
     <h1>Available products:</h1>
+
 
     <form action="FilterServlet" method="get">
         <label>Search by product name: </label>

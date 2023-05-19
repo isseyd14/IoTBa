@@ -138,7 +138,11 @@
 <%
     String email = (String) session.getAttribute("email");
     String name = (String) session.getAttribute("name");
+                String errorMessage3 = (String) session.getAttribute("errorMessage3");
+
     if(email == null){
+
+   
 %>
 
 <body>Error no Login</body>
@@ -166,6 +170,14 @@
 <a  type="submit" href="delete_acc.jsp"  class="button ">Delete My Account</a>
 <br>
 <a  type="submit" href="AccessLogServlet"  class="button ">View Past Account Activity</a>
+    <form action="Deletepaymentservlet" method="Post">
+         <input type="submit" value="Delete Payment Info">
+    </form>
+<% if(errorMessage3 != null) { %>
+    <p style="color: red"><%=errorMessage3%></p> <% } %>
+        
+
+
 
 </body>
 <%}

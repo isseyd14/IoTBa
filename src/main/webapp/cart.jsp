@@ -39,7 +39,7 @@ con = DriverManager.getConnection("jdbc:mysql://auth-db624.hstgr.io/u236601339_i
         <h1>IoT Bay Webstore</h1>
         <h2>My Cart</h2>
         <h2><a href="home.jsp">Home</a></h2>
-        
+
         <%if(cart_list != null){%>
         
         <div>
@@ -81,10 +81,16 @@ con = DriverManager.getConnection("jdbc:mysql://auth-db624.hstgr.io/u236601339_i
         
         while(rs.next()){
         sum+=rs.getDouble("productPrice");
-        }}%>
+        }}
+        
+        session.setAttribute("Amount", sum);
+
+    %>
         
     <h3>Total Price: $<%= sum %></h3>
-    <a href="cart-checkout">Check Out</a>
+    
+    <a href="Addpayment.jsp">Check Out</a>
+
     
         </div>
     <%}else{%>
