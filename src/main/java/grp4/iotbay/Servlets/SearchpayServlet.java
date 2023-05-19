@@ -1,6 +1,6 @@
- package grp4.iotbay;
+ package grp4.iotbay.Servlets;
 
-import grp4.Model.Validators;
+import grp4.iotbay.Model.Validators;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import grp4.Model.Payment;
+import grp4.iotbay.Model.Payment;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.sql.*;

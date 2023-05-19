@@ -12,7 +12,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Add payment Details</title>
+        <title>Add/update payment Details</title>
     </head>
     <body>
         <h1>IotBay</h1>
@@ -27,7 +27,7 @@
 
         
     %>    
-    <h2>Add Payment</h2>
+    <h2>Add/Update Payment</h2>
          <form action="AddPaymentServlet" method="post">
              <div>
     </div>

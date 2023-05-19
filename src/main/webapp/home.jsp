@@ -201,6 +201,9 @@
             <%}%>
             <li class="nav-button"><a href="orders.jsp">Orders</a></li>
             <li class="nav-button"><a href="LogoutServlet">Logout</a></li>
+            <li class="nav-button"><a href="Addpayment.jsp">Add Payment</a></li>
+            <li class="nav-button"><a href="ViewPayList.jsp">Payment history</a></li>
+
         </ul>
     </nav>
 

@@ -1,6 +1,6 @@
-package grp4.iotbay;
+package grp4.iotbay.Servlets;
 
-import grp4.Model.Validators;
+import grp4.iotbay.Model.Validators;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -11,23 +11,23 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import grp4.Model.Payment;
+import grp4.iotbay.Model.Payment;
 
 @WebServlet("/Deletepaymentservlet")
 public class Deletepaymentservlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        int payID =(int) session.getAttribute("PayID");
+        String currentEmail = (String) session.getAttribute("email");
         Connection con = null;
         PreparedStatement ps = null;
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://auth-db624.hstgr.io/u236601339_iotBay?autoReconnect=true&useSSL=false", "u236601339_iotbayAdmin", "iotBaypassword1");
-            String sql = "DELETE FROM u236601339_iotBay.PaymentInfo Where  = PaymentID ?" ;
+            String sql = "DELETE FROM u236601339_iotBay.PaymentInfo Where Email=?" ;
             ps = con.prepareStatement(sql);
-            ps.setInt(1, payID);
+            ps.setString(1, currentEmail);
             ps.executeUpdate();
            response.sendRedirect("home.jsp");
                             }

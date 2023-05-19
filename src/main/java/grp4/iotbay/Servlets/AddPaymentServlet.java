@@ -1,6 +1,6 @@
-package grp4.iotbay;
+package grp4.iotbay.Servlets;
 
-import grp4.Model.Validators;
+import grp4.iotbay.Model.Validators;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import grp4.Model.Payment;
+import grp4.iotbay.Model.Payment;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
@@ -40,26 +40,39 @@ public class AddPaymentServlet extends HttpServlet {
                     session.setAttribute("CCMsg", "Credit Card CVC format incorrect, please enter 3 digits");
                     request.getRequestDispatcher("Addpayment.jsp").include(request, response);
                 }
-            else{
+          
+                    
             Payment defaultpayment = new Payment(CCN , Expdate , CVC , name,  currentEmail);
             session.setAttribute("Oldpayment",defaultpayment);
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://auth-db624.hstgr.io/u236601339_iotBay?autoReconnect=true&useSSL=false", "u236601339_iotbayAdmin", "iotBaypassword1");
+            String sql1 = ("SELECT Email FROM u236601339_iotBay.PaymentInfo WHERE Email = ?");
+            ps = con.prepareStatement(sql1);
+            ps.setString (1, currentEmail);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                String sql = ("UPDATE u236601339_iotBay.PaymentInfo SET CardNumber = ?, CVC = ?, Expdate = ?, Name = ? WHERE Email = ?");
+                ps = con.prepareStatement(sql);
+                ps.setString(1, CCN);
+                ps.setString(2, CVC);
+                ps.setString(3, Expdate);
+                ps.setString(4, name);
+                ps.setString(5,currentEmail );
+                ps.executeUpdate();
+                response.sendRedirect("home.jsp");
+            }
+            else {
             String sql = "INSERT INTO u236601339_iotBay.PaymentInfo (CardNumber, CVC, Expdate,  Email, Name) VALUES (?, ?, ?, ?, ?)";
-            ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps = con.prepareStatement(sql);
             ps.setString(1, CCN);
             ps.setString(2, CVC);
             ps.setString(3, Expdate);
             ps.setString(4, currentEmail);
             ps.setString(5, name);
             ps.executeUpdate();
-            ResultSet rs = ps.getGeneratedKeys();
-            while(rs.next()){
-                int g = rs.getInt(1);
-                session.setAttribute("PayID",g);
-            }
            response.sendRedirect("home.jsp");
-                            }
+            }
+                            
 
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());

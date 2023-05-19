@@ -1,4 +1,4 @@
-package grp4.Model;
+package grp4.iotbay.Model;
 
 import java.sql.Timestamp;
 
@@ -10,8 +10,6 @@ public class Payment {
     private String creditCardCVC;
     private String Email;
     private String Name;
-    private String Amount;
-    //private int isDefault;
     private Timestamp Created;
 
     public Payment(String creditCardNumber, String creditCardExpiry, String creditCardCVC,String name ,String email) {
@@ -20,7 +18,6 @@ public class Payment {
         this.creditCardNumber = creditCardNumber;
         this.Name = name;
         this.Email = email;
-
     }
        public Payment() {
         this.creditCardCVC = creditCardCVC;
@@ -28,7 +25,6 @@ public class Payment {
         this.creditCardNumber = creditCardNumber;
         this.Name = Name;
         this.Email = Email;
-        this.Amount  = Amount;
         this.Created = Created;
 
     }
@@ -39,15 +35,7 @@ public class Payment {
     public void setCreated(Timestamp created) {
         this.Created = created;
     }
-    
-    public String getAmount() {
-        return Amount;
-    }
 
-    public void setAmount(String amount) {
-        this.Amount = amount;
-    }
-    
 
     public void setEmail(String email) {
         this.Email = email;

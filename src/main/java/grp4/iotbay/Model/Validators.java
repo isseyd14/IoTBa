@@ -1,4 +1,4 @@
-package grp4.Model;
+package grp4.iotbay.Model;
 
 import java.io.Serializable;
 import java.util.regex.Matcher;
