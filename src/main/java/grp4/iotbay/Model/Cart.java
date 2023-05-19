@@ -22,4 +22,4 @@ public class Cart extends Product{
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
-
+}
