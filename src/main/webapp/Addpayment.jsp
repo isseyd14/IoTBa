@@ -24,13 +24,63 @@
         String name = (String) session.getAttribute("Name");
         String email = (String) session.getAttribute("email");
         String CCM = (String) session.getAttribute("CCMsg");
-
+Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
         
     %>    
+    
+    <%
+        String currentEmail = (String) session.getAttribute("email");
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://auth-db624.hstgr.io/u236601339_iotBay?autoReconnect=true&useSSL=false", "u236601339_iotbayAdmin", "iotBaypassword1");
+            String sql = "SELECT * FROM u236601339_iotBay.PaymentInfo WHERE Email=?";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, currentEmail);
+            rs = ps.executeQuery();
+            //if(!rs.next()){
+              //  request.setAttribute("errorMessage1", "No Payment of this type");  
+          //  }
+            }
+                catch(SQLException e) {
+        }
+          
+
+        %>
     <h2>Add/Update Payment</h2>
          <form action="AddPaymentServlet" method="post">
              <div>
-    </div>
+    </div>  
+             <%if(rs.next()){%>
+              <table>
+                <tr>
+                    <td><label for="CCNE">Credit Card Number</label></td>
+                    <td><input class="form_input_box" type="text" id ="frame" name="CCNE" value=<%= rs.getString("CardNumber")%> required></td>
+                </tr>
+                <tr>
+                    <td><label for="CCEE">Credit Card Expiry</label></td>
+                    <td><input class="form_input_box" type="text" id ="frame" name="CCEE" value = <%= rs.getString("Expdate")%> required></td>
+                </tr>
+                <tr>
+                    <td><label for="CCCVC">Credit Card CVC</label></td>
+                    <td><input class="form_input_box" type="text" id ="frame" name="CCCVC" value = <%= rs.getString("CVC")%> required></td>
+                </tr>
+                 <tr>
+                    <td><label for="Name">Name</label></td>
+                    <td><input class="form_input_box" type="text" id ="frame" name="Name" value = <%= rs.getString("Name")%> required></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                <center>
+                    <p>${CCMsg}</p>
+                    <input class="button" type="submit" value="Add/Confirm" required>
+                </center>
+                </td>
+                </tr>
+            </table><%} else{%>
 
              <table>
                 <tr>
@@ -54,11 +104,12 @@
                     <td>
                 <center>
                     <p>${CCMsg}</p>
-                    <input class="button" type="submit" value="Add" required>
+                    <input class="button" type="submit" value="Add/Confirm" required>
                 </center>
                 </td>
                 </tr>
             </table>
+             <%}%>
                
     </body>
 </html>

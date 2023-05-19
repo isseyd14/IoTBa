@@ -14,20 +14,32 @@ import java.sql.PreparedStatement;
 import grp4.iotbay.Model.Payment;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.text.DateFormat;  
+import java.util.Calendar;
+import java.text.DateFormat;
+import static java.time.LocalDate.now;
+import java.util.Calendar;
+import java.util.Date;
 
 @WebServlet("/AddPaymentServlet")
 public class AddPaymentServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Validators validator = new Validators();
         String CCN = request.getParameter("CCNE");
         String CVC = request.getParameter("CCCVC");
         String Expdate = request.getParameter("CCEE");
         String currentEmail = (String) session.getAttribute("email");
+        Double am = (Double) session.getAttribute("Amount");
+        String amn = String.valueOf(am);     
         String name = request.getParameter("Name");
        Connection con = null;
         PreparedStatement ps = null;
+                PreparedStatement qs = null;
+
 
         try {
              if (!validator.validateCreditCardNumber(CCN)) {
@@ -51,6 +63,7 @@ public class AddPaymentServlet extends HttpServlet {
             ps.setString (1, currentEmail);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
+                
                 String sql = ("UPDATE u236601339_iotBay.PaymentInfo SET CardNumber = ?, CVC = ?, Expdate = ?, Name = ? WHERE Email = ?");
                 ps = con.prepareStatement(sql);
                 ps.setString(1, CCN);
@@ -59,7 +72,11 @@ public class AddPaymentServlet extends HttpServlet {
                 ps.setString(4, name);
                 ps.setString(5,currentEmail );
                 ps.executeUpdate();
-                response.sendRedirect("home.jsp");
+                ps.close();
+            
+            //response.sendRedirect("home.jsp"); 
+
+                //response.sendRedirect("home.jsp");//cart checkout
             }
             else {
             String sql = "INSERT INTO u236601339_iotBay.PaymentInfo (CardNumber, CVC, Expdate,  Email, Name) VALUES (?, ?, ?, ?, ?)";
@@ -70,9 +87,21 @@ public class AddPaymentServlet extends HttpServlet {
             ps.setString(4, currentEmail);
             ps.setString(5, name);
             ps.executeUpdate();
-           response.sendRedirect("home.jsp");
-            }
-                            
+            ps.close();
+
+            //response.sendRedirect("home.jsp"); 
+           }
+            String sql = ("INSERT INTO u236601339_iotBay.Payment (Date, Email, Amount) VALUES (?, ?, ?)");
+    
+            DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+String data = df.format(new Date());
+            ps = con.prepareStatement(sql);
+            ps.setString(1, data);
+            ps.setString(2, currentEmail);
+            ps.setString(3, amn);
+            ps.executeUpdate();
+            ps.close();
+                        response.sendRedirect("home.jsp"); 
 
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
@@ -88,5 +117,7 @@ public class AddPaymentServlet extends HttpServlet {
                 System.out.println("Error closing resources: " + e.getMessage());
             }
         }
+       			
+		
     }
 }

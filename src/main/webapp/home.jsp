@@ -201,22 +201,22 @@
             <%}%>
             <li class="nav-button"><a href="orders.jsp">Orders</a></li>
             <li class="nav-button"><a href="LogoutServlet">Logout</a></li>
-            <li class="nav-button"><a href="Addpayment.jsp">Add Payment</a></li>
             <li class="nav-button"><a href="ViewPayList.jsp">Payment history</a></li>
+
 
         </ul>
     </nav>
 
     <h1>Available products:</h1>
 
-    <form action="/FilterServlet" method="get">
+    <form action=" FilterServlet" method="get">
         <label>Search by product name: </label>
         <input type="text" name="productName">
         <label>Search by product type: </label>
         <input type="text" name="productType">
         <input type="submit" value="Filter">
     </form>
-    <form action="/ResetFilterServlet" method="get">
+    <form action="ResetFilterServlet" method="get">
         <input type="submit" value="Reset">
     </form>
     <% if(errorMessage != null) { %>

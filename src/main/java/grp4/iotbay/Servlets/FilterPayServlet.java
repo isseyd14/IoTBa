@@ -23,7 +23,7 @@ public class FilterPayServlet extends HttpServlet {
         String productName = request.getParameter("payID");
         String productType = request.getParameter("Paydate");
         String currentEmail = (String) session.getAttribute("email");
-        String referringFile = (String) session.getAttribute("referringFile1");
+        String referringFile = (String) session.getAttribute("referringFile1123");
 
         List<Pay> pay = new LinkedList<>();
         if (productName.isEmpty() && productType.isEmpty()) {
@@ -34,7 +34,7 @@ public class FilterPayServlet extends HttpServlet {
         Connection con;
         PreparedStatement ps;
             try {
-                Class.forName("com.mysql.cj.jdbc.Driver");
+                Class.forName("com.mysql.cj.jdbc.Driver") ;
                 con = DriverManager.getConnection(
                     "jdbc:mysql://auth-db624.hstgr.io/u236601339_iotBay?autoReconnect=true&useSSL=false",
                     "u236601339_iotbayAdmin", "iotBaypassword1"

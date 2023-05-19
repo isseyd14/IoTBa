@@ -26,7 +26,7 @@
         %>
         
         <%
-        session.setAttribute("referringFile1", "ViewPayList.jsp");
+        session.setAttribute("referringFile1123", "ViewPayList.jsp");
         List<Pay> pays = (LinkedList<Pay>) session.getAttribute("pay");
         String currentEmail = (String) session.getAttribute("email");
         String errorMessage2 = (String) session.getAttribute("errorMessage2");
@@ -84,13 +84,23 @@
  
 <% if(errorMessage2 != null) { %>
     <p style="color: red"><%=errorMessage2%></p> <% } %>
-    <form action="/FilterPayServlet" method="get">
+    <hr>
+    <form action="FilterPayServlet" method="get">
         <label>Search by Pay ID: </label>
         <input type="text" name="payID">
         <label>Search by Date: </label>
         <input type="text" name="Paydate">
         <input type="submit" value="Filter">
     </form>
+        <hr>
+
+     <form action="ResetPayFilter" method="get">
+        <input type="submit" value="Reset">
+    </form>
+            <hr>
+
+            <h1>Payment History</h1>
+
     <% if(pays == null) { %>
 
     <table class="stock-table">
@@ -104,7 +114,7 @@
         <tr>
             <td><%= rs.getInt("PayID") %></td>
             <td><%= rs.getString("Date")%></td>
-            <td><%= rs.getString("Amount")%></td>
+            <td>$<%= rs.getString("Amount")%></td>
 
         </tr>
         <% }
@@ -115,16 +125,14 @@
 
     <table class="stock-table">
         <tr>
-            <th>Name</th>
-            <th>Type</th>
-            <th>Description</th>
-            <th>Stock Quantity</th>
-            <th>Unit Price</th>
+            <th>ID</th>
+            <th>Date</th>
+            <th>Amount</th>
         </tr>
         <%for(Pay product : pays) { %>
         <td><%=product.getID() %></td>
         <td><%=product.getCreated()%></td>
-        <td><%=product.getAmount()%></td>
+        <td>$<%=product.getAmount()%></td>
         </tr>
         <% }
         }%>
