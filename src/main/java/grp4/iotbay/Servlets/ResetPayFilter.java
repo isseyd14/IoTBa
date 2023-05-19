@@ -21,7 +21,7 @@ public class ResetPayFilter extends HttpServlet {
         HttpSession session = request.getSession();
         referringFile = (String) session.getAttribute("referringFile1");
         session.setAttribute("pay", null);
-        RequestDispatcher rd = request.getRequestDispatcher(referringFile);
+        RequestDispatcher rd = request.getRequestDispatcher("ViewPayList.jsp");
         rd.forward(request, response);
     }
 }
