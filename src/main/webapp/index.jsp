@@ -5,6 +5,7 @@
     <title>IoTBay</title>
 </head>
 <body>
+<img  class="nav-logo" src="IotBayLogo.png" width="60px" height="60" alt="Product Image">
 <h1>IoTBay</h1>
 
 </body>

@@ -91,37 +91,24 @@
             String loginError = (String) session.getAttribute("InvalidLogin");
       %>
 <h1>Login</h1>
-<!--onsubmit="return validateForm()"-->
 <form method="post" action="LoginServlet" name="login" >
     <label>Email:</label>
-    <input type="text" name="email"><br><br>
+    <input type="text" name="email" required><br><br>
 
     <label>Password:</label>
-    <input type="password" name="password"><br><br>
-
-
+    <input type="password" name="password" required><br><br>
 
     <input type="submit" value="Login">
+
+<%
+String errorMessage = (String) request.getAttribute("errorMessage");
+if (errorMessage != null) {
+%>
+    <p style="color: red;"><%= errorMessage %></p>
+<%
+}
+%>
 </form>
-
-
-<script>
-
-    function validateForm() {
-        let email = document.forms["login"]["email"].value;
-        let password = document.forms["login"]["password"].value;
-
-        if(email == "" || password == "" ) {
-            alert("Please enter a valid username or password.")
-            return false;
-        }
-    }
-
-
-
-
-
-</script>
 
 </body>
 
