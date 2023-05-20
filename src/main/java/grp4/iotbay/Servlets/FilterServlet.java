@@ -60,6 +60,7 @@ public class FilterServlet extends HttpServlet {
 
                 else {
                     Product product = new Product();
+                    product.setId(rs.getInt("productId"));
                     product.setName(rs.getString("productName"));
                     product.setType(rs.getString("productType"));
                     product.setDescription(rs.getString("productDescription"));
@@ -92,6 +93,7 @@ public class FilterServlet extends HttpServlet {
 
                 while(rs.next()) {
                     Product product = new Product();
+                    product.setId(rs.getInt("productId"));
                     product.setName(rs.getString("productName"));
                     product.setType(rs.getString("productType"));
                     product.setDescription(rs.getString("productDescription"));
@@ -147,6 +149,7 @@ public class FilterServlet extends HttpServlet {
 
                 else {
                     Product product = new Product();
+                    product.setId(rs.getInt("productId"));
                     product.setName(rs.getString("productName"));
                     product.setType(rs.getString("productType"));
                     product.setDescription(rs.getString("productDescription"));

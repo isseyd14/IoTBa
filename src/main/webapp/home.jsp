@@ -284,8 +284,7 @@
         <td><%=product.getDescription()%></td>
         <td><%=product.getQuantity()%></td>
         <td>$<%=product.getPrice()%></td>
-        <td><%=product.getId()%></td>
-        <!--<td><a class="btn btn-dark" href="add-to-cart?id=<%=product.getId()%>">Add to Cart</a> <a</td>-->
+        <td><a href="add-to-cart?id=<%=(int) Math.round(product.getId())%>">Add to Cart</a></td>
         </tr>
         <% }
         }%>
