@@ -195,13 +195,14 @@
   <input type="text" name="quantity" class="inputField" placeholder="New quantity">
   <label>Update Price: </label>
   <input type="text" name="price" class="inputField" placeholder="New price">
+  <input type="submit" value="Update" class="button">
+</form>
 
 
   <div class="submitsection">
                                   
     <div class="submitDiv">
-<input type="submit" value="Update" class="button">
-</form>
+
 
 <% String errorMessage = (String) request.getAttribute("errorMessage"); %>
 <% String successMessage = (String) request.getAttribute("successMessage"); %>
