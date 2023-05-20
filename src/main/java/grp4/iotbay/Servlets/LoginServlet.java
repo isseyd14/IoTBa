@@ -13,6 +13,35 @@ import java.sql.*;
 
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
+
+    private void setSessionAttrs(HttpSession session, String email, String nameDB, int userIdDB) {
+        session.setAttribute("email", email);
+        session.setAttribute("name", nameDB);
+        session.setAttribute("userId", userIdDB);
+    }
+
+    private void createUserLog(HttpSession session, Connection con, String email) throws SQLException {
+        long loginTime = System.currentTimeMillis();
+        session.setAttribute("login_timestamp", loginTime);
+
+        // end timestamp for previous unlogged out session
+        String sql = "update u236601339_iotBay.access_logs set logout_timestamp=? where email=? and logout_timestamp=-1";
+
+        PreparedStatement ps = con.prepareStatement(sql);
+
+        ps.setLong(1, loginTime);
+        ps.setString(2, email);
+        ps.executeUpdate();
+
+        // create new session
+        sql = "insert into u236601339_iotBay.access_logs (email, login_timestamp) values (?,?)";
+
+        ps = con.prepareStatement(sql);
+        ps.setString(1, email);
+        ps.setLong(2, loginTime);
+        ps.executeUpdate();
+    }
+
     @Override
     protected void doPost(
         HttpServletRequest request, HttpServletResponse response
@@ -66,37 +95,15 @@ public class LoginServlet extends HttpServlet {
                 System.out.println("in If");
 
                 HttpSession session = request.getSession();
-                session.setAttribute("email", email);
-                session.setAttribute("name", nameDB);
-                session.setAttribute("userId", userIdDB);
-
-                // remove duplicate
-                long loginTime = System.currentTimeMillis();
-                session.setAttribute("login_timestamp", loginTime);
-
-                sql = "insert into u236601339_iotBay.access_logs (email, login_timestamp) values (?,?)";
-
-                ps = con.prepareStatement(sql);
-                ps.setString(1, email);
-                ps.setLong(2, loginTime);
-                ps.executeUpdate();
+                setSessionAttrs(session, email, nameDB, userIdDB);
+                createUserLog(session, con, email);
 
                 response.sendRedirect("home.jsp");
             } else if(email.equals(emailDB) && password.equals(passwordDB) && typeDB.equals("staff")) {
+
                 HttpSession session = request.getSession();
-                session.setAttribute("email", email);
-                session.setAttribute("name", nameDB);
-
-                // remove duplicate
-                long loginTime = System.currentTimeMillis();
-                session.setAttribute("login_timestamp", loginTime);
-
-                sql = "insert into u236601339_iotBay.access_logs (email, login_timestamp) values (?,?)";
-
-                ps = con.prepareStatement(sql);
-                ps.setString(1, email);
-                ps.setLong(2, loginTime);
-                ps.executeUpdate();
+                setSessionAttrs(session, email, nameDB, userIdDB);
+                createUserLog(session, con, email);
 
                 response.sendRedirect("staff-home.jsp");
             } else{

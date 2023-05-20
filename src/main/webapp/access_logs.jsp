@@ -180,7 +180,11 @@
 <% for(int i = 0; i < loginTimes.size(); ++i) {%>
   <tr>
     <td> <% out.print(format.format((new Date(loginTimes.get(i))))); %> </td>
-    <td> <% out.print(format.format((new Date(logoutTimes.get(i))))); %> </td>
+    <% if(logoutTimes.get(i) == -1) { %>
+      <td> - </td>
+    <%} else {%>
+      <td> <% out.print(format.format((new Date(logoutTimes.get(i))))); %> </td>
+    <%}%>
   </tr>
 <%}%>
 </table>
