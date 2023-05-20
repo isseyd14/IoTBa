@@ -20,6 +20,7 @@
 
         width: 100%;
         justify-content: center;
+        
 
     }
 
@@ -52,6 +53,7 @@
     table {
         border-collapse: collapse;
         width: 100%;
+        box-shadow: 0 4px 15px 0 rgba(0, 0, 0, 0.157);
     }
 
     .product-card {
@@ -64,68 +66,24 @@
         margin-right: 30px;
         margin-bottom: 20px;
     }
-    .stock-table {
-  width: 100%;
-  border-collapse: collapse;
-  border-radius: 20px;
-  overflow: hidden;
-}
 
-.stock-table th,
-.stock-table td {
-  padding: 12px;
-  text-align: left;
-  border-bottom: 1px solid #e0e0e0;
-}
-
-.stock-table th {
-    background-color: #f3f3f3af;
-  font-weight: bold;
-  text-transform: uppercase;
-}
-
-.stock-table tbody tr:hover {
-  background-color: #f9f9f9;
-}
-
-.stock-table a {
-  text-decoration: none;
-  color: #fff;
-  background-color: #034473;
-  padding: 8px 16px;
-  border-radius: 20px;
-  transition: background-color 0.3s ease;
-}
-
-.stock-table a:hover {
-    background-color: #4494d5;
-}
-
-.stock-table .table-actions {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.stock-table .table-actions .quantity {
-  font-size: 14px;
-  color: #888888;
-}
-
-.stock-table .table-actions .add-to-cart {
-  font-size: 16px;
-  font-weight: bold;
-}
 
 
 .mainBody{
     margin:50px;
+    
 }
 
 .formBody{
-    background-color: #f3f3f357;
+margin-left:auto;
+margin-right:auto;
+    background-color: #ffffff8f;
        padding:50px;
        border-radius: 40px;
+       max-width: 1100px;
+       min-width: 800px;
+       box-shadow: 0 4px 15px 0 rgba(0, 0, 0, 0.157);
+    
 }
 .searchForm {
   display: flex;
@@ -201,20 +159,9 @@
 
     <h1>Available products:</h1>
 
-<<<<<<< Updated upstream
 
-    <form action="FilterServlet" method="get">
-        <label>Search by product name: </label>
-        <input type="text" name="productName">
-        <label>Search by product type: </label>
-        <input type="text" name="productType">
-        <input type="submit" value="Filter">
-    </form>
-    <form action="ResetFilterServlet" method="get">
-        <input type="submit" value="Reset">
-=======
     <div class="formBody">
-    <form action="/FilterServlet" method="get" class="searchForm">
+    <form action="FilterServlet" method="get" class="searchForm">
         <div> <label >Search by product name: </label>
             <input type="text" name="productName" placeholder="product name"></div>
        <div> <label>Search by product type: </label>
@@ -222,9 +169,9 @@
        
         <input type="submit"  value="Filter" class="button">
     </form>
-    <form action="/ResetFilterServlet" method="get" class="searchForm" >
+    <form action="ResetFilterServlet" method="get" class="searchForm" >
         <input type="submit" value="Reset" class="button">
->>>>>>> Stashed changes
+
     </form>
 </div>
     <% if(errorMessage != null) { %>

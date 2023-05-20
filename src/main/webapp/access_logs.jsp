@@ -35,9 +35,9 @@
                         justify-content: space-between;
                         margin:50px;
                         padding:30px;
-
+                        box-shadow: 0 4px 15px 0 rgba(0, 0, 0, 0.157);
                         border-radius: 40px;
-                        background-color: #efefef76;
+                        background-color: #ffffff76;
 
                         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03), 0 8px 16px rgba(0, 0, 0, 0.03);
                       }

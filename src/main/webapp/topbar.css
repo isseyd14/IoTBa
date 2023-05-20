@@ -1,6 +1,7 @@
 body {
     margin: 0;
     font-family: Arial, Helvetica, sans-serif;
+    background-color: #f2f2f2;
 }
 
 .standard-Nav {
@@ -110,4 +111,65 @@ body {
         width: 300px;
         font-size: 14px;
         margin-top:20px;
+      }
+
+      .stock-table {
+        width: 100%;
+        border-collapse: collapse;
+        border-radius: 20px;
+        overflow: hidden;
+      }
+      
+      .stock-table th,
+      .stock-table td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #e0e0e0;
+       
+      }
+      
+      .stock-table th {
+          background-color: #f3f3f3af;
+        font-weight: bold;
+        text-transform: uppercase;
+      }
+
+      .stock-table tbody tr{
+        background-color: #ffffff;
+        transition: background-color 0.3s ease;
+      }
+      
+      
+      .stock-table tbody tr:hover {
+        background-color: #ffffff00;
+        transition: background-color 0.3s ease;
+      }
+      
+      .stock-table a {
+        text-decoration: none;
+        color: #fff;
+        background-color: #034473;
+        padding: 8px 16px;
+        border-radius: 20px;
+        transition: background-color 0.3s ease;
+      }
+      
+      .stock-table a:hover {
+          background-color: #4494d5;
+      }
+      
+      .stock-table .table-actions {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      
+      .stock-table .table-actions .quantity {
+        font-size: 14px;
+        color: #888888;
+      }
+      
+      .stock-table .table-actions .add-to-cart {
+        font-size: 16px;
+        font-weight: bold;
       }

@@ -18,7 +18,7 @@
 </head>
 <style>
 
-body{
+.mainContent{
   background-color: #034473;
 }
 

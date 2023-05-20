@@ -3,10 +3,15 @@
 <head>
   <title>IoT Bay Registration</title>
   <link rel="stylesheet" type="text/css" href="loginStyles.css?<?php echo time(); ?>">
+  <link rel="stylesheet" href="topbar.css">
 </head>
 
 
 <style>
+    .nav-logo{
+        margin-left:auto;
+        margin-right:auto;
+      }
   body {
       background-color: #f2f2f2;
       font-family: Arial, sans-serif;
@@ -34,10 +39,12 @@
       border: 1px solid #ccc;
       border-radius: 4px;
   }
-  
+
+      
   input[type="submit"] {
       width: 100%;
-      background-color: #4CAF50;
+      background-color: #034473;
+      
       color: white;
       padding: 14px 20px;
       margin: 8px 0;
@@ -46,11 +53,11 @@
       cursor: pointer;
   }
   input[type="text"]:focus, input[type="password"]:focus {
-      border: 2px solid #4CAF50;
+      border: 2px solid #034473;
   }
   
   input[type="submit"]:hover {
-      background-color: #45a049;
+    background-color: #4494d5;
   }
   
   .container {
@@ -88,6 +95,11 @@
   </style>
   
 <body>
+
+  <nav class="standard-Nav">
+    <img  class="nav-logo" src="IotBayLogo.png" width="60px" height="60" alt="Product Image">
+    
+  </nav>
     <!--onsubmit="return validateForm()"-->
 <h1>Registration</h1>
 <form method="post" action="RegisterServerlet" name="registration" >
