@@ -29,12 +29,11 @@ public class Deletepaymentservlet extends HttpServlet {
             ps = con.prepareStatement(sql);
             ps.setString(1, currentEmail);
             ps.executeUpdate();
-            request.setAttribute("errorMessage3", "Succesfully removed payment method");
             response.sendRedirect("account.jsp");
                             }
 
          catch (Exception e) {
-                        response.sendRedirect("account.jsp");
+            response.sendRedirect("account.jsp");
 
             System.out.println("Error: " + e.getMessage());
         } finally {
@@ -46,7 +45,7 @@ public class Deletepaymentservlet extends HttpServlet {
                     con.close();
                 }
             } catch (Exception e) {
-                           response.sendRedirect("account.jsp");
+            response.sendRedirect("account.jsp");
 
                 System.out.println("Error closing resources: " + e.getMessage());
             }

@@ -109,10 +109,10 @@ background-color:#509e6000;
 <div class="mainContent">
 
 
-<form method="post" action="DeleteServlet" name="delete" onsubmit="return confirm('Are you sure you wish to proceed? There is no going back from here...');">
+<form method="post" action="Deletepaymentservlet" name="deletePay" onsubmit="return confirm('Are you sure you wish to proceed? There is no going back from here...');">
     <div class="formContent">
 
-        <h3 style="text-align: center; margin-bottom:50px;">This action will irreversibly delete your account from IoTBay and all of your saved information!</h3>
+        <h3 style="text-align: center; margin-bottom:50px;">This action will irreversibly delete your payment information from IoTBay </h3>
 
     <label style="padding-right:50px;">Confirm Password:</label>
     <input type="password" class="inputField" name="password" placeholder="password" required><br><br>

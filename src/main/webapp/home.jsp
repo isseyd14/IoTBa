@@ -10,81 +10,17 @@
 
 <head>
     <title>IoTBay Search</title>
+    <link rel="stylesheet" href="topbar.css">
 </head>
 <style>
-    body {
-        margin: 0;
-        font-family: Arial, Helvetica, sans-serif;
-    }
-
-    .standard-Nav {
-        display: flex;
-        height: 70px;
-        background-color: #f3f3f3;
-        box-shadow: 0px -10px 36px 3px rgba(143, 142, 142, 0.537);
-        
-    }
-
-    .nav-logo {
-        font-size: 24px;
-        font-weight: bold;
-        text-decoration: none;
-        color: #333;
-        margin-top: auto;
-        margin-bottom: auto;
-
-        padding-left: 50px;
-        padding-right: 50px;
-    }
-
-    .nav-links {
-        display: flex;
-        flex-grow: 1;
-        justify-content: flex-end;
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        flex-basis: 0;
-    }
-
-    .nav-links .nav-search {
-
-        width: 100%;
-        margin-left: 20px;
-        margin-right: 20px;
-        margin-top: auto;
-        margin-bottom: auto;
-    }
-
-
-    .nav-links .nav-button a {
-        display: flex;
-        height: 100%;
-        padding-left: 40px;
-        padding-right: 40px;
-        align-items: center;
-        font-size: 16px;
-        font-weight: bold;
-        text-decoration: none;
-        color: #fff;
-        background-color: #034473;
-        transition: background-color 0.3s ease;
-
-    }
-
-    .nav-links .nav-button a:hover {
-        background-color: #0c78c5;
-    }
-
-    .nav-links .nav-button .active {
-        background-color: #4494d5;
-    }
+   
 
     .searchForm {
         display: flex;
-        height: 100%;
+
         width: 100%;
         justify-content: center;
+        
 
     }
 
@@ -100,7 +36,7 @@
         font-weight: bold;
         text-decoration: none;
         color: white;
-        background-color: #034473;
+
 
 
     }
@@ -117,6 +53,7 @@
     table {
         border-collapse: collapse;
         width: 100%;
+        box-shadow: 0 4px 15px 0 rgba(0, 0, 0, 0.157);
     }
 
     .product-card {
@@ -130,29 +67,50 @@
         margin-bottom: 20px;
     }
 
-    .product-card img {
-        width: 150px;
-        height: 150px;
-        margin-right: 20px;
-    }
 
-    .product-details h2 {
-        font-size: 18px;
-        margin: 0 0 10px;
-    }
 
-    .product-details p {
-        font-size: 14px;
-        margin: 0;
-    }
-    .stock-table {
-        border-collapse: collapse;
-    }
+.mainBody{
+    margin:50px;
+    
+}
 
-    .stock-table td, .stock-table th {
-        border: 1px solid black;
-        padding: 0.5rem;
-    }
+.formBody{
+margin-left:auto;
+margin-right:auto;
+    background-color: #ffffff8f;
+       padding:50px;
+       border-radius: 40px;
+       max-width: 1100px;
+       min-width: 800px;
+       box-shadow: 0 4px 15px 0 rgba(0, 0, 0, 0.157);
+    
+}
+.searchForm {
+  display: flex;
+  justify-content: center;
+
+
+       
+}
+
+.searchForm label {
+  font-weight: bold;
+  margin-bottom: 50px;
+
+}
+
+.searchForm input[type="text"] {
+  padding: 10px;
+  border: none;
+  border-radius: 30px;
+  background-color: #f5f5f5;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
+  width: 300px;
+  font-size: 14px;
+  margin-top:20px;
+}
+
 </style>
 
 <%
@@ -168,7 +126,7 @@
     if(email == null){
 %>
 
-<body>Error no Login</body>
+<body class="loginFail">Error no Login</body>
 
 <%} else if(email != null){
 
@@ -178,23 +136,14 @@
     <nav class="standard-Nav">
         <img  class="nav-logo" src="IotBayLogo.png" width="60px" height="60" alt="Product Image">
         <ul class="nav-links">
-            <li class="nav-search">
-
-                <form name="searchQuery" action="searchQuery" method="POST" class="seachForm">
-                    <input type="text" id="searchQuery" name="searchQuery" placeholder="Search IOTBay"
-                        class="searchField">
-                    <input type="submit" value="Search" style="background-color: ;">
-                </form>
-
-
-            </li>
-            <li class="nav-button"><a href="account.jsp">Welcome, <%out.print(name);%></a></li>
+    
+            <li class="nav-button" style="min-width:400px; "><a href="account.jsp" style="background-color: #ff000000; color:black;">Welcome, <%out.print(name);%></a></li>
             <li class="nav-button"><a class="active" href="home.jsp">Search</a></li>
             <% if(cart_list != null){%>
-            <li class="nav-button"><a class="active" href="cart.jsp">
+            <li class="nav-button"><a  href="cart.jsp">
                     Cart(<%=cart_list.size()%>)
                 </a></li>
-            <%}else{%><li class="nav-button"><a class="active" href="cart.jsp">
+            <%}else{%><li class="nav-button"><a  href="cart.jsp">
                     Cart
                 </a></li>
        
@@ -206,19 +155,28 @@
         </ul>
     </nav>
 
+    <div class="mainBody">
+
     <h1>Available products:</h1>
 
 
-    <form action="FilterServlet" method="get">
-        <label>Search by product name: </label>
-        <input type="text" name="productName">
-        <label>Search by product type: </label>
-        <input type="text" name="productType">
-        <input type="submit" value="Filter">
-    </form>
-    <form action="ResetFilterServlet" method="get">
-        <input type="submit" value="Reset">
-    </form>
+        <div class="formBody">
+
+            <form action="FilterServlet" method="get" class="searchForm">
+                <div>
+                    <label>Search by product name: </label>
+                    <input type="text" name="productName" class="inputField" placeholder="product name">
+                </div>
+                <div>
+                    <label>Search by product type: </label>
+                    <input type="text" name="productType" class="inputField" placeholder="product type">
+                </div>
+                <input type="submit" value="Filter" class="button">
+            </form>
+            <form action="ResetFilterServlet" method="get">
+                <input type="submit" value="Reset" class="button">
+            </form>
+        </div>
     <% if(errorMessage != null) { %>
     <p style="color: red"><%=errorMessage%></p> <% } %>
     <%  Connection con = null;
@@ -254,15 +212,16 @@
             <th>Description</th>
             <th>Stock Quantity</th>
             <th>Unit Price</th>
+            <th>Cart</th>
         </tr>
         <% while (rs.next()) { %>
         <tr>
-            <td><%= rs.getString("productName") %></td>
-            <td><%= rs.getString("productType")%></td>
-            <td><%= rs.getString("productDescription")%></td>
-            <td><%= rs.getInt("productQuantity") %></td>
-            <td>$<%= rs.getDouble("productPrice") %></td>
-            <td><a href="add-to-cart?id=<%=rs.getInt("productId")%>"> Add to Cart</a></td>
+            <td style="max-width:150px;"><%= rs.getString("productName") %></td>
+            <td style="max-width:150px;"><%= rs.getString("productType")%></td>
+            <td style="max-width:450px;"><%= rs.getString("productDescription")%></td>
+            <td style="max-width:100px;"><%= rs.getInt("productQuantity") %></td>
+            <td style="max-width:100px;">$<%= rs.getDouble("productPrice") %></td>
+            <td style="min-width:150px;"><a href="add-to-cart?id=<%=rs.getInt("productId")%>"> Add to Cart</a></td>
         </tr>
         <% }
             if(con != null) {
@@ -284,66 +243,14 @@
         <td><%=product.getDescription()%></td>
         <td><%=product.getQuantity()%></td>
         <td>$<%=product.getPrice()%></td>
-        <td><%=product.getId()%></td>
-        <!--<td><a class="btn btn-dark" href="add-to-cart?id=<%=product.getId()%>">Add to Cart</a> <a</td>-->
+        <td><a href="add-to-cart?id=<%=(int) Math.round(product.getId())%>">Add to Cart</a></td>
         </tr>
         <% }
         }%>
     </table>
 
 
-
-   <!-- Jack old Table
-
-    <div class="main display">
-        <h1 style="text-align: center; padding-top:50px;">Search Results...</h1>
-        <p style="color:red;">This table is an example table. As this is hard coded, we will place the java code around
-            this. The tr will be placed in a while loop as each
-            %search% row is retrieved from the database. Data will be added acordingly</p>
-        <table>
-            <tbody>
-                <tr>
-                    <td>
-                        <div class="product-card">
-                            <img src="https://picsum.photos/id/1/100/100" alt="Product Image">
-                            <div class="product-details">
-                                <h2>Phone</h2>
-                                <p>This is a random description to describe a product that would be in our search. THis
-                                    is just random adipiscin rnnrogrnog4oir</p>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="product-card">
-                            <img src="https://picsum.photos/id/2/100/100" alt="Product Image">
-                            <div class="product-details">
-                                <h2>Cool thing</h2>
-                                <p>This is a random description to describe a product that would be in our search. THis
-                                    is just random adipiscin rnnrogrnog4oir</p>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="product-card">
-                            <img src="https://picsum.photos/id/3/100/100" alt="Product Image">
-                            <div class="product-details">
-                                <h2>Watch</h2>
-                                <p>This is a random description to describe a product that would be in our search. THis
-                                    is just random adipiscin rnnrogrnog4oir</p>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-
-
-    </div> -->
-
+</div>
 </body>
 <%}%>
 </html>

@@ -5,14 +5,18 @@
     <title>IoTBay</title>
 </head>
 <body>
-<img  class="nav-logo" src="IotBayLogo.png" width="60px" height="60" alt="Product Image">
-<h1>IoTBay</h1>
 
+
+<link rel="stylesheet" href="topbar.css">
 </body>
 </html>
 
 
 <style>
+     .nav-logo{
+        margin-left:auto;
+        margin-right:auto;
+      }
 body {
     background-color: #f2f2f2;
     font-family: Arial, sans-serif;
@@ -41,23 +45,14 @@ a[type="text"], input[type="password"] {
     border-radius: 4px;
 }
 
-a[type="submit"] {
-    width: 100%;
-    background-color: #4CAF50;
-    color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
 
-}
 a[type="text"]:focus, input[type="password"]:focus {
-    border: 2px solid #4CAF50;
+    border: 2px solid #034473;
 }
 
-a:hover {
-    background-color: #45a049;
+      
+a {
+   color: #474747;
 }
 
 .container {
@@ -92,19 +87,35 @@ input[type="submit"] {
     cursor: pointer;
 }
 
-
+.button{
+    height:50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    font-size: 20px;
+}
 </style>
 
+<nav class="standard-Nav">
+    <img  class="nav-logo" src="IotBayLogo.png" width="60px" height="60" alt="Product Image">
+    
+  </nav>
 
+  <div style="margin-top:100px; margin-bottom:-20px; color:#2e2e2e;">
+  <h1 style=" text-align: center;">Welcome to IOT Bay.  </h1>
+  <h2 style=" text-align: center;">Create an account to view our amazing stock!!</h2>
+</div>
 
 <div class="container">
 
-<form >
- <a  type="submit" href="login.jsp"  class="button ">Login</a>
+<form style="padding: 50px; display: flex; flex-direction: column; align-items: center;">
+    <a  type="submit" href="register.jsp"  class="button ">Create an account</a>
+ <a  type="submit" href="login.jsp" style="margin-top:40px; margin-bottom:0px;">I am already a member</a>
  <br>
  <br>
  <br>
-    <a  type="submit" href="register.jsp"  class="button ">Register</a>
+    
   
     
 </form>
