@@ -146,7 +146,7 @@
                         </style>
 
                         <% int userId=(int) request.getSession().getAttribute("userId"); Connection con ;
-                            PreparedStatement pst ; PreparedStatement pst2 ; ResultSet rs ; ResultSet rs2 ; String query
+                            PreparedStatement pst = null ; PreparedStatement pst2 = null ; ResultSet rs = null ; ResultSet rs2 = null ; String query
                             ; String query2 ;
                             con=DriverManager.getConnection("jdbc:mysql://auth-db624.hstgr.io/u236601339_iotBay?autoReconnect=true&useSSL=false", "u236601339_iotbayAdmin"
                             , "iotBaypassword1" ); List<Order> list = new ArrayList<>();
@@ -185,6 +185,27 @@
                                 } catch (Exception e) {
                                 e.printStackTrace();
                                 System.out.println(e.getMessage());
+                                }
+                                finally {
+                                    try {
+                                        if(rs != null) {
+                                            rs.close();
+                                        }
+                                        if(rs2 != null) {
+                                            rs2.close();
+                                        }
+                                        if(pst != null) {
+                                            pst.close();
+                                        }
+                                        if(pst2 != null) {
+                                            pst.close();
+                                        }
+                                        if(con != null) {
+                                            con.close();
+                                        }
+                                    } catch (SQLException e) {
+                                        throw new RuntimeException(e);
+                                    }
                                 }
                                 %>
 
