@@ -4,6 +4,7 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.LinkedList" %>
+<%@ page import="javax.swing.plaf.nimbus.State" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 
@@ -166,8 +167,10 @@ background-color: #ffffff8f;
 
 <% if(errorMessage != null) { %>
 <p style="color: red"><%=errorMessage%></p> <% } %>
+
 <%  Connection con = null;
-    ResultSet rs = null; %>
+    ResultSet rs = null;
+    Statement stmt = null;%>
 
 <% if(products == null) {
     try {
@@ -177,42 +180,43 @@ background-color: #ffffff8f;
         );
 
         con = DriverManager.getConnection("jdbc:mysql://auth-db624.hstgr.io/u236601339_iotBay?autoReconnect=true&useSSL=false", "u236601339_iotbayAdmin", "iotBaypassword1");
-        Statement stmt = con.createStatement();
-        rs = stmt.executeQuery("SELECT * FROM product order by productName ASC");
+        stmt = con.createStatement();
+        rs = stmt.executeQuery("SELECT * FROM product order by productName ASC"); %>
 
-
-
+    <table class="stock-table">
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Stock Quantity</th>
+            <th>Unit Price</th>
+        </tr>
+        <% while (rs.next()) { %>
+        <tr>
+            <td><%= rs.getString("productName") %></td>
+            <td><%= rs.getString("productType")%></td>
+            <td><%= rs.getString("productDescription")%></td>
+            <td><%= rs.getInt("productQuantity") %></td>
+            <td>$<%= rs.getDouble("productPrice") %></td>
+        </tr>
+        <% } %>
+    </table>
+ <% } finally {
+        try {
+            if(stmt != null) {
+                stmt.close();
+            }
+            if(rs != null) {
+                rs.close();
+            }
+            if(con != null) {
+                con.close();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
-    catch(SQLException e) {
-
-    }
-}
-
-    %>
-
-<% if(products == null) { %>
-
-<table class="stock-table">
-    <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Description</th>
-        <th>Stock Quantity</th>
-        <th>Unit Price</th>
-    </tr>
-    <% while (rs.next()) { %>
-    <tr>
-        <td><%= rs.getString("productName") %></td>
-        <td><%= rs.getString("productType")%></td>
-        <td><%= rs.getString("productDescription")%></td>
-        <td><%= rs.getInt("productQuantity") %></td>
-        <td>$<%= rs.getDouble("productPrice") %></td>
-    </tr>
-    <% }
-    if(con != null) {
-        con.close();
-    }%>
-</table> <% } else { %>
+} else { %>
 
 <table class="stock-table">
 <tr>
