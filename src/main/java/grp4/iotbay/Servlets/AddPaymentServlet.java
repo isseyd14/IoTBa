@@ -36,9 +36,10 @@ public class AddPaymentServlet extends HttpServlet {
         Double am = (Double) session.getAttribute("Amount");
         String amn = String.valueOf(am);     
         String name = request.getParameter("Name");
-       Connection con = null;
+        
+        Connection con = null;
         PreparedStatement ps = null;
-                PreparedStatement qs = null;
+        ResultSet rs = null;
 
 
         try {
@@ -61,7 +62,9 @@ public class AddPaymentServlet extends HttpServlet {
             String sql1 = ("SELECT Email FROM u236601339_iotBay.PaymentInfo WHERE Email = ?");
             ps = con.prepareStatement(sql1);
             ps.setString (1, currentEmail);
-            ResultSet rs = ps.executeQuery();
+          
+            rs = ps.executeQuery();
+          
             if (rs.next()) {
                 
                 String sql = ("UPDATE u236601339_iotBay.PaymentInfo SET CardNumber = ?, CVC = ?, Expdate = ?, Name = ? WHERE Email = ?");
@@ -94,14 +97,18 @@ public class AddPaymentServlet extends HttpServlet {
             String sql = ("INSERT INTO u236601339_iotBay.Payment (Date, Email, Amount) VALUES (?, ?, ?)");
     
             DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+
             String data = df.format(new Date());
+          
             ps = con.prepareStatement(sql);
             ps.setString(1, data);
             ps.setString(2, currentEmail);
             ps.setString(3, amn);
             ps.executeUpdate();
             ps.close();
+
             response.sendRedirect("checkout.jsp"); 
+
 
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
@@ -109,6 +116,9 @@ public class AddPaymentServlet extends HttpServlet {
             try {
                 if (ps != null) {
                     ps.close();
+                }
+                if(rs != null) {
+                    rs.close();
                 }
                 if (con != null) {
                     con.close();

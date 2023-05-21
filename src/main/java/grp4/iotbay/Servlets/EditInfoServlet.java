@@ -36,8 +36,10 @@ public class EditInfoServlet extends HttpServlet {
             newEmail = currentEmail;
         }
 
+        Connection con = null;
+        PreparedStatement ps = null;
+
         try{
-            Connection con;
 
             Class.forName("com.mysql.jdbc.Driver");
 
@@ -46,7 +48,7 @@ public class EditInfoServlet extends HttpServlet {
 
             String sql = "update u236601339_iotBay.users set name=?, email=?, password=? where email=? and password=?";
 
-            PreparedStatement ps = con.prepareStatement(sql);
+            ps = con.prepareStatement(sql);
 
             ps.setString(1, newName);
             ps.setString(2, newEmail);
@@ -59,6 +61,7 @@ public class EditInfoServlet extends HttpServlet {
                 RequestDispatcher rd = request.getRequestDispatcher("edit_info.jsp");
                 rd.forward(request, response);
             } else {
+              
                 if (!newEmail.equals(currentEmail)) {
                     sql = "update u236601339_iotBay.access_logs set email=? where email=?";
 
@@ -72,8 +75,20 @@ public class EditInfoServlet extends HttpServlet {
                 session.setAttribute("email", newEmail);
                 response.sendRedirect("account.jsp");
             }
-        } catch(SQLException | ClassNotFoundException e){
+        }catch(SQLException | ClassNotFoundException e){
             System.out.println("Edit Error! - " + e.getMessage());
+        }
+        finally {
+            try {
+                if(ps != null) {
+                    ps.close();
+                }
+                if(con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                System.out.println("Error closing resources: " + e.getMessage());
+            }
         }
     }
 }

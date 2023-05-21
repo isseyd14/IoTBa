@@ -55,8 +55,11 @@ public class LoginServlet extends HttpServlet {
             rd.forward(request, response);
             return;
         }
+      
         Connection con = null;
         PreparedStatement ps = null;
+        ResultSet rs = null;
+      
         try {
             Class.forName("com.mysql.jdbc.Driver");
 
@@ -76,7 +79,8 @@ public class LoginServlet extends HttpServlet {
             String nameDB = "";
             int userIdDB = 0;
             
-            ResultSet rs = ps.executeQuery();
+            rs = ps.executeQuery();
+
 
             while(rs.next()) {
                 emailDB = rs.getString("email");
@@ -119,6 +123,9 @@ public class LoginServlet extends HttpServlet {
             try {
                 if (ps != null) {
                     ps.close();
+                }
+                if (rs != null) {
+                    rs.close();
                 }
                 if (con != null) {
                     con.close();

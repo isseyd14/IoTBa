@@ -16,8 +16,10 @@ public class DeleteServlet extends HttpServlet {
         HttpSession session = request.getSession();
         String email = (String) session.getAttribute("email");
         String password = request.getParameter("password");
+
+        Connection con = null;
+        PreparedStatement ps = null;
         try{
-            Connection con;
 
             Class.forName("com.mysql.jdbc.Driver");
 
@@ -26,7 +28,7 @@ public class DeleteServlet extends HttpServlet {
 
             String sql = "delete from u236601339_iotBay.users where email=? and password=?";
 
-            PreparedStatement ps = con.prepareStatement(sql);
+            ps = con.prepareStatement(sql);
 
             ps.setString(1, email);
             ps.setString(2, password);
@@ -46,6 +48,18 @@ public class DeleteServlet extends HttpServlet {
             }
         }catch(SQLException | ClassNotFoundException e){
             System.out.println("Delete Error! - " + e.getMessage());
+        }
+        finally {
+            try {
+                if(ps != null) {
+                    ps.close();
+                }
+                if(con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                System.out.println("Error closing resources: " + e.getMessage());
+            }
         }
     }
 }

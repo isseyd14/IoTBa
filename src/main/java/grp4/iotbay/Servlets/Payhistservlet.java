@@ -19,8 +19,11 @@ public class Payhistservlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-       Connection con = null;
+
+        Connection con = null;
         PreparedStatement ps = null;
+        ResultSet rs = null;
+      
         String currentEmail = (String) session.getAttribute("email");
 
         try {
@@ -29,7 +32,9 @@ public class Payhistservlet extends HttpServlet {
             String sql = "SELECT * FROM u236601339_iotBay.PaymentInfo WHERE Email=?" ;
             ps = con.prepareStatement(sql);
             ps.setString(1, currentEmail);
-            ResultSet rs = ps.executeQuery();
+
+            rs = ps.executeQuery();
+          
             if(rs.next()) {
                 Payment paymentNew = new Payment();
                 paymentNew.setCreditCardNumber(rs.getString("CardNumber"));
@@ -56,6 +61,9 @@ public class Payhistservlet extends HttpServlet {
                 }
                 if (con != null) {
                     con.close();
+                }
+                if (rs != null) {
+                    rs.close();
                 }
             } catch (Exception e) {
                 System.out.println("Error closing resources: " + e.getMessage());

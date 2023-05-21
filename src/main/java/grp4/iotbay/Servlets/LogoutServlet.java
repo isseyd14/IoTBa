@@ -20,13 +20,21 @@ public class LogoutServlet extends HttpServlet {
     protected void service(
         HttpServletRequest request, HttpServletResponse response
     ) throws ServletException, IOException {
+        try {
+            request.getSession().invalidate();
+            response.sendRedirect("index.jsp");
+        } catch (IOException e) {
+            e.printStackTrace();
         HttpSession session = request.getSession();
 
         String email = (String) session.getAttribute("email");
         long loginTime = (long) session.getAttribute("login_timestamp");
 
+        Connection con = null;
+        ResultSet rs = null;
+        PreparedStatement ps = null;
+
         try {
-            Connection con;
 
             Class.forName("com.mysql.jdbc.Driver");
 
@@ -38,7 +46,7 @@ public class LogoutServlet extends HttpServlet {
 
             String sql = "update u236601339_iotBay.access_logs set logout_timestamp=? where email=? and login_timestamp=?";
 
-            PreparedStatement ps = con.prepareStatement(sql);
+            ps = con.prepareStatement(sql);
 
             ps.setLong(1, System.currentTimeMillis());
             ps.setString(2, email);
@@ -57,6 +65,21 @@ public class LogoutServlet extends HttpServlet {
             }
         } catch (SQLException | ClassNotFoundException e) {
             System.out.println("Logout Error! - " + e.getMessage());
+        }
+        finally {
+            try {
+                if(ps != null) {
+                    ps.close();
+                }
+                if(rs != null) {
+                    rs.close();
+                }
+                if(con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }
