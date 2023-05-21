@@ -111,7 +111,7 @@
 
   .stock-table th,
   .stock-table td {
-      font-size: 10px;
+      font-size: 16px;
   }
 
 
@@ -157,10 +157,24 @@
 
 <div class="mainContent">
 
-  <h2><a href="staff-home.jsp" class="button" style=" margin:100px; top:50px; border:2px solid white;">Home</a></h2>
+  <h2><a href="staff-home.jsp" class="button" style=" margin:100px; top:50px; border:2px solid white;">Home</a></h2><br>
+  <h2><a href="update-product.jsp" class="button" style="margin:100px; top:50px; border:2px solid white;">Back</a> </h2>
   <div class="innerBody">
 
 <h1>Updating: <%=product.getName()%></h1>
+
+    <% String errorMessage = (String) request.getAttribute("errorMessage"); %>
+    <% String successMessage = (String) request.getAttribute("successMessage"); %>
+
+    <% if(errorMessage != null) { %>
+    <h3 style="color: red"><%=errorMessage%></h3>
+
+    <% } %>
+
+    <% if(successMessage != null) { %>
+    <h3 style="color: green"><%=successMessage%></h3>
+
+    <% } %>
 
 <table class="stock-table">
   <tr>
@@ -203,20 +217,6 @@
                                   
     <div class="submitDiv">
 
-
-<% String errorMessage = (String) request.getAttribute("errorMessage"); %>
-<% String successMessage = (String) request.getAttribute("successMessage"); %>
-
-<% if(errorMessage != null) { %>
-<h3 style="color: red"><%=errorMessage%></h3>
-
-<% } %>
-
-<% if(successMessage != null) { %>
-<h3 style="color: green"><%=successMessage%></h3>
-
-<% } %>
-
 <form action="update-product.jsp" >
   <input type="submit" value="Back" class="button" style="border:2px solid #034473; color:#034473; background-color: #d9d9d900;">
 </form>
@@ -233,23 +233,3 @@
   </div>
 </body>
 </html>
-<script>
-  const inputs = document.querySelectorAll('input[type="text"], input[type="password"]');
-const submitSection = document.querySelector('.submitsection');
-
-inputs.forEach((input) => {
-  input.addEventListener('input', toggleSubmitSectionVisibility);
-});
-
-function toggleSubmitSectionVisibility() {
-  let showSubmitSection = false;
-
-  inputs.forEach((input) => {
-    if (input.value.trim() !== '') {
-      showSubmitSection = true;
-    }
-  });
-
-  submitSection.style.display = showSubmitSection ? 'flex' : 'none';
-}
-</script>

@@ -110,7 +110,7 @@
 
   .stock-table th,
   .stock-table td {
-      font-size: 10px;
+      font-size: 16px;
   }
 
 
@@ -157,7 +157,13 @@
     <h2><a href="staff-home.jsp" class="button" style=" margin:100px; top:50px; border:2px solid white;">Home</a></h2>
 
 <div class="innerBody">
-<h1>Product List</h1>
+  <form action="RemoveServlet" method="post" name="removeProduct">
+    <label style="">Use remove buttons below OR enter name of product to be removed from listing:</label>
+    <input type="text" name="productName" class="inputField" placeholder="enter product name"/>
+
+
+    <input type="submit" value="Remove product" class="button" style="font-size: 12px;">
+  </form>
 <%
   Connection con;
 
@@ -170,7 +176,7 @@
     ResultSet rs = stmt.executeQuery("SELECT * FROM product");
 %>
 
-
+  <h1>Product List</h1>
 <table class="stock-table">
   <tr>
     <th>Product Name</th>
@@ -195,14 +201,6 @@
   </tr>
   <% } con.close(); rs.close(); %>
 </table>
-
-<form action="RemoveServlet" method="post" name="removeProduct">
-  <label style="margin:50px;">Use remove buttons above OR enter name of product to be removed from listing:</label>
-  <input type="text" name="productName" class="inputField" placeholder="enter product name"/>
-
-
-  <input type="submit" value="Remove product" class="button" style="font-size: 12px;  padding:10px;">
-</form>
 
 <% if(errorMessage != null) { %>
 <p style="color: red"><%=errorMessage%></p>

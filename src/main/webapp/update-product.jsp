@@ -119,7 +119,7 @@
     
       .stock-table th,
       .stock-table td {
-          font-size: 10px;
+          font-size: 16px;
       }
     
     
@@ -177,6 +177,14 @@
 
 
 <h2>Select product to edit:</h2>
+      <% String errorMessage = (String) request.getAttribute("errorMessage"); %>
+
+      <% if(errorMessage != null) { %>
+
+    <h3 style="color: red"><%=errorMessage%></h3>
+
+      <% } %>
+
 <form action="FilterServlet" method="get">
   <label>Search by product name: </label>
   <input type="text" name="productName" class="inputField">
@@ -184,9 +192,15 @@
   <input type="text" name="productType" class="inputField">
   <input type="submit" value="Filter" class="button">
 </form>
-<form action="ResetFilterServlet" method="get">
-  <input type="submit" value="Reset" class="button" style="border:2px solid #034473; color:#034473; background-color: #d9d9d900;">
-</form>
+    <form action="ResetFilterServlet" method="get">
+      <input type="submit" value="Reset" class="button" style="border:2px solid #034473; color:#034473; background-color: #d9d9d900;">
+    </form>
+
+    <form method="post" action="FindProductServlet">
+      <strong style="margin:40px;"><label >Select product below OR type in product you wish to edit:</label></strong>
+      <input type="text" class="inputField" name="productName"><br><br>
+      <input type="submit" value="Select" class="button"/>
+    </form>
 
 <% if(products == null) { %>
   <div class="tableContainer">
@@ -234,20 +248,6 @@
     }%>
 </table>
   </div>
-<form method="post" action="FindProductServlet">
-  <strong style="margin:40px;"><label >Select product above OR type in product you wish to edit:</label></strong>
-  <input type="text" class="inputField" name="productName"><br><br>
-  <input type="submit" value="Select" class="button"/>
-
-</form>
-
-<% String errorMessage = (String) request.getAttribute("errorMessage"); %>
-
-<% if(errorMessage != null) { %>
-
-<h3 style="color: red"><%=errorMessage%></h3>
-
-<% } %>
 
 <%
 
