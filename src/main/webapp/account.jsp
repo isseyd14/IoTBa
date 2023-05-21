@@ -109,9 +109,10 @@
 
            
                     <a type="submit" href="AccessLogServlet" class="buttons ">View Past Account Activity</a>
-                    <form action="Deletepaymentservlet" method="Post" >
-                        <input type="submit" value="Delete Payment Info" class="buttons ">
-                    </form>
+                    
+                    <a type="submit" href="DeletePayment.jsp" class="buttons ">Delete Payment Information</a>
+
+                 
                   
 
 
