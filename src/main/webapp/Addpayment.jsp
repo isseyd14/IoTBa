@@ -178,6 +178,13 @@ align-items: center;
                     <img class="nav-logo" src="IotBayLogo.png" width="60px" height="60" alt="Product Image">
 
                 </nav>
+                
+                <nav class="standard-Nav">
+                <ul class="nav-links">
+                <li class="nav-button"><a href="home.jsp">Home</a></li>
+                <li class="nav-button"><a href="account.jsp">Account</a></li>
+                </ul>
+                </nav>
 
 
 
