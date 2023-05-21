@@ -154,6 +154,19 @@ background-color:#509e6000;
 <div class="innerBody">
 
   <h1>Add Product</h1>
+
+  <%
+    String errorMessage = (String) request.getAttribute("errorMessage");
+    if (errorMessage != null) {
+  %>
+  <p style="color: red;"><%=errorMessage %></p>
+  <%
+    }
+  %>
+  <% String successMessage = (String) request.getAttribute("successMessage");
+    if(successMessage != null) { %>
+  <p style="color: green"><%=successMessage%></p>
+  <% } %>
  
 <form method="post" action="AddProductServlet" name="addProduct">
   <label>Name:</label>
@@ -173,18 +186,6 @@ background-color:#509e6000;
 
   <input type="submit" value="Add product" class="button">
 
-  <%
-    String errorMessage = (String) request.getAttribute("errorMessage");
-    if (errorMessage != null) {
-  %>
-  <p style="color: red;"><%=errorMessage %></p>
-  <%
-    }
-  %>
-  <% String successMessage = (String) request.getAttribute("successMessage");
-  if(successMessage != null) { %>
-  <p style="color: green"><%=successMessage%></p>
-  <% } %>
 </form>
 
 <h1>Product List</h1>
