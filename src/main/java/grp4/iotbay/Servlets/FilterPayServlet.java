@@ -40,7 +40,7 @@ public class FilterPayServlet extends HttpServlet {
                     "u236601339_iotbayAdmin", "iotBaypassword1"
                 );
 
-                String sql = "SELECT * from u236601339_iotBay.Payment WHERE PayID=? AND Email=?";
+                String sql = "SELECT * FROM u236601339_iotBay.Payment WHERE PayID=? AND Email=?";
 
                 ps = con.prepareStatement(sql);
                 ps.setString(1, productName);
@@ -49,7 +49,7 @@ public class FilterPayServlet extends HttpServlet {
 
                 if (!rs.next()) {
                     closeConnections(con, ps, rs);
-                    request.setAttribute("errorMessage2", "Cannot find payment.");
+                    request.setAttribute("errorMessage5", "Cannot find payment.");
                     session.setAttribute("pay", null);
                     RequestDispatcher rd = request.getRequestDispatcher(referringFile);
                     rd.forward(request, response);
@@ -79,7 +79,7 @@ public class FilterPayServlet extends HttpServlet {
                     "u236601339_iotbayAdmin", "iotBaypassword1"
                 );
 
-                String sql = "SELECT * from u236601339_iotBay.Payment where Date=? AND Email=?";
+                String sql = "SELECT * FROM u236601339_iotBay.Payment WHERE Date=? AND Email=?";
 
                 ps = con.prepareStatement(sql);
                 ps.setString(1, productType);
@@ -88,9 +88,9 @@ public class FilterPayServlet extends HttpServlet {
 
                 while(rs.next()) {
                     Pay product = new Pay();
-                    product.setID(rs.getInt("productName"));
-                    product.setAmount(rs.getString("productType"));
-                    product.setCreated(rs.getString("productDescription"));
+                    product.setID(rs.getInt("PayID"));
+                    product.setAmount(rs.getString("Amount"));
+                    product.setCreated(rs.getString("Date"));
                     pay.add(product);
                 }
 
@@ -103,7 +103,7 @@ public class FilterPayServlet extends HttpServlet {
 
                 else {
                     closeConnections(con, ps, rs);
-                    request.setAttribute("errorMessage2", "Cannot find Payment.");
+                    request.setAttribute("errorMessage5", "Cannot find Payment.");
                     session.setAttribute("pay", null);
                     RequestDispatcher rd = request.getRequestDispatcher(referringFile);
                     rd.forward(request, response);
@@ -120,7 +120,7 @@ public class FilterPayServlet extends HttpServlet {
                     "u236601339_iotbayAdmin", "iotBaypassword1"
                 );
 
-                String sql = "SELECT * from u236601339_iotBay.Payment where PayID = ? AND Date=? AND Email=?";
+                String sql = "SELECT * FROM u236601339_iotBay.Payment WHERE PayID = ? AND Date=? AND Email=?";
 
                 ps = con.prepareStatement(sql);
                 ps.setString(1, productName);
@@ -131,7 +131,7 @@ public class FilterPayServlet extends HttpServlet {
 
                 if (!rs.next()) {
                     closeConnections(con, ps, rs);
-                    request.setAttribute("errorMessage2", "Cannot find product.");
+                    request.setAttribute("errorMessage5", "Cannot find Payment.");
                     session.setAttribute("pay", null);
                     RequestDispatcher rd = request.getRequestDispatcher(referringFile);
                     rd.forward(request, response);

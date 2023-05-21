@@ -1,17 +1,17 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
     <html>
 
-    <% String email=(String) session.getAttribute("email"); String name=(String) session.getAttribute("name"); String
-        errorMessage3=(String) session.getAttribute("errorMessage3"); if(email==null){ %>
+    <% String email=(String) session.getAttribute("email"); String name=(String) session.getAttribute("name"); 
+    String errorMessage3 = (String) session.getAttribute("errorMessage3"); if(email==null){ %>
 
         <body>Error no Login</body>
 
         <%} else if(email !=null){ %>
-
+                            
             <head>
                 <title>
                     <%out.print(name);%> - Your Account
-                </title>
+                </title>             
                 <link rel="stylesheet" href="topbar.css">
             </head>
             <style>
@@ -76,6 +76,7 @@
             </style>
 
             <body>
+                                                                 <p>${errorMessage3}</p>
 
                 <nav class="standard-Nav">
                     <img class="nav-logo" src="IotBayLogo.png" width="60px" height="60" alt="Product Image">
@@ -99,6 +100,8 @@
                             <%out.print(email);%>
                         </h3>
                     </div>
+                        
+
 
                     <div class="buttonsDiv">
                     <a type="submit" href="edit_info.jsp" class="buttons ">Edit My Information</a>
@@ -109,11 +112,7 @@
                     <form action="Deletepaymentservlet" method="Post" >
                         <input type="submit" value="Delete Payment Info" class="buttons ">
                     </form>
-                    <% if(errorMessage3 !=null) { %>
-                        <p style="color: red">
-                            <%=errorMessage3%>
-                        </p>
-                        <% } %>
+                  
 
 
                     </div>

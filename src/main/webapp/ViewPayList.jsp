@@ -174,7 +174,7 @@
         session.setAttribute("referringFile1123", "ViewPayList.jsp");
         List<Pay> pays = (LinkedList<Pay>) session.getAttribute("pay");
         String currentEmail = (String) session.getAttribute("email");
-        String errorMessage2 = (String) session.getAttribute("errorMessage2");
+        String errorMessage5 = (String) session.getAttribute("errorMessage5");
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://auth-db624.hstgr.io/u236601339_iotBay?autoReconnect=true&useSSL=false", "u236601339_iotbayAdmin", "iotBaypassword1");
@@ -227,8 +227,8 @@
         %>
        <%}%>
  
-<% if(errorMessage2 != null) { %>
-    <p style="color: red"><%=errorMessage2%></p> <% } %>
+<% if(errorMessage5 != null) { %>
+    <p style="color: red"><%=errorMessage5%></p> <% } %>
     <hr>
     <form action="FilterPayServlet" method="get">
         <label>Search by Pay ID: </label>

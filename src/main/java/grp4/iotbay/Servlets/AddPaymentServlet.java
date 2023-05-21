@@ -94,14 +94,14 @@ public class AddPaymentServlet extends HttpServlet {
             String sql = ("INSERT INTO u236601339_iotBay.Payment (Date, Email, Amount) VALUES (?, ?, ?)");
     
             DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-String data = df.format(new Date());
+            String data = df.format(new Date());
             ps = con.prepareStatement(sql);
             ps.setString(1, data);
             ps.setString(2, currentEmail);
             ps.setString(3, amn);
             ps.executeUpdate();
             ps.close();
-                        response.sendRedirect("checkout.jsp"); 
+            response.sendRedirect("checkout.jsp"); 
 
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());

@@ -191,7 +191,7 @@ align-items: center;
                         Class.forName("com.mysql.cj.jdbc.Driver");
                         con=DriverManager.getConnection("jdbc:mysql://auth-db624.hstgr.io/u236601339_iotBay?autoReconnect=true&useSSL=false", "u236601339_iotbayAdmin"
                         , "iotBaypassword1" ); String sql="SELECT * FROM u236601339_iotBay.PaymentInfo WHERE Email=?" ;
-                        ps=con.prepareStatement(sql); ps.setString(1, currentEmail); rs=ps.executeQuery();
+                        ps=con.prepareStatement(sql); ps.setString(1, currentEmail); rs=ps.executeQuery();}
                         //if(!rs.next()){ // request.setAttribute("errorMessage1", "No Payment of this type" ); // } }
                         catch(SQLException e) { } %>
 
@@ -224,6 +224,8 @@ align-items: center;
                                         <td><input class="form_input_box inputField" type="text" id="frame" name="Name"
                                                 value=<%=rs.getString("Name")%> required></td>
                                     </tr>
+                                        <p>${CCMsg}</p>
+
                                     <tr>
                                         <td></td>
                                         <td>
@@ -236,7 +238,6 @@ align-items: center;
                                 <div class="submitsection">
                                   
                                     <div class="submitDiv">
-                                        <p>${CCMsg}</p>
                                     <input class="button" type="submit" value="Add/Confirm" required>
                                     </div>
                                 </div>
@@ -246,24 +247,25 @@ align-items: center;
                                         <tr>
                                             <td><label for="CCNE">Credit Card Number</label></td>
                                             <td><input class="form_input_box inputField" type="text" id="frame" name="CCNE"
-                                                    placeholder="<%=(CCNEr != null ? CCNEr : " 0055435156548569")%>"
+                                                    placeholder="<%=(CCNEr != null ? CCNEr : "0055435156548569")%>"
                                                 required></td>
                                         </tr>
                                         <tr>
                                             <td><label for="CCEE">Credit Card Expiry</label></td>
                                             <td><input class="form_input_box inputField" type="text" id="frame" name="CCEE"
-                                                    placeholder="<%=(CCEEr != null ? CCEEr : " 12/24")%>" required></td>
+                                                    placeholder="<%=(CCEEr != null ? CCEEr : "12/24")%>" required></td>
                                         </tr>
                                         <tr>
                                             <td><label for="CCCVC">Credit Card CVC</label></td>
                                             <td><input class="form_input_box inputField" type="text" id="frame" name="CCCVC"
-                                                    placeholder="<%=(CCCVCr != null ? CCCVCr : " 161")%>" required></td>
+                                                    placeholder="<%=(CCCVCr != null ? CCCVCr : "161")%>" required></td>
                                         </tr>
                                         <tr>
                                             <td><label for="Name">Name</label></td>
                                             <td><input class="form_input_box inputField" type="text" id="frame" name="Name"
                                                     placeholder="<%=(name != null ? name : " jack smith")%>" required>
                                             </td>
+                                            <p>${CCMsg}</p>
                                         </tr>
                                         <tr>
                                             <td></td>
@@ -278,7 +280,7 @@ align-items: center;
                                     <div class="submitsection">
                                         <div class="submitDiv">
                                  
-                                            <p>${CCMsg}</p><input class="button" type="submit" value="Add/Confirm" required>
+                                            <input class="button" type="submit" value="Add/Confirm" required>
                                     </div>
                                 </div>
                                 </form>
