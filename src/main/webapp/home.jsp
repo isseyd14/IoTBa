@@ -238,13 +238,12 @@ margin-right:auto;
             <th>Unit Price</th>
         </tr>
         <%for(Product product : products) { %>
-        <td style="max-width:150px;"><%=product.getName() %></td>
-        <td style="max-width:150px;"><%=product.getType()%></td>
-        <td style="max-width:450px;"><%=product.getDescription()%></td>
-        <td style="max-width:100px;"><%=product.getQuantity()%></td>
-        <td style="max-width:100px;">$<%=product.getPrice()%></td>
-        <td style="max-width:150px;"><%=product.getId()%></td>
-        <!--<td><a class="btn btn-dark" href="add-to-cart?id=<%=product.getId()%>">Add to Cart</a></td>-->
+        <td><%=product.getName() %></td>
+        <td><%=product.getType()%></td>
+        <td><%=product.getDescription()%></td>
+        <td><%=product.getQuantity()%></td>
+        <td>$<%=product.getPrice()%></td>
+        <td><a href="add-to-cart?id=<%=(int) Math.round(product.getId())%>">Add to Cart</a></td>
         </tr>
         <% }
         }%>
