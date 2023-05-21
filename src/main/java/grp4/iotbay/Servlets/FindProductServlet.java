@@ -67,11 +67,11 @@ public class FindProductServlet extends HttpServlet {
             System.out.println("Error: " + e.getMessage());
         } finally {
             try {
-                if (ps != null) {
-                    ps.close();
-                }
                 if(rs != null) {
                     rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
                 }
                 if (con != null) {
                     con.close();

@@ -56,14 +56,14 @@ public class Payhistservlet extends HttpServlet {
             System.out.println("Error: " + e.getMessage());
         } finally {
             try {
+                if (rs != null) {
+                    rs.close();
+                }
                 if (ps != null) {
                     ps.close();
                 }
                 if (con != null) {
                     con.close();
-                }
-                if (rs != null) {
-                    rs.close();
                 }
             } catch (Exception e) {
                 System.out.println("Error closing resources: " + e.getMessage());

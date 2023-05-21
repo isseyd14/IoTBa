@@ -177,11 +177,11 @@ public class FilterServlet extends HttpServlet {
     }
     private void closeConnections(Connection con, PreparedStatement ps, ResultSet rs) {
         try {
-            if(ps != null) {
-                ps.close();
-            }
             if(rs != null) {
                 rs.close();
+            }
+            if(ps != null) {
+                ps.close();
             }
             if(con != null) {
                 con.close();

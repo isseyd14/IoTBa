@@ -121,11 +121,11 @@ public class LoginServlet extends HttpServlet {
         } finally {
             // Close statement and connection
             try {
-                if (ps != null) {
-                    ps.close();
-                }
                 if (rs != null) {
                     rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
                 }
                 if (con != null) {
                     con.close();
