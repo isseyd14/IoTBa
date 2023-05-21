@@ -38,7 +38,6 @@ public class RemoveServlet extends HttpServlet {
                 request.setAttribute("errorMessage", "Error: No such product");
                 RequestDispatcher rd = request.getRequestDispatcher("remove-product.jsp");
                 rd.forward(request, response);
-                return;
             }
             request.setAttribute("successMessage", "Product successfully removed");
             RequestDispatcher rd = request.getRequestDispatcher("remove-product.jsp");
