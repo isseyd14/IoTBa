@@ -1,4 +1,4 @@
-package grp4.iotbay;
+package grp4.iotbay.Servlets;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -25,8 +25,10 @@ public class LogoutServlet extends HttpServlet {
         String email = (String) session.getAttribute("email");
         long loginTime = (long) session.getAttribute("login_timestamp");
 
+        Connection con = null;
+        PreparedStatement ps = null;
+
         try {
-            Connection con;
 
             Class.forName("com.mysql.jdbc.Driver");
 
@@ -38,7 +40,7 @@ public class LogoutServlet extends HttpServlet {
 
             String sql = "update u236601339_iotBay.access_logs set logout_timestamp=? where email=? and login_timestamp=?";
 
-            PreparedStatement ps = con.prepareStatement(sql);
+            ps = con.prepareStatement(sql);
 
             ps.setLong(1, System.currentTimeMillis());
             ps.setString(2, email);
@@ -57,6 +59,19 @@ public class LogoutServlet extends HttpServlet {
             }
         } catch (SQLException | ClassNotFoundException e) {
             System.out.println("Logout Error! - " + e.getMessage());
+        }
+        finally {
+            try {
+                if(ps != null) {
+                    ps.close();
+                }
+                if(con != null) {
+                    con.close();
+                }
+
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }

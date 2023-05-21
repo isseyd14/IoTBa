@@ -130,29 +130,6 @@
   <input type="submit" value="Register">
 </form>
 
-<!--
-<script>
-  function validateForm() {
-    var email = document.forms["registration"]["email"].value;
-    var name = document.forms["registration"]["name"].value;
-    var password = document.forms["registration"]["password"].value;
-    var gender = document.querySelector('input[name="gender"]:checked');
-    // gender = gender ? gender.value : null;
-    var tos = document.forms["registration"]["tos"].checked;
-
-
-    console.log("Email: " + email);
-    console.log("Name: " + name);
-    console.log("Password: " + password);
-    console.log("Terms of Service: " + tos);
-
-    if (email == "" || name == "" || password == "" || gender == null || !tos) {
-      alert("Please fill out all fields and agree to the terms of service!");
-      return false;
-    }
-  }
-</script>-->
-
 
 </body>
 </html>

@@ -164,57 +164,70 @@
 
     <input type="submit" value="Remove product" class="button" style="font-size: 12px;">
   </form>
+  <% if(errorMessage != null) { %>
+  <p style="color: red"><%=errorMessage%></p>
+
+  <% } %>
+
+  <% if(successMessage != null) { %>
+  <p style="color: green"><%=successMessage%></p>
+  <% } %>
 <%
-  Connection con;
+  Connection con = null;
+  Statement stmt = null;
+  ResultSet rs = null;
 
   try {
     con = DriverManager.getConnection(
             "jdbc:mysql://auth-db624.hstgr.io/u236601339_iotBay?autoReconnect=true&useSSL=false",
             "u236601339_iotbayAdmin", "iotBaypassword1"
     );
-    Statement stmt = con.createStatement();
-    ResultSet rs = stmt.executeQuery("SELECT * FROM product");
+    stmt = con.createStatement();
+    rs = stmt.executeQuery("SELECT * FROM product");
 %>
 
   <h1>Product List</h1>
-<table class="stock-table">
-  <tr>
-    <th>Product Name</th>
-    <th>Stock Amount</th>
-    <th>Unit Price</th>
-    <th></th>
-  </tr>
-  <% while (rs.next()) { %>
-  <tr>
-    <td><%= rs.getString("productName") %>
-    </td>
-    <td><%= rs.getInt("productQuantity") %>
-    </td>
-    <td>$<%= rs.getDouble("productPrice") %>
-    </td>
-    <td>
-      <form action="RemoveServlet" method="post">
-        <input type="hidden" name="productName" value="<%=rs.getString("productName")%>">
-        <input type="submit" value="Remove product" class="button" style="font-size: 12px;  padding:10px;">
-      </form>
-    </td>
-  </tr>
-  <% } con.close(); rs.close(); %>
-</table>
-
-<% if(errorMessage != null) { %>
-<p style="color: red"><%=errorMessage%></p>
-
-<% } %>
-
-<% if(successMessage != null) { %>
-<p style="color: green"><%=successMessage%></p>
-<% } %>
+  <table class="stock-table">
+    <tr>
+      <th>Product Name</th>
+      <th>Stock Amount</th>
+      <th>Unit Price</th>
+      <th></th>
+    </tr>
+    <% while (rs.next()) { %>
+    <tr>
+      <td><%= rs.getString("productName") %>
+      </td>
+      <td><%= rs.getInt("productQuantity") %>
+      </td>
+      <td>$<%= rs.getDouble("productPrice") %>
+      </td>
+      <td>
+        <form action="RemoveServlet" method="post">
+          <input type="hidden" name="productName" value="<%=rs.getString("productName")%>">
+          <input type="submit" value="Remove product" class="button" style="font-size: 12px;  padding:10px;">
+        </form>
+      </td>
+    </tr>
+    <% } %>
+  </table>
+  <% } finally {
+    try {
+      if(rs != null) {
+        stmt.close();
+      }
+      if(stmt != null) {
+        stmt.close();
+      }
+      if(con != null) {
+        con.close();
+      }
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    }
+  } %>
 </div>
 </div>
 </body>
 </html>
 
-<% } finally {
-
-} %>

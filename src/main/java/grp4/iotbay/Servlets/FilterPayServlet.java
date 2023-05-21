@@ -31,8 +31,10 @@ public class FilterPayServlet extends HttpServlet {
             RequestDispatcher rd = request.getRequestDispatcher(referringFile);
             rd.forward(request, response);
         }
-        Connection con;
-        PreparedStatement ps;
+      
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver") ;
                 con = DriverManager.getConnection(
@@ -40,16 +42,18 @@ public class FilterPayServlet extends HttpServlet {
                     "u236601339_iotbayAdmin", "iotBaypassword1"
                 );
 
-                String sql = "SELECT * FROM u236601339_iotBay.Payment WHERE PayID=? AND Email=?";
 
+                String sql = "SELECT * FROM u236601339_iotBay.Payment WHERE PayID=? AND Email=?";
+              
                 ps = con.prepareStatement(sql);
                 ps.setString(1, productName);
                 ps.setString(2, currentEmail);                
-                ResultSet rs = ps.executeQuery();
+
+                rs = ps.executeQuery();
 
                 if (!rs.next()) {
-                    closeConnections(con, ps, rs);
-                    request.setAttribute("errorMessage5", "Cannot find payment.");
+                    request.setAttribute("errorMessage2", "Cannot find payment.");
+
                     session.setAttribute("pay", null);
                     RequestDispatcher rd = request.getRequestDispatcher(referringFile);
                     rd.forward(request, response);
@@ -61,13 +65,15 @@ public class FilterPayServlet extends HttpServlet {
                     product.setAmount(rs.getString("Amount"));
                     product.setCreated(rs.getString("Date"));
                     pay.add(product);
-                    closeConnections(con, ps, rs);
                     session.setAttribute("pay", pay);
                     RequestDispatcher rd = request.getRequestDispatcher(referringFile);
                     rd.forward(request, response);
                 }
             } catch (SQLException | ClassNotFoundException e) {
 
+            }
+            finally {
+                closeConnections(con, ps, rs);
             }
         
 
@@ -84,32 +90,34 @@ public class FilterPayServlet extends HttpServlet {
                 ps = con.prepareStatement(sql);
                 ps.setString(1, productType);
                 ps.setString(2, currentEmail);                
-                ResultSet rs = ps.executeQuery();
+
+                rs = ps.executeQuery();
 
                 while(rs.next()) {
                     Pay product = new Pay();
-                    product.setID(rs.getInt("PayID"));
-                    product.setAmount(rs.getString("Amount"));
-                    product.setCreated(rs.getString("Date"));
+                    product.setID(rs.getInt("productName"));
+                    product.setAmount(rs.getString("productType"));
+                    product.setCreated(rs.getString("productDescription"));
                     pay.add(product);
                 }
 
                 if(!pay.isEmpty()) {
-                    closeConnections(con, ps, rs);
                     session.setAttribute("pay", pay);
                     RequestDispatcher rd = request.getRequestDispatcher(referringFile);
                     rd.forward(request, response);
                 }
 
                 else {
-                    closeConnections(con, ps, rs);
-                    request.setAttribute("errorMessage5", "Cannot find Payment.");
+                    request.setAttribute("errorMessage2", "Cannot find Payment.");
                     session.setAttribute("pay", null);
                     RequestDispatcher rd = request.getRequestDispatcher(referringFile);
                     rd.forward(request, response);
                 }
             }
             catch (SQLException | ClassNotFoundException e) {
+            }
+            finally {
+                closeConnections(con, ps, rs);
             }
         }
         else {
@@ -120,6 +128,7 @@ public class FilterPayServlet extends HttpServlet {
                     "u236601339_iotbayAdmin", "iotBaypassword1"
                 );
 
+
                 String sql = "SELECT * FROM u236601339_iotBay.Payment WHERE PayID = ? AND Date=? AND Email=?";
 
                 ps = con.prepareStatement(sql);
@@ -127,11 +136,10 @@ public class FilterPayServlet extends HttpServlet {
                 ps.setString(2, productType);
                 ps.setString(3, currentEmail);                
 
-                ResultSet rs = ps.executeQuery();
+                rs = ps.executeQuery();
 
                 if (!rs.next()) {
-                    closeConnections(con, ps, rs);
-                    request.setAttribute("errorMessage5", "Cannot find Payment.");
+                    request.setAttribute("errorMessage2", "Cannot find product.");
                     session.setAttribute("pay", null);
                     RequestDispatcher rd = request.getRequestDispatcher(referringFile);
                     rd.forward(request, response);
@@ -143,7 +151,6 @@ public class FilterPayServlet extends HttpServlet {
                     product.setAmount(rs.getString("Amount"));
                     product.setCreated(rs.getString("Date"));
                     pay.add(product);
-                    closeConnections(con, ps, rs);
                     session.setAttribute("pay", pay);
                     RequestDispatcher rd = request.getRequestDispatcher(referringFile);
                     rd.forward(request, response);
@@ -151,18 +158,25 @@ public class FilterPayServlet extends HttpServlet {
             } catch (SQLException | ClassNotFoundException e) {
 
             }
+            finally {
+                closeConnections(con, ps, rs);
+            }
         }
     }
-    
-    private void closeConnections(Connection con, PreparedStatement ps, ResultSet rs) throws SQLException {
-        if(con != null) {
-            con.close();
-        }
-        if(ps != null) {
-            ps.close();
-        }
-        if(rs != null) {
-            rs.close();
+
+    private void closeConnections(Connection con, PreparedStatement ps, ResultSet rs) {
+        try {
+            if(rs != null) {
+                rs.close();
+            }
+            if(ps != null) {
+                ps.close();
+            }
+            if(con != null) {
+                con.close();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 }

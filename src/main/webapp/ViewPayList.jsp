@@ -185,10 +185,6 @@
             //if(!rs.next()){
               //  request.setAttribute("errorMessage1", "No Payment of this type");  
           //  }
-            }
-                catch(SQLException e) {
-        }
-          
 
         %>
         
@@ -208,7 +204,21 @@
             </tr>
             <% } else{%>
             No payment information was found
-            <%}%>
+            <%} } finally{
+                try {
+                    if(rs != null) {
+                        rs.close();
+                    }
+                    if(ps != null) {
+                        ps.close();
+                    }
+                    if(con != null) {
+                        con.close();
+                    }
+                }catch (SQLException e) {
+    throw new RuntimeException(e);
+}
+            }%>
             
              <% if(pays == null) { %>
             <% try {
