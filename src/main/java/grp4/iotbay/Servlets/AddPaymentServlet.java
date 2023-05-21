@@ -53,6 +53,7 @@ public class AddPaymentServlet extends HttpServlet {
                     session.setAttribute("CCMsg", "Credit Card CVC format incorrect, please enter 3 digits");
                     request.getRequestDispatcher("Addpayment.jsp").include(request, response);
                 }
+                else{
           
                     
             Payment defaultpayment = new Payment(CCN , Expdate , CVC , name,  currentEmail);
@@ -108,8 +109,7 @@ public class AddPaymentServlet extends HttpServlet {
             ps.close();
 
             response.sendRedirect("checkout.jsp"); 
-
-
+                }
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         } finally {
