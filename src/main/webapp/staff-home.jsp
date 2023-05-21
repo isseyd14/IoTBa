@@ -203,11 +203,11 @@ background-color: #ffffff8f;
     </table>
  <% } finally {
         try {
-            if(stmt != null) {
-                stmt.close();
-            }
             if(rs != null) {
                 rs.close();
+            }
+            if(stmt != null) {
+                stmt.close();
             }
             if(con != null) {
                 con.close();

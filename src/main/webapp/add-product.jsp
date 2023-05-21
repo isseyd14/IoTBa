@@ -230,11 +230,11 @@ background-color:#509e6000;
     e.printStackTrace();
   }
   finally {
-    if(stmt != null) {
-      stmt.close();
-    }
     if(rs != null) {
       rs.close();
+    }
+    if(stmt != null) {
+      stmt.close();
     }
     if(con != null) {
       con.close();

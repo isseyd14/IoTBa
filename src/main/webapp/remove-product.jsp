@@ -213,10 +213,10 @@
   </table>
   <% } finally {
     try {
-      if(stmt != null) {
+      if(rs != null) {
         stmt.close();
       }
-      if(rs != null) {
+      if(stmt != null) {
         stmt.close();
       }
       if(con != null) {
