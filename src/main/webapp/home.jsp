@@ -160,20 +160,23 @@ margin-right:auto;
     <h1>Available products:</h1>
 
 
-    <div class="formBody">
-    <form action="FilterServlet" method="get" class="searchForm">
-        <div> <label >Search by product name: </label>
-            <input type="text" name="productName" placeholder="product name"></div>
-       <div> <label>Search by product type: </label>
-        <input type="text" name="productType" placeholder="product type"></div>
-       
-        <input type="submit"  value="Filter" class="button">
-    </form>
-    <form action="ResetFilterServlet" method="get" class="searchForm" >
-        <input type="submit" value="Reset" class="button">
+        <div class="formBody">
 
-    </form>
-</div>
+            <form action="FilterServlet" method="get" class="searchForm">
+                <div>
+                    <label>Search by product name: </label>
+                    <input type="text" name="productName" class="inputField" placeholder="product name">
+                </div>
+                <div>
+                    <label>Search by product type: </label>
+                    <input type="text" name="productType" class="inputField" placeholder="product type">
+                </div>
+                <input type="submit" value="Filter" class="button">
+            </form>
+            <form action="ResetFilterServlet" method="get">
+                <input type="submit" value="Reset" class="button">
+            </form>
+        </div>
     <% if(errorMessage != null) { %>
     <p style="color: red"><%=errorMessage%></p> <% } %>
     <%  Connection con = null;
@@ -241,7 +244,7 @@ margin-right:auto;
         <td style="max-width:100px;"><%=product.getQuantity()%></td>
         <td style="max-width:100px;">$<%=product.getPrice()%></td>
         <td style="max-width:150px;"><%=product.getId()%></td>
-        <!--<td><a class="btn btn-dark" href="add-to-cart?id=<%=product.getId()%>">Add to Cart</a> <a</td>-->
+        <!--<td><a class="btn btn-dark" href="add-to-cart?id=<%=product.getId()%>">Add to Cart</a></td>-->
         </tr>
         <% }
         }%>

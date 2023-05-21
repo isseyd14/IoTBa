@@ -151,8 +151,7 @@
                             con=DriverManager.getConnection("jdbc:mysql://auth-db624.hstgr.io/u236601339_iotBay?autoReconnect=true&useSSL=false", "u236601339_iotbayAdmin"
                             , "iotBaypassword1" ); List<Order> list = new ArrayList<>();
                                 try {
-                                query = "SELECT * FROM u236601339_iotBay.order WHERE customerId=? ORDER BY order.orderId
-                                DESC";
+                                query = "SELECT * FROM u236601339_iotBay.order WHERE customerId=? ORDER BY order.orderId DESC";
                                 pst = con.prepareStatement(query);
                                 pst.setInt(1, userId);
                                 rs = pst.executeQuery();
