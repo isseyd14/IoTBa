@@ -5,9 +5,9 @@
             <%@ page import="java.util.List" %>
                 <%@ page import="java.util.ArrayList" %>
                     <% ArrayList<Cart> cart_list = (ArrayList<Cart>) session.getAttribute("cart-list");
-                            Connection con ;
-                            PreparedStatement pst ;
-                            ResultSet rs ;
+                            Connection con = null;
+                            PreparedStatement pst = null ;
+                            ResultSet rs = null ;
                             String query ;
                             con =
                             DriverManager.getConnection("jdbc:mysql://auth-db624.hstgr.io/u236601339_iotBay?autoReconnect=true&useSSL=false",

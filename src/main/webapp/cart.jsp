@@ -3,16 +3,6 @@
         <%@ page import="grp4.iotbay.Model.Cart" %>
             <%@ page import="java.util.List" %>
                 <%@ page import="java.util.ArrayList" %>
-                    <% ArrayList<Cart> cart_list = (ArrayList<Cart>) session.getAttribute("cart-list");
-                            Connection con ;
-                            PreparedStatement pst ;
-                            ResultSet rs ;
-                            String query ;
-                            con =
-                            DriverManager.getConnection("jdbc:mysql://auth-db624.hstgr.io/u236601339_iotBay?autoReconnect=true&useSSL=false",
-                            "u236601339_iotbayAdmin", "iotBaypassword1");
-
-                            %>
 
                             <%@page contentType="text/html" pageEncoding="UTF-8" %>
                                 <!DOCTYPE html>
@@ -215,51 +205,78 @@
                                             <h1>My Cart</h1>
                                             <p style="margin-bottom:80px;">Here is a list of products in your cart. You can remove items, continue to add more or proceed to </p>
 
-                                            <%if(cart_list !=null){%>
+                                            <% ArrayList<Cart> cart_list = (ArrayList<Cart>) session.getAttribute("cart-list");
+                                                Connection con = null ;
+                                                PreparedStatement pst = null ;
+                                                ResultSet rs = null ;
+                                                String query ;
+                                                try {
+                                                    con =
+                                                            DriverManager.getConnection(
+                                                                    "jdbc:mysql://auth-db624.hstgr.io/u236601339_iotBay?autoReconnect=true&useSSL=false",
+                                                                    "u236601339_iotbayAdmin", "iotBaypassword1"
+                                                            );
 
-                                                <div class="tableContainer">
-                                                    <table class="stock-table">
-                                                        <tr>
-                                                            <th>Name</th>
-                                                            <th >Type</th>
-                                                            <th>Description</th>
-                                                            <th>Quantity</th>
-                                                            <th>Unit Price</th>
-                                                            <th></th>
-                                                        </tr>
-                                                        <% for(Cart product : cart_list) { int id=(int)product.getId();
-                                                            query="SELECT * FROM product WHERE productId=?" ;
-                                                            pst=con.prepareStatement(query); pst.setInt(1, id);
-                                                            rs=pst.executeQuery(); while(rs.next()){%>
-                                                            <tr>
+                                            %>
 
-                                                                <td style="max-width:80px;">
-                                                                    <%=rs.getString("productName") %>
-                                                                </td>
-                                                                <td style="max-width:50px;">
-                                                                    <%= rs.getString("productType")%>
-                                                                </td>
-                                                                <td style="max-width:150px;">
-                                                                    <%= rs.getString("productDescription")%>
-                                                                </td>
-                                                                <td style="max-width:10px;">1</td>
-                                                                <td style="max-width:20px;">$<%= rs.getDouble("productPrice") %>
-                                                                </td>
-                                                                <td style="max-width:60px;">   <a href="remove-cart?id=<%=id %>" style="background-color: #ff000000;"> <img class="nav-logo" src="bin.png" width="20px" height="20"></a></td>
-                                                            </tr>
-                                                            <%}}%>
-                                                    </table>
-                                                    <% double sum=0; for(Cart product : cart_list) { int
-                                                        id=(int)product.getId();
-                                                        query="SELECT productPrice FROM product WHERE productId=?" ;
-                                                        pst=con.prepareStatement(query); pst.setInt(1, id);
-                                                        rs=pst.executeQuery(); while(rs.next()){
-                                                        sum+=rs.getDouble("productPrice"); }}
-                                                        session.setAttribute("Amount", sum); %>
+                                            <%if (cart_list != null) {%>
 
-                                                </div>
+                                            <div class="tableContainer">
+                                                <table class="stock-table">
+                                                    <tr>
+                                                        <th>Name</th>
+                                                        <th>Type</th>
+                                                        <th>Description</th>
+                                                        <th>Quantity</th>
+                                                        <th>Unit Price</th>
+                                                        <th></th>
+                                                    </tr>
+                                                    <% for (Cart product : cart_list) {
+                                                        int id = (int) product.getId();
+                                                        query = "SELECT * FROM product WHERE productId=?";
+                                                        pst = con.prepareStatement(query);
+                                                        pst.setInt(1, id);
+                                                        rs = pst.executeQuery();
+                                                        while (rs.next()) {%>
+                                                    <tr>
 
+                                                        <td style="max-width:80px;">
+                                                            <%=rs.getString("productName") %>
+                                                        </td>
+                                                        <td style="max-width:50px;">
+                                                            <%= rs.getString("productType")%>
+                                                        </td>
+                                                        <td style="max-width:150px;">
+                                                            <%= rs.getString("productDescription")%>
+                                                        </td>
+                                                        <td style="max-width:10px;">1</td>
+                                                        <td style="max-width:20px;">$<%= rs.getDouble("productPrice") %>
+                                                        </td>
+                                                        <td style="max-width:60px;"><a href="remove-cart?id=<%=id %>"
+                                                                                       style="background-color: #ff000000;">
+                                                            <img class="nav-logo" src="bin.png" width="20px"
+                                                                 height="20"></a></td>
+                                                    </tr>
+                                                    <%
+                                                            }
+                                                        }
+                                                    %>
+                                                </table>
+                                                <% double sum = 0;
+                                                    for (Cart product : cart_list) {
+                                                        int
+                                                                id = (int) product.getId();
+                                                        query = "SELECT productPrice FROM product WHERE productId=?";
+                                                        pst = con.prepareStatement(query);
+                                                        pst.setInt(1, id);
+                                                        rs = pst.executeQuery();
+                                                        while (rs.next()) {
+                                                            sum += rs.getDouble("productPrice");
+                                                        }
+                                                    }
+                                                    session.setAttribute("Amount", sum); %>
 
+                                            </div>
 
 
                                         </div>
@@ -272,10 +289,28 @@
                                             <h3>Total Price: $<%= sum %>
                                             </h3>
 
-                                            <a href="Addpayment.jsp" class="button" style="text-align: center;">Check Out</a>
-                                            <%}else{%>
-                                                <div>NO ITEMS IN THE CART</div>
-                                                <%}%>
+                                            <a href="Addpayment.jsp" class="button" style="text-align: center;">Check
+                                                Out</a>
+                                            <%} else {%>
+                                            <div>NO ITEMS IN THE CART</div>
+                                            <%
+                                                    }
+                                                } finally {
+                                                    try {
+                                                        if(rs != null) {
+                                                            rs.close();
+                                                        }
+                                                        if(pst != null) {
+                                                            pst.close();
+                                                        }
+                                                        if(con != null) {
+                                                            con.close();
+                                                        }
+                                                    } catch (SQLException e) {
+                                                        throw new RuntimeException(e);
+                                                    }
+                                                    }
+                                            %>
                                         </div>
 
 
