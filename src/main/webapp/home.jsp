@@ -137,7 +137,7 @@ margin-right:auto;
         <img  class="nav-logo" src="IotBayLogo.png" width="60px" height="60" alt="Product Image">
         <ul class="nav-links">
     
-            <li class="nav-button" style="min-width:400px; "><a href="account.jsp" style="background-color: #ff000000; color:black;">Welcome, <%out.print(name);%></a></li>
+            <li class="nav-button" style="min-width:400px; "><a href="account.jsp" style="background-color: #ff000000; color:black;">Welcome, <%=name%></a></li>
             <li class="nav-button"><a class="active" href="home.jsp">Search</a></li>
             <% if(cart_list != null){%>
             <li class="nav-button"><a  href="cart.jsp">
@@ -180,7 +180,8 @@ margin-right:auto;
     <% if(errorMessage != null) { %>
     <p style="color: red"><%=errorMessage%></p> <% } %>
     <%  Connection con = null;
-        ResultSet rs = null; %>
+        ResultSet rs = null;
+        Statement stmt = null; %>
 
     <% if(products == null) {
         try {
@@ -190,44 +191,46 @@ margin-right:auto;
             );
 
             con = DriverManager.getConnection("jdbc:mysql://auth-db624.hstgr.io/u236601339_iotBay?autoReconnect=true&useSSL=false", "u236601339_iotbayAdmin", "iotBaypassword1");
-            Statement stmt = con.createStatement();
-            rs = stmt.executeQuery("SELECT * FROM product order by productName ASC");
+            stmt = con.createStatement();
+            rs = stmt.executeQuery("SELECT * FROM product order by productName ASC"); %>
 
-
-
+        <table class="stock-table">
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Description</th>
+                <th>Stock Quantity</th>
+                <th>Unit Price</th>
+                <th>Cart</th>
+            </tr>
+            <% while (rs.next()) { %>
+            <tr>
+                <td style="max-width:150px;"><%= rs.getString("productName") %></td>
+                <td style="max-width:150px;"><%= rs.getString("productType")%></td>
+                <td style="max-width:450px;"><%= rs.getString("productDescription")%></td>
+                <td style="max-width:100px;"><%= rs.getInt("productQuantity") %></td>
+                <td style="max-width:100px;">$<%= rs.getDouble("productPrice") %></td>
+                <td style="min-width:150px;"><a href="add-to-cart?id=<%=rs.getInt("productId")%>"> Add to Cart</a></td>
+            </tr>  <% } %>
+    </table>
+        <% } finally {
+            {
+                try {
+                    if(rs != null) {
+                        rs.close();
+                    }
+                    if(stmt != null) {
+                        stmt.close();
+                    }
+                    if(con != null) {
+                        con.close();
+                    }
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
         }
-        catch(SQLException e) {
-
-        }
-    }
-
-    %>
-
-    <% if(products == null) { %>
-
-    <table class="stock-table">
-        <tr>
-            <th>Name</th>
-            <th>Type</th>
-            <th>Description</th>
-            <th>Stock Quantity</th>
-            <th>Unit Price</th>
-            <th>Cart</th>
-        </tr>
-        <% while (rs.next()) { %>
-        <tr>
-            <td style="max-width:150px;"><%= rs.getString("productName") %></td>
-            <td style="max-width:150px;"><%= rs.getString("productType")%></td>
-            <td style="max-width:450px;"><%= rs.getString("productDescription")%></td>
-            <td style="max-width:100px;"><%= rs.getInt("productQuantity") %></td>
-            <td style="max-width:100px;">$<%= rs.getDouble("productPrice") %></td>
-            <td style="min-width:150px;"><a href="add-to-cart?id=<%=rs.getInt("productId")%>"> Add to Cart</a></td>
-        </tr>
-        <% }
-            if(con != null) {
-                con.close();
-            }%>
-    </table> <% } else { %>
+        } else {%>
 
     <table class="stock-table">
         <tr>
@@ -245,12 +248,10 @@ margin-right:auto;
         <td>$<%=product.getPrice()%></td>
         <td><a href="add-to-cart?id=<%=(int) Math.round(product.getId())%>">Add to Cart</a></td>
         </tr>
-        <% }
-        }%>
+        <% } } }%>
     </table>
 
 
 </div>
 </body>
-<%}%>
 </html>

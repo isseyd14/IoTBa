@@ -48,18 +48,30 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 					order.setDate(formatter.format(date));
 					
 					try{
-                                            Class.forName("com.mysql.cj.jdbc.Driver");
-                                            con = DriverManager.getConnection("jdbc:mysql://auth-db624.hstgr.io/u236601339_iotBay?autoReconnect=true&useSSL=false", "u236601339_iotbayAdmin", "iotBaypassword1");
-                                            String sql = "INSERT into u236601339_iotBay.order (productId, customerId, orderDate) values(?,?,?)";
-                                            
-                                            ps = con.prepareStatement(sql);
-                                            ps.setInt(1, (int) Math.round(order.getId()));
-                                            ps.setInt(2, order.getUid());
-                                            ps.setString(3, order.getDate());
-                                            ps.executeUpdate();
-                                        } catch (ClassNotFoundException | SQLException ex) {
-                                        Logger.getLogger(CheckoutServlet.class.getName()).log(Level.SEVERE, null, ex);
+						Class.forName("com.mysql.cj.jdbc.Driver");
+						con = DriverManager.getConnection("jdbc:mysql://auth-db624.hstgr.io/u236601339_iotBay?autoReconnect=true&useSSL=false", "u236601339_iotbayAdmin", "iotBaypassword1");
+						String sql = "INSERT into u236601339_iotBay.order (productId, customerId, orderDate) values(?,?,?)";
+
+						ps = con.prepareStatement(sql);
+						ps.setInt(1, (int) Math.round(order.getId()));
+						ps.setInt(2, order.getUid());
+						ps.setString(3, order.getDate());
+						ps.executeUpdate();
+					} catch (ClassNotFoundException | SQLException ex) {
+					Logger.getLogger(CheckoutServlet.class.getName()).log(Level.SEVERE, null, ex);
                                     }
+					finally {
+						try {
+							if(ps != null) {
+								ps.close();
+							}
+							if(con != null) {
+								con.close();
+							}
+						} catch (SQLException e) {
+							System.out.println("Error closing resources: " + e.getMessage());
+						}
+					}
 					
 				}
 				cart_list.clear();

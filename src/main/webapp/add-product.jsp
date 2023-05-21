@@ -114,7 +114,7 @@ background-color:#509e6000;
       
       .stock-table th,
       .stock-table td {
-      font-size: 10px;
+      font-size: 16px;
       }
    
   
@@ -191,12 +191,14 @@ background-color:#509e6000;
 <h1>Product List</h1>
 
 <%
-  Connection con;
+  Connection con = null;
+  Statement stmt = null;
+  ResultSet rs = null;
 
   try {
     con = DriverManager.getConnection("jdbc:mysql://auth-db624.hstgr.io/u236601339_iotBay?autoReconnect=true&useSSL=false", "u236601339_iotbayAdmin", "iotBaypassword1");
-    Statement stmt = con.createStatement();
-    ResultSet rs = stmt.executeQuery("SELECT * FROM product ORDER BY productName ASC");
+    stmt = con.createStatement();
+    rs = stmt.executeQuery("SELECT * FROM product ORDER BY productName ASC");
 %>
 
 <div class="tableContainer">
@@ -226,6 +228,17 @@ background-color:#509e6000;
 
   } catch (SQLException e) {
     e.printStackTrace();
+  }
+  finally {
+    if(rs != null) {
+      rs.close();
+    }
+    if(stmt != null) {
+      stmt.close();
+    }
+    if(con != null) {
+      con.close();
+    }
   }
 %>
 </div>

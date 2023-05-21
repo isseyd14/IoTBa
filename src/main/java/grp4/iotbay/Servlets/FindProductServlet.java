@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
+import javax.xml.transform.Result;
 import java.io.IOException;
 import java.sql.*;
 
@@ -27,7 +28,8 @@ public class FindProductServlet extends HttpServlet {
 
         Connection con = null;
         PreparedStatement ps = null;
-
+        ResultSet rs = null;
+      
         if(productName == null) {
             return;
         }
@@ -42,7 +44,7 @@ public class FindProductServlet extends HttpServlet {
 
             ps.setString(1, productName);
 
-            ResultSet rs = ps.executeQuery();
+            rs = ps.executeQuery();
 
             if(rs.next()) {
                 Product product = new Product();
@@ -61,13 +63,13 @@ public class FindProductServlet extends HttpServlet {
                 RequestDispatcher rd = request.getRequestDispatcher("update-product.jsp");
                 rd.forward(request, response);
             }
-
-
-
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         } finally {
             try {
+                if(rs != null) {
+                    rs.close();
+                }
                 if (ps != null) {
                     ps.close();
                 }

@@ -18,10 +18,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
 
-/**
- *
- * @author Rhys
- */
 @WebServlet(name = "RemoveCartServlet", urlPatterns = {"/remove-cart"})
 public class RemoveCartServlet extends HttpServlet {
 

@@ -5,10 +5,7 @@ import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.util.ArrayList;
 
 @WebServlet("/AccessLogServlet")
@@ -18,10 +15,12 @@ public class AccessLogServlet extends HttpServlet {
         HttpServletRequest request, HttpServletResponse response
     ) throws ServletException, IOException {
         HttpSession session = request.getSession();
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
         String email = (String) session.getAttribute("email");
+      
         try{
-            Connection con;
-
             Class.forName("com.mysql.jdbc.Driver");
 
             con = DriverManager.getConnection("jdbc:mysql://auth-db624.hstgr.io/u236601339_iotBay?autoReconnect=true&useSSL=false", "u236601339_iotbayAdmin", "iotBaypassword1");
@@ -29,10 +28,10 @@ public class AccessLogServlet extends HttpServlet {
 
             String sql = "select * from u236601339_iotBay.access_logs where email=?";
 
-            PreparedStatement ps = con.prepareStatement(sql);
+            ps = con.prepareStatement(sql);
 
             ps.setString(1, email);
-            ResultSet rs = ps.executeQuery();
+            rs = ps.executeQuery();
 
             ArrayList<Long> loginTimes = new ArrayList<>();
             ArrayList<Long> logoutTimes = new ArrayList<>();
@@ -45,6 +44,21 @@ public class AccessLogServlet extends HttpServlet {
             response.sendRedirect("access_logs.jsp");
         }catch(Exception e){
             System.out.println("Access Log Error - " + e.getMessage());
+        }
+        finally {
+            try {
+                if(rs != null) {
+                    rs.close();
+                }
+                if(ps != null) {
+                    ps.close();
+                }
+                if(con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                System.out.println("Error closing db connection, result set or prepared set. - " + e.getMessage());
+            }
         }
     }
 }

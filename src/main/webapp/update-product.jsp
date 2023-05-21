@@ -162,12 +162,14 @@
 
 </nav>
 <%
-  Connection con;
+  Connection con = null;
+  Statement stmt = null;
+  ResultSet rs = null;
 
   try {
     con = DriverManager.getConnection("jdbc:mysql://auth-db624.hstgr.io/u236601339_iotBay?autoReconnect=true&useSSL=false", "u236601339_iotbayAdmin", "iotBaypassword1");
-    Statement stmt = con.createStatement();
-    ResultSet rs = stmt.executeQuery("SELECT * FROM product order by productName ASC");
+    stmt = con.createStatement();
+    rs = stmt.executeQuery("SELECT * FROM product order by productName ASC");
 %>
 
 <div class="mainContent">
@@ -253,6 +255,21 @@
 
   } catch (SQLException e) {
     e.printStackTrace();
+  }
+  finally{
+    try {
+      if(stmt != null) {
+        stmt.close();
+      }
+      if(rs != null) {
+        rs.close();
+      }
+      if(con != null) {
+        con.close();
+      }
+    }catch (SQLException e) {
+    throw new RuntimeException(e);
+}
   }
 %>
 
