@@ -1,185 +1,124 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<style>
-    body {
-        margin: 0;
-        font-family: Arial, Helvetica, sans-serif;
-    }
+    <html>
 
-    .standard-Nav {
-        display: flex;
-        height: 70px;
-        background-color: #f3f3f3;
-        box-shadow: 0px -10px 36px 3px rgba(143, 142, 142, 0.537);
+    <% String email=(String) session.getAttribute("email"); String name=(String) session.getAttribute("name"); String
+        errorMessage3=(String) session.getAttribute("errorMessage3"); if(email==null){ %>
 
-    }
+        <body>Error no Login</body>
 
-    .nav-logo {
-        font-size: 24px;
-        font-weight: bold;
-        text-decoration: none;
-        color: #333;
-        margin-top: auto;
-        margin-bottom: auto;
+        <%} else if(email !=null){ %>
 
-        padding-left: 50px;
-        padding-right: 50px;
-    }
+            <head>
+                <title>
+                    <%out.print(name);%> - Your Account
+                </title>
+                <link rel="stylesheet" href="topbar.css">
+            </head>
+            <style>
+                .mainHead {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: space-between;
+                    padding-top: 50px;  
+                    margin: 150px;   
+                    border-radius: 40px;
+                    background-color: #ffffff76;
+                    box-shadow: 0 4px 15px 0 rgba(0, 0, 0, 0.157);
+                }
 
-    .nav-links {
-        display: flex;
-        flex-grow: 1;
-        justify-content: flex-end;
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        flex-basis: 0;
-    }
+                .titleSubheading {
+                    font-size: 14px;
+                    color: #767676;
+                    margin: 0px;
+                    margin-top: 30px;
+                    padding: 0px;
+                }
 
-    .nav-links .nav-search {
+                .titleHeading {
+                    font-size: 24px;
+                    margin: 0px;
+                    padding: 0px;
+                    color: #363636;
+                }
 
-        width: 100%;
-        margin-left: 20px;
-        margin-right: 20px;
-        margin-top: auto;
-        margin-bottom: auto;
-    }
-
-
-    .nav-links .nav-button a {
-        display: flex;
-        height: 100%;
-        padding-left: 40px;
-        padding-right: 40px;
-        align-items: center;
-        font-size: 16px;
-        font-weight: bold;
-        text-decoration: none;
-        color: #fff;
-        background-color: #034473;
-        transition: background-color 0.3s ease;
-
-    }
-
-    .nav-links .nav-button a:hover {
-        background-color: #0c78c5;
-    }
-
-    .nav-links .nav-button .active {
-        background-color: #4494d5;
-    }
-
-    .searchForm {
-        display: flex;
-        height: 100%;
-        width: 100%;
-        justify-content: center;
-
-    }
-
-    .seachForm input[type=submit] {
-
-        border: none;
-        height: 100%;
-        padding: 10px;
-        padding-left: 10px;
-        padding-right: 10px;
-        align-items: center;
-        font-size: 14px;
-        font-weight: bold;
-        text-decoration: none;
-        color: white;
-        background-color: #034473;
+            
+                .buttons{
+                    
+    border: none;
+    border-radius: 30px;
+    background-color: #034473;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  
+    text-decoration: none;
+    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    max-width: 100%;
+                    width: 90%;
+                    height:80px;
+                    margin-top: 50px;
+                    margin-right:auto;
+                    margin-left:auto;
+                }
 
 
-    }
+                .buttonsDiv{
+            
+                    width:100%;
+                    margin-left:30px;
+                    margin-right:30px;
+                }
+            </style>
 
-    .searchField {
-        width: calc(100% - 170px);
-        padding-left: 20px;
-        padding-right: 20px;
-        height: 30px;
-        font-size: 14px;
-        max-width: 500px;
-    }
+            <body>
 
-    table {
-        border-collapse: collapse;
-        width: 100%;
-    }
+                <nav class="standard-Nav">
+                    <img class="nav-logo" src="IotBayLogo.png" width="60px" height="60" alt="Product Image">
+                    <ul class="nav-links">
+                        <li class="nav-button" style="min-width:400px; "><a href="account.jsp"
+                                style="background-color: #ff000000; color:black;">Welcome, <%out.print(name);%></a></li>
+                        <li class="nav-button"><a href="home.jsp">Search</a></li>
 
-    .product-card {
-        display: flex;
-        align-items: center;
-        padding: 10px;
-        border: 2px #b3b3b3 solid;
-        border-radius: 5px;
-        margin-left: 30px;
-        margin-right: 30px;
-        margin-bottom: 20px;
-    }
+                        <li class="nav-button"><a href="logout">Logout</a></li>
+                    </ul>
+                </nav>
 
-    .product-card img {
-        width: 150px;
-        height: 150px;
-        margin-right: 20px;
-    }
+                <div class="mainHead">
+                    <div style="margin-bottom:100px;">
+                        <h3 class="titleSubheading">Name</h3>
+                        <h3 class="titleHeading" style="font-size: 28px;">
+                            <%out.print(name);%>
+                        </h3>
+                        <h3 class="titleSubheading" style=" margin-top:30px;">Email</h3>
+                        <h3 class="titleHeading" style="font-size: 28px;">
+                            <%out.print(email);%>
+                        </h3>
+                    </div>
 
-    .product-details h2 {
-        font-size: 18px;
-        margin: 0 0 10px;
-    }
+                    <div class="buttonsDiv">
+                    <a type="submit" href="edit_info.jsp" class="buttons ">Edit My Information</a>
+                    <a type="submit" href="delete_acc.jsp" class="buttons ">Delete My Account</a>
 
-    .product-details p {
-        font-size: 14px;
-        margin: 0;
-    }
-</style>
-<%
-    String email = (String) session.getAttribute("email");
-    String name = (String) session.getAttribute("name");
-                String errorMessage3 = (String) session.getAttribute("errorMessage3");
-
-    if(email == null){
-
-   
-%>
-
-<body>Error no Login</body>
-
-<%} else if(email != null){
-
-%>
-<head>
-    <title><%out.print(name);%> - Your Account</title>
-</head>
-<body>
-<nav class="standard-Nav">
-    <img  class="nav-logo" src="IotBayLogo.png" width="60px" height="60" alt="Product Image">
-    <ul class="nav-links">
-        <li class="nav-button"><a href="account.jsp">Welcome, <%out.print(name);%></a></li>
-        <li class="nav-button"><a class="active" href="home.jsp">Search</a></li>
-
-        <li class="nav-button"><a href="logout">Logout</a></li>
-    </ul>
-</nav>
-
-<h3>Name: <%out.print(name);%></h3>
-<h3>Email: <%out.print(email);%></h3>
-<a  type="submit" href="edit_info.jsp"  class="button ">Edit My Information</a>
-<a  type="submit" href="delete_acc.jsp"  class="button ">Delete My Account</a>
-<br>
-<a  type="submit" href="AccessLogServlet"  class="button ">View Past Account Activity</a>
-    <form action="Deletepaymentservlet" method="Post">
-         <input type="submit" value="Delete Payment Info">
-    </form>
-<% if(errorMessage3 != null) { %>
-    <p style="color: red"><%=errorMessage3%></p> <% } %>
-        
+           
+                    <a type="submit" href="AccessLogServlet" class="buttons ">View Past Account Activity</a>
+                    <form action="Deletepaymentservlet" method="Post" >
+                        <input type="submit" value="Delete Payment Info" class="buttons ">
+                    </form>
+                    <% if(errorMessage3 !=null) { %>
+                        <p style="color: red">
+                            <%=errorMessage3%>
+                        </p>
+                        <% } %>
 
 
+                    </div>
+                </div>
+            </body>
+            <%} %>
 
-</body>
-<%}
-%>
-</html>
+    </html>
