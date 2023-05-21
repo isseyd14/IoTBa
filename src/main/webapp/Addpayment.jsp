@@ -235,12 +235,8 @@ align-items: center;
 
                                 </table>
 
-                                <div class="submitsection">
-                                  
-                                    <div class="submitDiv">
+
                                     <input class="button" type="submit" value="Add/Confirm" required>
-                                    </div>
-                                </div>
                                 <%} else{%>
 
                                     <table>
@@ -270,26 +266,18 @@ align-items: center;
                                         <tr>
                                             <td></td>
                                             <td>
-                                                
-                                                <center>
-                                                  
-                                                </center>
                                             </td>
                                         </tr>
                                     </table>
-                                    <div class="submitsection">
-                                        <div class="submitDiv">
-                                 
-                                            <input class="button" type="submit" value="Add/Confirm" required>
-                                    </div>
-                                </div>
+
+                                            <input class="" type="submit" value="Add/Confirm" required>
                                 </form>
                                     <%}%>
                                 </div>
                                 </div>
             </body>
 
-            </html><script>
+            </html><!--<script>
                 const inputs = document.querySelectorAll('input[type="text"], input[type="password"]');
               const submitSection = document.querySelector('.submitsection');
               
@@ -308,4 +296,4 @@ align-items: center;
               
                 submitSection.style.display = showSubmitSection ? 'flex' : 'none';
               }
-              </script>
+              </script> -->
