@@ -1,4 +1,4 @@
-package grp4.iotbay;
+package grp4.iotbay.Servlets;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -20,18 +20,12 @@ public class LogoutServlet extends HttpServlet {
     protected void service(
         HttpServletRequest request, HttpServletResponse response
     ) throws ServletException, IOException {
-        try {
-            request.getSession().invalidate();
-            response.sendRedirect("index.jsp");
-        } catch (IOException e) {
-            e.printStackTrace();
         HttpSession session = request.getSession();
 
         String email = (String) session.getAttribute("email");
         long loginTime = (long) session.getAttribute("login_timestamp");
 
         Connection con = null;
-        ResultSet rs = null;
         PreparedStatement ps = null;
 
         try {
@@ -71,12 +65,10 @@ public class LogoutServlet extends HttpServlet {
                 if(ps != null) {
                     ps.close();
                 }
-                if(rs != null) {
-                    rs.close();
-                }
                 if(con != null) {
                     con.close();
                 }
+
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
