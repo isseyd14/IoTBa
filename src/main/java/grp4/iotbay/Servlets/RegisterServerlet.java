@@ -28,9 +28,11 @@ public class RegisterServerlet extends HttpServlet {
         String email = request.getParameter("email");
         String name = request.getParameter("fname");
         String password = request.getParameter("password");
+
+        Connection con = null;
+        PreparedStatement ps = null;
         
         try{
-            Connection con = null;
             
             Class.forName("com.mysql.jdbc.Driver");
             
@@ -39,7 +41,7 @@ public class RegisterServerlet extends HttpServlet {
             
             String sql = "insert into u236601339_iotBay.users (name, email, password) values(?,?,?)";
             
-            PreparedStatement ps = con.prepareStatement(sql);
+            ps = con.prepareStatement(sql);
             ps.setString(1, name);
             ps.setString(2, email);
             ps.setString(3, password);
@@ -49,6 +51,19 @@ public class RegisterServerlet extends HttpServlet {
             rd.forward(request,response);
         }catch(ClassNotFoundException | SQLException e){
             System.out.println("Error! - " + e.getMessage());
+        }
+        finally {
+            try {
+                if(ps != null) {
+                    ps.close();
+                }
+                if(con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
         }
     }
 }

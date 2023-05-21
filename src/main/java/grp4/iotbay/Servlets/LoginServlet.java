@@ -35,6 +35,14 @@ public class LoginServlet extends HttpServlet {
             rd.forward(request, response);
             return;
         }
+<<<<<<< Updated upstream
+=======
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+>>>>>>> Stashed changes
 
         Connection con = null;
 
@@ -59,9 +67,15 @@ public class LoginServlet extends HttpServlet {
             String typeDB = "";
             String nameDB = "";
             
+<<<<<<< Updated upstream
             ResultSet rs = ps.executeQuery();
             
             while(rs.next()){
+=======
+            rs = ps.executeQuery();
+
+            while(rs.next()) {
+>>>>>>> Stashed changes
                 emailDB = rs.getString("email");
                 passwordDB = rs.getString("password");
                 typeDB = rs.getString("Type");
@@ -107,6 +121,9 @@ public class LoginServlet extends HttpServlet {
             try {
                 if (ps != null) {
                     ps.close();
+                }
+                if (rs != null) {
+                    rs.close();
                 }
                 if (con != null) {
                     con.close();
