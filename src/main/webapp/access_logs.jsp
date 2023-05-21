@@ -71,7 +71,7 @@
                               style="background-color: #ff000000; color:black;">Welcome, <%out.print(name);%></a></li>
                           <li class="nav-button"><a href="home.jsp">Search</a></li>
 
-                          <li class="nav-button"><a href="logout">Logout</a></li>
+                          <li class="nav-button"><a href="LogoutServlet">Logout</a></li>
                         </ul>
                       </nav>
                       <div class="bodyContent">
@@ -101,17 +101,18 @@
                           <th>Login Time</th>
                           <th>Logout Time</th>
                         </tr>
-                    <% for(int i=0; i < loginTimes.size(); ++i) {%> 
+                        <% for(int i=0; i < loginTimes.size(); ++i) {%>
                           <tr class="bodyTablerow">
                             <td>
                               <% out.print(format.format((new Date(loginTimes.get(i))))); %>
                             </td>
-                            <td>
-                              <% out.print(format.format((new Date(logoutTimes.get(i))))); %>
-                            </td>
+                            <% if(logoutTimes.get(i) == -1) { %>
+                              <td> - </td>
+                            <%} else {%>
+                              <td> <% out.print(format.format((new Date(logoutTimes.get(i))))); %> </td>
+                            <%}%>
                           </tr>
-                          
-                          <%}%>
+                        <%}%>
                       </table>
                   </div>
                     </div>

@@ -35,6 +35,13 @@ public class DeleteServlet extends HttpServlet {
                 RequestDispatcher rd = request.getRequestDispatcher("delete_acc.jsp");
                 rd.forward(request, response);
             } else {
+                sql = "delete from u236601339_iotBay.access_logs where email=?";
+
+                ps = con.prepareStatement(sql);
+
+                ps.setString(1, email);
+                ps.executeUpdate();
+
                 response.sendRedirect("index.jsp");
             }
         }catch(SQLException | ClassNotFoundException e){

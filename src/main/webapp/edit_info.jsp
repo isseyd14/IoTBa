@@ -116,7 +116,7 @@ background-color:#509e6000;
           style="background-color: #ff000000; color:black;">Welcome, <%out.print(name);%></a></li>
       <li class="nav-button"><a href="home.jsp" style="">Search</a></li>
 
-      <li class="nav-button" ><a href="logout" style="color:#034473; background-color:#509e6000;">Logout</a></li>
+      <li class="nav-button" ><a href="LogoutServlet" style="color:#034473; background-color:#509e6000;">Logout</a></li>
     </ul>
   </nav>
 
