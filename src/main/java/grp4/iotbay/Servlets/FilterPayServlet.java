@@ -33,6 +33,7 @@ public class FilterPayServlet extends HttpServlet {
         }
         Connection con;
         PreparedStatement ps;
+        if(productType.isEmpty()){
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver") ;
                 con = DriverManager.getConnection(
@@ -69,9 +70,9 @@ public class FilterPayServlet extends HttpServlet {
             } catch (SQLException | ClassNotFoundException e) {
 
             }
-        
+        }
 
-        if(productName.isEmpty()) {
+        else if (productName.isEmpty()) {
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");
                 con = DriverManager.getConnection(
