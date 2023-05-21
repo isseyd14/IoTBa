@@ -38,10 +38,11 @@ public class RemoveServlet extends HttpServlet {
                 request.setAttribute("errorMessage", "Error: No such product");
                 RequestDispatcher rd = request.getRequestDispatcher("remove-product.jsp");
                 rd.forward(request, response);
+                return;
             }
-
-            response.sendRedirect("remove-product.jsp");
-
+            request.setAttribute("successMessage", "Product successfully removed");
+            RequestDispatcher rd = request.getRequestDispatcher("remove-product.jsp");
+            rd.forward(request, response);
 
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
