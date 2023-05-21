@@ -31,6 +31,7 @@ public class FilterPayServlet extends HttpServlet {
             RequestDispatcher rd = request.getRequestDispatcher(referringFile);
             rd.forward(request, response);
         }
+      
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -41,15 +42,18 @@ public class FilterPayServlet extends HttpServlet {
                     "u236601339_iotbayAdmin", "iotBaypassword1"
                 );
 
-                String sql = "SELECT * from u236601339_iotBay.Payment WHERE PayID=? AND Email=?";
 
+                String sql = "SELECT * FROM u236601339_iotBay.Payment WHERE PayID=? AND Email=?";
+              
                 ps = con.prepareStatement(sql);
                 ps.setString(1, productName);
                 ps.setString(2, currentEmail);                
+
                 rs = ps.executeQuery();
 
                 if (!rs.next()) {
                     request.setAttribute("errorMessage2", "Cannot find payment.");
+
                     session.setAttribute("pay", null);
                     RequestDispatcher rd = request.getRequestDispatcher(referringFile);
                     rd.forward(request, response);
@@ -81,11 +85,12 @@ public class FilterPayServlet extends HttpServlet {
                     "u236601339_iotbayAdmin", "iotBaypassword1"
                 );
 
-                String sql = "SELECT * from u236601339_iotBay.Payment where Date=? AND Email=?";
+                String sql = "SELECT * FROM u236601339_iotBay.Payment WHERE Date=? AND Email=?";
 
                 ps = con.prepareStatement(sql);
                 ps.setString(1, productType);
                 ps.setString(2, currentEmail);                
+
                 rs = ps.executeQuery();
 
                 while(rs.next()) {
@@ -123,7 +128,8 @@ public class FilterPayServlet extends HttpServlet {
                     "u236601339_iotbayAdmin", "iotBaypassword1"
                 );
 
-                String sql = "SELECT * from u236601339_iotBay.Payment where PayID = ? AND Date=? AND Email=?";
+
+                String sql = "SELECT * FROM u236601339_iotBay.Payment WHERE PayID = ? AND Date=? AND Email=?";
 
                 ps = con.prepareStatement(sql);
                 ps.setString(1, productName);

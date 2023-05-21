@@ -1,3 +1,4 @@
+
 <%@ page import="grp4.iotbay.Model.Product" %>
 <%@ page import="java.sql.*" %>
 <%@ page import="java.util.ArrayList" %>
@@ -10,148 +11,110 @@
 <html>
 <head>
     <title>Staff Home</title>
-
+    <link rel="stylesheet" href="topbar.css">
 </head>
 
 <style>
 
-    body {
-        margin: 0;
-        font-family: Arial, Helvetica, sans-serif;
-    }
-
-    .standard-Nav {
+    
+.searchForm {
         display: flex;
-        height: 70px;
-        background-color: #f3f3f3;
-        box-shadow: 0px -10px 36px 3px rgba(143, 142, 142, 0.537);
-
-    }
-
-    .nav-logo {
-        font-size: 24px;
-        font-weight: bold;
-        text-decoration: none;
-        color: #333;
-        margin-top: auto;
-        margin-bottom: auto;
-
-        padding-left: 50px;
-        padding-right: 50px;
-    }
-
-    .nav-links {
-        display: flex;
-        flex-grow: 1;
-        justify-content: flex-end;
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        flex-basis: 0;
-    }
-
-    .nav-links .nav-search {
 
         width: 100%;
-        margin-left: 20px;
-        margin-right: 20px;
-        margin-top: auto;
-        margin-bottom: auto;
-    }
-
-
-    .nav-links .nav-button a  {
-        display: flex;
-        height: 100%;
-        padding-left: 40px;
-        padding-right: 40px;
-        align-items: center;
-        font-size: 16px;
-        font-weight: bold;
-        text-decoration: none;
-        color: #fff;
-        background-color: #034473;
-        transition: background-color 0.3s ease;
+        justify-content: center;
+        
 
     }
 
-    .name-card {
-        display: flex;
-        height: 100%;
-        padding-left: 40px;
-        padding-right: 40px;
-        align-items: center;
-        font-size: 16px;
-        font-weight: bold;
-        text-decoration: none;
-        color: black;
-        background-color: #f3f3f3;
-        transition: background-color 0.3s ease;
-    }
+    .seachForm input[type=submit] {
 
-    .nav-links .nav-button a:hover {
-        background-color: #0c78c5;
-    }
-
-    .nav-links .nav-button .active {
-        background-color: #4494d5;
-    }
-
-    .h2Button a {
-        display: flex;
-        height: 100%;
-        padding-left: 40px;
-        padding-right: 40px;
-        align-items: center;
-        font-size: 16px;
-        font-weight: bold;
-        text-decoration: none;
-        color: #fff;
-        background-color: #4CAF50;
-        transition: background-color 0.3s ease;
-    }
-
-    .h2Button a:hover {
-        background-color: #80d27b;
-    }
-
-    .form-container {
-
-    }
-
-    /*.form-container label {
-        margin-bottom: 5px;
-    }
-
-    .form-container input[type="text"],
-    .form-container input[type="submit"] {
-        padding: 10px;
-        margin-bottom: 10px;
-        border-radius: 4px;
-        border: 1px solid #ccc;
-    }
-
-    .form-container input[type="submit"] {
-        background-color: #4CAF50;
-        color: white;
         border: none;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
+        height: 100%;
+        padding: 10px;
+        padding-left: 10px;
+        padding-right: 10px;
+        align-items: center;
+        font-size: 14px;
+        font-weight: bold;
+        text-decoration: none;
+        color: white;
+
+
+
     }
 
-    .form-container input[type="submit"]:hover {
-        background-color: #45a049;
-    } */
+    .searchField {
+        width: calc(100% - 170px);
+        padding-left: 20px;
+        padding-right: 20px;
+        height: 30px;
+        font-size: 14px;
+        max-width: 500px;
+    }
 
-
-    .stock-table {
+    table {
         border-collapse: collapse;
+        width: 100%;
+        box-shadow: 0 4px 15px 0 rgba(0, 0, 0, 0.157);
     }
 
-    .stock-table td, .stock-table th {
-        border: 1px solid black;
-        padding: 0.5rem;
+    .product-card {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        border: 2px #b3b3b3 solid;
+        border-radius: 5px;
+        margin-left: 30px;
+        margin-right: 30px;
+        margin-bottom: 20px;
     }
+
+
+
+.mainBody{
+    margin:50px;
+    
+}
+
+.formBody{
+margin-left:auto;
+margin-right:auto;
+background-color: #ffffff8f;
+       padding:50px;
+       border-radius: 40px;
+       max-width: 1100px;
+       min-width: 800px;
+       box-shadow: 0 4px 15px 0 rgba(0, 0, 0, 0.157);
+      
+    
+}
+
+.searchForm {
+  display: flex;
+  justify-content: center;
+
+
+       
+}
+
+.searchForm label {
+  font-weight: bold;
+  margin-bottom: 50px;
+
+}
+
+.searchForm input[type="text"] {
+  padding: 10px;
+  border: none;
+  border-radius: 30px;
+  background-color: #f5f5f5;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
+  width: 300px;
+  font-size: 14px;
+  margin-top:20px;
+}
+
 </style>
 
 <%
@@ -168,10 +131,10 @@
 <nav class="standard-Nav">
     <img  class="nav-logo" src="IotBayLogo.png" width="60px" height="60" alt="Product Image">
     <ul class="nav-links">
-        <li class="name-card">Welcome, <%=name%></li>
-        <li class="h2Button"><a href="add-product.jsp">Add Product</a></li>
-        <li class="h2Button"> <a href="update-product.jsp"> Update Product Details</a></li>
-        <li class="h2Button"><a href="remove-product.jsp">Remove Product</a></li>
+        <li class="nav-button" style="min-width: 400px;"><a style="background-color: #ff000000; color:black;">Welcome, <%=name%> </a></li>
+        <li class="nav-button"><a href="add-product.jsp">Add Product</a></li>
+        <li class="nav-button"> <a href="update-product.jsp"> Update Product Details</a></li>
+        <li class="nav-button"><a href="remove-product.jsp">Remove Product</a></li>
 
 
         <li class="nav-button"><a href="LogoutServlet">Logout</a></li>
@@ -179,21 +142,25 @@
 
 </nav>
 
-
+<div class="mainBody">
 
 <h2>Stocked products</h2>
 
-<div class="form-container">
+<div class="formBody">
 
-<form action="/FilterServlet" method="get">
+<form action="FilterServlet" method="get" class="searchForm">
+    <div>
     <label>Search by product name: </label>
-    <input type="text" name="productName">
+    <input type="text" name="productName" class="inputField" placeholder="product name">
+    </div>
+    <div>
     <label>Search by product type: </label>
-    <input type="text" name="productType">
-    <input type="submit" value="Filter">
+    <input type="text" name="productType" class="inputField" placeholder="product type">
+</div>
+    <input type="submit" value="Filter" class="button">
 </form>
-<form action="/ResetFilterServlet" method="get">
-    <input type="submit" value="Reset">
+<form action="ResetFilterServlet" method="get">
+    <input type="submit" value="Reset" class="button">
 </form>
 </div>
 
@@ -239,7 +206,7 @@
         <td><%= rs.getString("productType")%></td>
         <td><%= rs.getString("productDescription")%></td>
         <td><%= rs.getInt("productQuantity") %></td>
-        <td><%= rs.getDouble("productPrice") %></td>
+        <td>$<%= rs.getDouble("productPrice") %></td>
     </tr>
     <% }
     if(con != null) {
@@ -261,12 +228,13 @@
     <td><%=product.getType()%></td>
     <td><%=product.getDescription()%></td>
     <td><%=product.getQuantity()%></td>
-    <td><%=product.getPrice()%></td>
+    <td>$<%=product.getPrice()%></td>
 </tr>
 <% }
 
 } %>
 </table>
 
+</div>
 </body>
 </html>

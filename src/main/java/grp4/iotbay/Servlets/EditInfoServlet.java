@@ -61,6 +61,16 @@ public class EditInfoServlet extends HttpServlet {
                 RequestDispatcher rd = request.getRequestDispatcher("edit_info.jsp");
                 rd.forward(request, response);
             } else {
+              
+                if (!newEmail.equals(currentEmail)) {
+                    sql = "update u236601339_iotBay.access_logs set email=? where email=?";
+
+                    ps = con.prepareStatement(sql);
+
+                    ps.setString(1, newEmail);
+                    ps.setString(2, currentEmail);
+                    ps.executeUpdate();
+                }
                 session.setAttribute("name", newName);
                 session.setAttribute("email", newEmail);
                 response.sendRedirect("account.jsp");

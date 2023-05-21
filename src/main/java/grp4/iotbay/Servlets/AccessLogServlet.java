@@ -5,7 +5,10 @@ import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
 import java.io.IOException;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 
 @WebServlet("/AccessLogServlet")
@@ -19,8 +22,8 @@ public class AccessLogServlet extends HttpServlet {
         PreparedStatement ps = null;
         ResultSet rs = null;
         String email = (String) session.getAttribute("email");
+      
         try{
-
             Class.forName("com.mysql.jdbc.Driver");
 
             con = DriverManager.getConnection("jdbc:mysql://auth-db624.hstgr.io/u236601339_iotBay?autoReconnect=true&useSSL=false", "u236601339_iotbayAdmin", "iotBaypassword1");

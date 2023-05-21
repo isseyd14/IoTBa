@@ -1,16 +1,18 @@
-package grp4.iotbay.Servlets;
+package grp4.iotbay;
 
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
-<<<<<<< Updated upstream
-=======
-import java.sql.*;
->>>>>>> Stashed changes
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 @WebServlet("/LogoutServlet")
 public class LogoutServlet extends HttpServlet {
@@ -18,13 +20,11 @@ public class LogoutServlet extends HttpServlet {
     protected void service(
         HttpServletRequest request, HttpServletResponse response
     ) throws ServletException, IOException {
-<<<<<<< Updated upstream
         try {
             request.getSession().invalidate();
             response.sendRedirect("index.jsp");
         } catch (IOException e) {
             e.printStackTrace();
-=======
         HttpSession session = request.getSession();
 
         String email = (String) session.getAttribute("email");
@@ -65,7 +65,6 @@ public class LogoutServlet extends HttpServlet {
             }
         } catch (SQLException | ClassNotFoundException e) {
             System.out.println("Logout Error! - " + e.getMessage());
->>>>>>> Stashed changes
         }
         finally {
             try {
