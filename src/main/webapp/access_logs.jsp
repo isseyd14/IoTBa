@@ -71,7 +71,7 @@
                               style="background-color: #ff000000; color:black;">Welcome, <%out.print(name);%></a></li>
                           <li class="nav-button"><a href="home.jsp">Search</a></li>
 
-                          <li class="nav-button"><a href="logout">Logout</a></li>
+                          <li class="nav-button"><a href="LogoutServlet">Logout</a></li>
                         </ul>
                       </nav>
                       <div class="bodyContent">
